@@ -26,6 +26,9 @@ public void assignProjectLeader(String ID){
     this.projectLeaderID = ID;
 }
 
+public String getName(){
+    return this.name;
+}
 public String getProjectLeaderID(){
     return this.projectLeaderID;
 

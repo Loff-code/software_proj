@@ -1,2 +1,4 @@
-package app;public class RegisterTime {
+package app;
+
+public class RegisterTime {
 }

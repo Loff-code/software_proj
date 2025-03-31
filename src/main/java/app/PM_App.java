@@ -5,14 +5,17 @@ import java.util.*;
 
 public class PM_App {
 
-    public  PM_App(Employer employer){
+    public  PM_App(Employer employer,Employee employee){
         this.employers.add(employer);
+        this.employees.add(employee);
     }
     private List<Project> projects = new ArrayList<>();
     private List<Employee> employees = new ArrayList<>();
     private List<Employer> employers = new ArrayList<>();
     private boolean isEmployer;
-    private String userID;
+    private String userID = "";
+
+    private boolean loggedIn = false;
 
 
     public List<Project> getProject() {
@@ -108,30 +111,58 @@ public class PM_App {
 
 // SKal udvides, mangles at teste for dupp navn
     public void createProject(String name, Client client){
-        this.projects.add(new Project(name,  client));
+        boolean nameTaken = false;
+        for (Project project : projects){
+            if (project.getName().equals(name)&& client != null){
+                nameTaken = true;
+            }
+        }
+
+        if (!name.equals("") && client != null && !nameTaken){
+            this.projects.add(new Project(name,  client));
+        }
+
+
     }
 
+    public Project getProjectByName(String name){
+        for (Project project : this.projects){
+            if (project.getName().equals(name)){
+                return project;
+            }
+
+        }
+        return null;
+    }
 
 
     public String getUserID() {
         return userID;
     }
 
-    public void Login(String ID, String password) {
+    public boolean LoggedIn() {
+        return this.loggedIn;
+    }
+    public void login(String ID, String password) throws OperationNotAllowedException{
         for (Employee employee : employees){
             if(employee.getID().equals(ID) && employee.getPassword().equals(password)) {
                 this.userID = employee.getID();
             }
+
         }
         for (Employer employer : employers){
             if(employer.getID().equals(ID) && employer.getPassword().equals(password)) {
                 this.userID = employer.getID();
             }
         }
-
+        if (!this.LoggedIn()) {
+            throw new OperationNotAllowedException("Wrong password");
+        }
     }
 
-    public void Logout(){
+
+
+    public void logout(){
         this.userID = "";
     }
 
