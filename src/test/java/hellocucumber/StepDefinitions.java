@@ -5,6 +5,9 @@ import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StepDefinitions {
+   public StepDefinitions(){
+
+   }
 
     @Given("an example scenario")
     public void anExampleScenario() {

@@ -1,7 +1,13 @@
+package app;
+
 import java.util.*;
 
 
 public class PM_App {
+
+    public  PM_App(Employer employer){
+        this.employers.add(employer);
+    }
     private List<Project> projects = new ArrayList<>();
     private List<Employee> employees = new ArrayList<>();
     private List<Employer> employers = new ArrayList<>();
@@ -39,13 +45,12 @@ public class PM_App {
         return cnt;
     }
 
-    public void registerEmployee(Employee newEmployee) throws OperationNotAllowedException {
+    public void registerEmployee(Employee newEmployee)  {
         for (Employee existingEmployee : employees) {
             if (existingEmployee.getID().equals(newEmployee.getID())
                     &&existingEmployee.getName().equals(newEmployee.getName())
                     && existingEmployee.getEmail().equals(newEmployee.getEmail())) {
                 System.out.println(Arrays.toString(employees.toArray()));
-                throw new OperationNotAllowedException("Employee already exists");
             }
         }
         // No duplicates found; add the user
@@ -64,7 +69,7 @@ public class PM_App {
                 return employee;
             }
         }
-        return NULL;
+        return null;
     }
     public Employer getEmployerByID (String ID){
         for (Employer employer : employers){
@@ -72,7 +77,7 @@ public class PM_App {
                 return employer;
             }
         }
-        return NULL;
+        return null;
     }
 
     public boolean isAvailable(String employeeId, int startWeek, int endWeek) {
@@ -108,7 +113,9 @@ public class PM_App {
 
 
 
-
+    public String getUserID() {
+        return userID;
+    }
 
     public void Login(String ID, String password) {
         for (Employee employee : employees){
@@ -116,6 +123,12 @@ public class PM_App {
                 this.userID = employee.getID();
             }
         }
+        for (Employer employer : employers){
+            if(employer.getID().equals(ID) && employer.getPassword().equals(password)) {
+                this.userID = employer.getID();
+            }
+        }
+
     }
 
     public void Logout(){

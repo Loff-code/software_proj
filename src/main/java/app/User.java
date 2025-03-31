@@ -1,15 +1,16 @@
-public class Employer {
+package app;
+
+public class User {
     private String name;
     private String email;
     private String ID;
     private String password;
 
-    public Employer(String name, String email, String ID, String password){
+    public User(String name, String email, String ID, String password){
         this.name = name;
         this.email = email;
         this.ID = ID;
         this.password = password;
-
     }
 
 
@@ -25,4 +26,5 @@ public class Employer {
     public String getPassword(){
         return this.password;
     }
+
 }
