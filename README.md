@@ -14,6 +14,10 @@ Project
 - Edit data [ ] [ ]
 - Get statuslog [ ] [ ]
 
+Design must:
+- White box test
+- Black box test
+- Design by contract
 
 Problems:
 We do not duplicate object, we reference by ID. 
