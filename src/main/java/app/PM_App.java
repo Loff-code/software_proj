@@ -167,4 +167,26 @@ public class PM_App {
     }
 
 
+    public void assignProjectLeader(String projectName, String employeeID) throws OperationNotAllowedException{
+        Project project = getProjectByName(projectName);
+        if (project == null){
+            throw new OperationNotAllowedException("Project does not exist");
+        }
+
+        Employee employee = getEmployeeByID(employeeID);
+        if (employee == null){
+            throw new OperationNotAllowedException("Employee does not exist");
+        }
+
+        if(project.getProjectLeader() != null && project.getProjectLeader().equals(employee)) {
+            throw new OperationNotAllowedException("Project leader already assigned");
+        }
+
+        project.setProjectLeader(employee);
+
+
+
+    }
+
+
 }
