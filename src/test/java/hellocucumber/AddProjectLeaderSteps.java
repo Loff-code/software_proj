@@ -22,7 +22,7 @@ public class AddProjectLeaderSteps {
     }
 
     // Create a new instance of PM_App with the given employees
-    PM_App app = new PM_App(carl, tom);
+    PM_App app = new PM_App();
 
     @Given("an employee is logged in")
     public void an_employee_is_logged_in() throws OperationNotAllowedException {

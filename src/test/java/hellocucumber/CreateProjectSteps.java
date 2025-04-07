@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateProjectSteps {
 
-    Employer carl = new EmployerHelper().getEmployer();
+    Employer admin = new EmployerHelper().getEmployer();
     Employee bob = new EmployeeHelper().getEmployee();
     Client clientHelper;
 
@@ -19,11 +19,11 @@ public class CreateProjectSteps {
 
     public CreateProjectSteps(){
     }
-    PM_App app = new PM_App(carl,bob);
+    PM_App app = new PM_App();
     @Given("an employer is logged in")
     public void an_employer_is_logged_in() throws OperationNotAllowedException{
         try{
-        app.login(carl.getID(),carl.getPassword());
+        app.login(admin.getID(),admin.getPassword());
         }
         catch (OperationNotAllowedException e) {
             // Assert that the exception message is what you expect

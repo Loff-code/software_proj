@@ -6,7 +6,7 @@ public class EmployerHelper {
         return exampleEmployer();
     }
     public Employer exampleEmployer(){
-        this.employer = new Employer("Carl", "carl@world.com", "0001", "CarlCarl");
+        this.employer = new Employer("Admin", "admin@world.com", "0001", "AdminAdmin");
         return employer;
     }
 }

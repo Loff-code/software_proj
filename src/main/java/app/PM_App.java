@@ -5,9 +5,9 @@ import java.util.*;
 
 public class PM_App {
 
-    public  PM_App(Employer employer,Employee employee){
-        this.employers.add(employer);
-        this.employees.add(employee);
+    public  PM_App(){
+        EmployerHelper employerHelper = new EmployerHelper();
+        this.employers.add(employerHelper.getEmployer());
     }
     private List<Project> projects = new ArrayList<>();
     private List<Employee> employees = new ArrayList<>();
@@ -49,6 +49,7 @@ public class PM_App {
     }
 
     public void registerEmployee(Employee newEmployee)  {
+        System.out.println("Employee added: " + newEmployee.getName());
         for (Employee existingEmployee : employees) {
             if (existingEmployee.getID().equals(newEmployee.getID())
                     &&existingEmployee.getName().equals(newEmployee.getName())
@@ -58,6 +59,7 @@ public class PM_App {
         }
         // No duplicates found; add the user
         employees.add(newEmployee);
+
     }
 
 
@@ -143,6 +145,7 @@ public class PM_App {
     public boolean LoggedIn() {
         return this.loggedIn;
     }
+
     public void login(String ID, String password) throws OperationNotAllowedException{
         for (Employee employee : employees){
             if(employee.getID().equals(ID) && employee.getPassword().equals(password)) {
@@ -153,9 +156,10 @@ public class PM_App {
         for (Employer employer : employers){
             if(employer.getID().equals(ID) && employer.getPassword().equals(password)) {
                 this.userID = employer.getID();
+
             }
         }
-        if (!this.LoggedIn()) {
+        if (this.userID.equals("")){
             throw new OperationNotAllowedException("Wrong password");
         }
     }
