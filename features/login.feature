@@ -1,26 +1,19 @@
-Feature: Employee Login
-  Description: The employee logs into the system and also logs out
-  Actor: Employee
+Feature: User Login
+  Description: The user logs into the system and also logs out
+  Actor: User
 
-  Scenario: Employee can login
-    Given that an employee is not logged in
-    And that an employee with the name "Bob", email "bob@world.com", ID "0002" and password "BobBob" exists
-    When the employee logs in with the ID "0002" and password "BobBob"
-    Then the employee with the ID "0002" is now logged in
-
-
-  Scenario: Employee has the wrong password
-    Given that an employee is not logged in
-    And that an employee with the name "Bob", email "bob@world.com", ID "0002" and password "BobBob" exists
-    When the employee logs in with the ID "0002" and password "CarlCarl"
-    Then the employee is not logged in
+  Scenario: User can login
+    Given the user is not logged in
+    And the user with the ID "bob" exists
+    When the user logs in with the ID "bob"
+    Then the user with the ID "bob" is now logged in
 
 
-  Scenario: Employer can login
-    Given that the employer is not logged in
-    And that the employer with the name "Admin", email "admin@world.com", ID "0001" and password "AdminAdmin" exists
-    When the employer logs in with the ID "0001" and password "AdminAdmin"
-    Then the employer with the ID "0001" is now logged in
+  Scenario: user has the wrong password
+    Given the user is not logged in
+    And the user with the ID "carl" does not exist
+    When the user logs in with the ID "carl"
+    Then the user is not logged in
 
 
 

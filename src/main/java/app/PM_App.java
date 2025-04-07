@@ -6,40 +6,27 @@ import java.util.*;
 public class PM_App {
 
     public  PM_App(){
-        EmployerHelper employerHelper = new EmployerHelper();
-        this.employers.add(employerHelper.getEmployer());
+        this.users.add(new User("bob"));
     }
     private List<Project> projects = new ArrayList<>();
-    private List<Employee> employees = new ArrayList<>();
-    private List<Employer> employers = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
+
     private boolean isEmployer;
     private String userID = "";
-
-    private boolean loggedIn = false;
-
 
     public List<Project> getProject() {
         return projects;
     }
 
-    public List<Employer> getEmployers() {
-        return employers;
+    public List<User> getUsers() {
+        return users;
     }
-
-    public boolean isEmployer() {
-        return isEmployer;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public int getEmployeeActivityCount(String ID) {
+    public int getUserActivityCount(String ID) {
         int cnt = 0;
         for (Project proj : this.projects) {
             for (Activity activity : proj.getActivities()) {
-                for (String employeeID : activity.getEmployees()) {
-                    if (employeeID.equals(ID)) {
+                for (String userID : activity.getAssignedUsers()) {
+                    if (userID.equals(ID)) {
                         cnt++;
                     }
                 }
@@ -48,47 +35,20 @@ public class PM_App {
         return cnt;
     }
 
-    public void registerEmployee(Employee newEmployee)  {
-        System.out.println("Employee added: " + newEmployee.getName());
-        for (Employee existingEmployee : employees) {
-            if (existingEmployee.getID().equals(newEmployee.getID())
-                    &&existingEmployee.getName().equals(newEmployee.getName())
-                    && existingEmployee.getEmail().equals(newEmployee.getEmail())) {
-                System.out.println(Arrays.toString(employees.toArray()));
-            }
-        }
-        // No duplicates found; add the user
-        employees.add(newEmployee);
-
-    }
-
-
-    //Register Employer ændres i fremtiden, skal tjekke for ikke samme som employee
-    public void registerEmployer(String name, String email, String ID, String password){
-        employers.add(new Employer( name,  email,  ID,  password));
-    }
-
-    public Employee getEmployeeByID (String ID){
-        for (Employee employee : employees){
-            if (employee.getID().equals(ID)){
-                return employee;
-            }
-        }
-        return null;
-    }
-    public Employer getEmployerByID (String ID){
-        for (Employer employer : employers){
-            if (employer.getID().equals(ID)){
-                return employer;
+    public User getUserByID (String ID){
+        for (User user : users){
+            if (user.getID().equals(ID)){
+                return user;
             }
         }
         return null;
     }
 
-    public boolean isAvailable(String employeeId, int startWeek, int endWeek) {
+
+    public boolean isAvailable(String userID, int startWeek, int endWeek) {
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {
-                if (activity.getEmployees().contains(employeeId)
+                if (activity.getAssignedUsers().contains(userID)
                         && activity.getStartWeek() < endWeek
                         && activity.getEndWeek() > startWeek) {
                     return false;
@@ -98,33 +58,29 @@ public class PM_App {
         return true;
     }
     
-    public List<String> getAvailableEmployeeIDs(int startWeek, int endWeek){
+    public List<String> getAvailableUserIDs(int startWeek, int endWeek){
         List<String>  availables = new ArrayList<>();
-        for (Employee employee : employees){
-            if (isAvailable(employee.getID(),startWeek,endWeek)){
-                availables.add(employee.getID());
+        for (User user : users){
+            if (isAvailable(user.getID(),startWeek,endWeek)){
+                availables.add(user.getID());
             }
         }
         return  availables;
     }
 
 
-
-
-// SKal udvides, mangles at teste for dupp navn
-    public void createProject(String name, Client client){
+    public void createProject(String name, String client)throws OperationNotAllowedException{
         boolean nameTaken = false;
         for (Project project : projects){
-            if (project.getName().equals(name)&& client != null){
+            if (project.getName().equals(name)){
                 nameTaken = true;
+                throw new OperationNotAllowedException("Project name is taken");
             }
         }
 
-        if (!name.equals("") && client != null && !nameTaken){
+        if (!name.equals("") && !(client.equals("")) && !nameTaken){
             this.projects.add(new Project(name,  client));
         }
-
-
     }
 
     public Project getProjectByName(String name){
@@ -142,54 +98,22 @@ public class PM_App {
         return userID;
     }
 
-    public boolean LoggedIn() {
-        return this.loggedIn;
-    }
 
-    public void login(String ID, String password) throws OperationNotAllowedException{
-        for (Employee employee : employees){
-            if(employee.getID().equals(ID) && employee.getPassword().equals(password)) {
-                this.userID = employee.getID();
+    public void login(String id) throws OperationNotAllowedException{
+        for (User user : users){
+            if(user.getID().equals(id)) {
+                this.userID = user.getID();
             }
 
-        }
-        for (Employer employer : employers){
-            if(employer.getID().equals(ID) && employer.getPassword().equals(password)) {
-                this.userID = employer.getID();
-
-            }
         }
         if (this.userID.equals("")){
-            throw new OperationNotAllowedException("Wrong password");
+            throw new OperationNotAllowedException("User does not exist");
         }
     }
-
 
 
     public void logout(){
         this.userID = "";
-    }
-
-
-    public void assignProjectLeader(String projectName, String employeeID) throws OperationNotAllowedException{
-        Project project = getProjectByName(projectName);
-        if (project == null){
-            throw new OperationNotAllowedException("Project does not exist");
-        }
-
-        Employee employee = getEmployeeByID(employeeID);
-        if (employee == null){
-            throw new OperationNotAllowedException("Employee does not exist");
-        }
-
-        if(project.getProjectLeader() != null && project.getProjectLeader().equals(employee)) {
-            throw new OperationNotAllowedException("Project leader already assigned");
-        }
-
-        project.setProjectLeader(employee);
-
-
-
     }
 
 

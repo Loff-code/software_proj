@@ -7,7 +7,7 @@ private String name;
 private int budgetTime;
 private int startWeek;
 private int endWeek;
-private List<String> employees = new ArrayList<>();
+private List<String> assignedUsers = new ArrayList<>();
 private Map<String,Integer> timeMap =new HashMap<>();
 
 public Activity(String name, int budgetTime, int startWeek, int endWeek){
@@ -16,8 +16,8 @@ public Activity(String name, int budgetTime, int startWeek, int endWeek){
     this.startWeek = startWeek;
     this.endWeek = endWeek;
 }
-public void assignEmployeeToActivity(String employeeID){
-    this.employees.add(employeeID);
+public void assignEmployeeToActivity(String userID){
+    this.assignedUsers.add(userID);
 }
 public String getName(){
     return this.name;
@@ -31,8 +31,8 @@ public String getName(){
     public int getEndWeek(){
         return this.endWeek;
     }
-    public List<String> getEmployees(){
-    return this.employees;
+    public List<String> getAssignedUsers(){
+    return this.assignedUsers;
     }
 
 }

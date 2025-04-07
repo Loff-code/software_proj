@@ -5,13 +5,13 @@ import java.util.*;
 public class Project {
 
     private String name;
-    private Client client;
+    private String client;
     private List<Activity> activities = new ArrayList<>();
     private String projectLeaderID;
-    private Employee projectLeader;
+    private User projectLeader;
     private int projectID;
 
-    public Project(String name, Client client) {
+    public Project(String name, String client) {
         this.name = name;
         this.client = client;
     }
@@ -30,13 +30,13 @@ public class Project {
     }
 
 
-    public void setProjectLeader(Employee employee) {
-        this.projectLeader = employee;
-        this.projectLeaderID = employee.getID();
+    public void setProjectLeader(User user) {
+        this.projectLeader = user;
+        this.projectLeaderID = user.getID();
 
     }
 
-    public Employee getProjectLeader() {
+    public User getProjectLeader() {
         return this.projectLeader;
     }
 
@@ -47,4 +47,26 @@ public class Project {
     public void assignProjectID(int id) {
         this.projectID = id;
     }
+
+
+
+    //public void assignProjectLeader(String projectName, String employeeID) throws OperationNotAllowedException{
+//        Project project = getProjectByName(projectName);
+//        if (project == null){
+//            throw new OperationNotAllowedException("Project does not exist");
+//        }
+//
+//        User user = getUserByID(userID);
+//        if (user == null){
+//            throw new OperationNotAllowedException("Employee does not exist");
+//        }
+//
+//        if(project.getProjectLeader() != null && project.getProjectLeader().equals(user)) {
+//            throw new OperationNotAllowedException("Project leader already assigned");
+//        }
+//
+//        project.setProjectLeader(user);
+//
+//
+//    }
 }
