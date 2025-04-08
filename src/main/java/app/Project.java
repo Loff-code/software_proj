@@ -50,23 +50,4 @@ public class Project {
 
 
 
-    //public void assignProjectLeader(String projectName, String employeeID) throws OperationNotAllowedException{
-//        Project project = getProjectByName(projectName);
-//        if (project == null){
-//            throw new OperationNotAllowedException("Project does not exist");
-//        }
-//
-//        User user = getUserByID(userID);
-//        if (user == null){
-//            throw new OperationNotAllowedException("Employee does not exist");
-//        }
-//
-//        if(project.getProjectLeader() != null && project.getProjectLeader().equals(user)) {
-//            throw new OperationNotAllowedException("Project leader already assigned");
-//        }
-//
-//        project.setProjectLeader(user);
-//
-//
-//    }
 }

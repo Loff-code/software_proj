@@ -1,0 +1,44 @@
+package hellocucumber;
+
+import app.*;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class editDataSteps {
+
+    Project project;
+    private ErrorMessageHolder errorMessageHolder;
+
+
+    public editDataSteps() {
+
+    }
+    PM_App app = AppHolder.app;
+
+
+    //Scenario 1: User edits registered data successfully
+
+    //@Given("the user {string} is logged in")
+
+
+    @Given("the user has registered {int} hours on an activity called {string} in project {int}")
+    public void the_user_has_registered_hours_on_an_activity_called_in_project(int hours, String activityName, int projectID) throws OperationNotAllowedException {
+
+    }
+
+    @When("the user changes the registered from {int} hours to {int} hours on the {string} activity")
+    public void the_user_changes_the_registered_from_hours_to_hours_on_the_activity(int oldHours, int newHours, String activityName) throws OperationNotAllowedException {
+
+    }
+
+    @Then("the system updates the registered hours to {int} hours on the {string} activity")
+    public void the_system_updates_the_registered_hours_to_hours_on_the_activity(int newHours, String activityName) throws OperationNotAllowedException {
+
+    }
+
+
+
+}

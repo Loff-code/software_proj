@@ -15,7 +15,7 @@ public class PM_App {
     private String userID = "";
 
     public List<Project> getProject() {
-        return projects;
+        return this.projects;
     }
 
     public List<User> getUsers() {
@@ -117,4 +117,22 @@ public class PM_App {
     }
 
 
+    public void assignProjectLeader(String name, String assignedUserID) throws OperationNotAllowedException{
+        Project project = getProjectByName(name);
+        if (project == null) {
+            throw new OperationNotAllowedException("Project does not exist");
+        }
+
+        if (project.getProjectLeader() != null) {
+            throw new OperationNotAllowedException("User is already a project leader");
+        }
+
+        User user = getUserByID(assignedUserID);
+        if (user == null) {
+            throw new OperationNotAllowedException("User does not exist");
+        }
+
+        project.setProjectLeader(user);
+
+    }
 }

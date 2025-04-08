@@ -17,7 +17,7 @@ public class LoginLogoutSteps {
    public LoginLogoutSteps(){
 
    }
-   PM_App app = new PM_App();
+   PM_App app = AppHolder.app;
 
 
    @Given("the user with the ID {string} exists")
@@ -71,4 +71,5 @@ public class LoginLogoutSteps {
          assertEquals("User does not exist", e.getMessage());
       }
    }
+
 }
