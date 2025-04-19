@@ -44,7 +44,7 @@ public class AddProjectLeaderSteps {
 
     @When("the user assigns {string} as the project leader to the project {int}")
     public void user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException {
-        app.assignProjectLeader(project.getName(), assignedUserID);
+        app.assignProjectLeader(project.getProjectID(), assignedUserID);
 
     }
 
@@ -75,7 +75,7 @@ public class AddProjectLeaderSteps {
     @When("the user {string} tries to assign {string} as the project leader to project {int} again")
     public void the_user_tries_to_assign_as_the_project_leader_to_project_again(String user, String name, int id) throws OperationNotAllowedException {
         try {
-            app.assignProjectLeader(project.getName(), assignedUserID);
+            app.assignProjectLeader(project.getProjectID(), assignedUserID);
         } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -99,7 +99,7 @@ public class AddProjectLeaderSteps {
     @When("the user assigns {string} as project leader to project {int}")
     public void the_user_assigns_as_project_leader_to_project(String name, int id) throws OperationNotAllowedException {
         try {
-            app.assignProjectLeader(project.getName(), assignedUserID);
+            app.assignProjectLeader(project.getProjectID(), assignedUserID);
         } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -109,6 +109,46 @@ public class AddProjectLeaderSteps {
     public void an_error_message_happens_about_the_user_not_existing() {
         assertEquals("User does not exist", errorMessageHolder.getErrorMessage());
     }
+
+
+    // scenario 4: User assigns a project leader to a non existing project
+    @Given("the project with ID {int} does not exist")
+    public void the_project_with_id_does_not_exist(int id) {
+        project = null;
+    }
+
+    @When("the user assigns {string} as project leader to project with ID {int} that does not exist")
+    public void the_user_assigns_as_project_leader_to_project_with_id_that_does_not_exist(String name, int id) throws OperationNotAllowedException {
+        try {
+            app.assignProjectLeader(id, assignedUserID);
+        } catch (OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("an error message happens about the project not existing")
+    public void an_error_message_happens_about_the_project_not_existing() {
+        assertEquals("Project does not exist", errorMessageHolder.getErrorMessage());
+    }
+
+
+    // scenario 5: User tries to assign themselves as project leader
+
+    //@When("the user {string} tries to assign themselves as project leader to project {int}")
+    //public void the_user_tries_to_assign_themselves_as_project_leader_to_project(String name, int id) throws OperationNotAllowedException {
+      //  try {
+        //    app.assignProjectLeader(project.getProjectID(), assignedUserID);
+        //} catch (OperationNotAllowedException e) {
+         //   errorMessageHolder.setErrorMessage(e.getMessage());
+        //}
+    //}
+
+    //@Then("an error message happens about the user not being able to assign themselves as project leader")
+    //public void an_error_message_happens_about_the_user_not_being_able_to_assign_themselves_as_project_leader() {
+      //  assertEquals("User cannot assign themselves as project leader", errorMessageHolder.getErrorMessage());
+    //}
+
+
 
 
 }

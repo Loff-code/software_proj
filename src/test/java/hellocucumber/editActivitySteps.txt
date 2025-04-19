@@ -5,15 +5,13 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class editDataSteps {
+public class editActivitySteps {
 
     Project project;
     private ErrorMessageHolder errorMessageHolder;
 
 
-    public editDataSteps() {
+    public editActivitySteps() {
 
     }
     PM_App app = AppHolder.app;

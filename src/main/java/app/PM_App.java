@@ -93,6 +93,15 @@ public class PM_App {
         return null;
     }
 
+    public Project getProjectByID(int id){
+        for (Project project : this.projects){
+            if (project.getProjectID() == id){
+                return project;
+            }
+        }
+        return null;
+    }
+
 
     public String getUserID() {
         return userID;
@@ -117,8 +126,8 @@ public class PM_App {
     }
 
 
-    public void assignProjectLeader(String name, String assignedUserID) throws OperationNotAllowedException{
-        Project project = getProjectByName(name);
+    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException{
+        Project project = getProjectByID(projectID);
         if (project == null) {
             throw new OperationNotAllowedException("Project does not exist");
         }
@@ -130,6 +139,10 @@ public class PM_App {
         User user = getUserByID(assignedUserID);
         if (user == null) {
             throw new OperationNotAllowedException("User does not exist");
+        }
+
+        if(assignedUserID.equals(userID)){
+            throw new OperationNotAllowedException("User cannot assign themselves as project leader");
         }
 
         project.setProjectLeader(user);

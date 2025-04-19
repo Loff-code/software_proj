@@ -49,5 +49,7 @@ public class Project {
     }
 
 
-
+    public int getProjectID() {
+        return this.projectID;
+    }
 }
