@@ -4,7 +4,6 @@ Feature: Register used time
 
   Background:
     Given the user is logged in
-    Given there exists a project with name "example"
     Given there exists users with the following initials in the project
       | Huba     |
       | Sore     |
@@ -12,22 +11,34 @@ Feature: Register used time
       | Hamz     |
       | Zoha     |
 
-  Scenario: Employee registers time spent on an activity
-    Given that the employee is logged in
-    And the employee is assigned to an activity named "Implementation"
-    When the employee registers 4 hours spent on "Implementation" on date "2025-03-21"
-    Then the system records 4 hours for "Implementation" on "2025-03-22" for the employee
+  Scenario: The user registers time spent on an activity
+    Given that a project with ID 25001 exists
+    Given that an activity named "Demo" exists
+    And the user "Huba" is assigned to an activity named "Demo"
+    When the user "Huba" registers 4 hours spent on "Demo" on date "2025-03-21"
+    Then the system records 4 hours for "Demo" on "2025-03-22" for the user "Huba"
 
-  Scenario: Employee tries to register time for an activity they are not assigned to
-    Given that the employee is logged in
-    And there is an activity named "Testing" that the employee is not assigned to
-    When the employee tries to register 2 hours spent on "Testing" on date "2025-03-21"
+  Scenario: User tries to register time for an activity they are not assigned to
+    And there is an activity named "Demo" that the user "Sore" is not assigned to
+    When the user "Sore" tries to register 2 hours spent on "Demo" on date "2025-03-21"
     Then the system does not allow the time registration
     And an error message happens
 
-  Scenario: Employee registers time with invalid hours
-    Given that the employee is logged in
-    And the employee is assigned to an activity named "Design"
-    When the employee tries to register -3 hours spent on "Design" on Date "2025-03-21"
+  Scenario: User registers time with invalid hours
+    And the user "Huba" is assigned to an activity named "Demo"
+    When the user "Huba" tries to register -3 hours spent on "Demo" on Date "2025-03-21"
     Then the system does not accept the negative hours
     And an error message happens
+
+    Scenario: User registers time with invalid date
+    And the user "Huba" is assigned to an activity named "Demo"
+    When the user "Huba" tries to register 4 hours spent on "Demo" on date "2025-03-32"
+    Then the system does not accept the invalid date
+    And an error message happens
+
+
+    Scenario:  registers time with invalid initials
+
+
+
+    Scenario: User registers time to an activity that doesnt exist
