@@ -2,16 +2,12 @@ package hellocucumber;
 
 import app.*;
 import io.cucumber.java.en.Given;
-<<<<<<< HEAD
 //import io.cucumber.java.en.Then;
-=======
 import io.cucumber.java.en.Then;
->>>>>>> 0e46d6e66d5a5f62ade05faa5d0e9aa5a66d4862
 import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-<<<<<<< HEAD
 
 public class AddProjectLeaderSteps {
 
@@ -42,7 +38,6 @@ public class AddProjectLeaderSteps {
     public void that_a_project_with_id_exists(int id) throws OperationNotAllowedException {
         Client client = new ClientHelper().getClient();
         project = new Project("Projectx", client);
-=======
 public class AddProjectLeaderSteps {
 
     Project project;
@@ -62,13 +57,11 @@ public class AddProjectLeaderSteps {
     @Given("that a project with ID {int} exists")
     public void that_a_project_with_id_exists(int id) throws OperationNotAllowedException {
         project = new Project("Projectx", "DTU");
->>>>>>> 0e46d6e66d5a5f62ade05faa5d0e9aa5a66d4862
         project.assignProjectID(id);
         app.getProject().add(project);
 
     }
 
-<<<<<<< HEAD
     @Given("that the employee {string} is not already a leader of the project")
     public void that_the_employee_is_not_already_a_leader_of_the_project(String name) {
         app.registerEmployee(jerry);
@@ -86,7 +79,6 @@ public class AddProjectLeaderSteps {
         assertEquals(jerry.getID(), project.getProjectLeaderID());
     }
 
-=======
     @Given("the user {string} exists")
     public void the_user_exists(String name) {
         app.getUsers().add(new User(name));
@@ -205,9 +197,6 @@ public class AddProjectLeaderSteps {
     //}
 
 
-
-
->>>>>>> 0e46d6e66d5a5f62ade05faa5d0e9aa5a66d4862
 }
 
 
