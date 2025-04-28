@@ -15,7 +15,7 @@ public class PM_App extends Observable  {
     private String userID = "";
 
     public List<Project> getProject() {
-        return projects;
+        return this.projects;
     }
 
     public List<User> getUsers() {
@@ -95,6 +95,15 @@ public class PM_App extends Observable  {
         return null;
     }
 
+    public Project getProjectByID(int id){
+        for (Project project : this.projects){
+            if (project.getProjectID() == id){
+                return project;
+            }
+        }
+        return null;
+    }
+
 
     public String getUserID() {
         return userID;
@@ -119,4 +128,26 @@ public class PM_App extends Observable  {
     }
 
 
+    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException{
+        Project project = getProjectByID(projectID);
+        if (project == null) {
+            throw new OperationNotAllowedException("Project does not exist");
+        }
+
+        if (project.getProjectLeader() != null) {
+            throw new OperationNotAllowedException("User is already a project leader");
+        }
+
+        User user = getUserByID(assignedUserID);
+        if (user == null) {
+            throw new OperationNotAllowedException("User does not exist");
+        }
+
+        if(assignedUserID.equals(userID)){
+            throw new OperationNotAllowedException("User cannot assign themselves as project leader");
+        }
+
+        project.setProjectLeader(user);
+
+    }
 }

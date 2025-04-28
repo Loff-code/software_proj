@@ -25,3 +25,4 @@ Feature: Create Project
     When the user creates a project with the name "P", client "a"
     Then there are no duplicates of the project "P"
     #And an error message happens
+
