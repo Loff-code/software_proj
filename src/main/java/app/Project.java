@@ -23,7 +23,14 @@ public class Project {
     public List<Activity> getActivities() {
         return this.activities;
     }
-
+    public Activity getActivityByName(String name) {
+        for (Activity activity : activities) {
+            if (activity.getName().equals(name)) {
+                return activity;
+            }
+        }
+        return null;
+    }
 
     public String getName() {
         return this.name;

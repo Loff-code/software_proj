@@ -19,6 +19,19 @@ public class PM_App extends Observable  {
     private boolean isEmployer;
     private String userID = "";
 
+    public void createUser(String id) throws OperationNotAllowedException {
+        boolean idTaken = false;
+        for (User user : users) {
+            if (user.getID().equals(id)) {
+                idTaken = true;
+                throw new OperationNotAllowedException("User ID is taken");
+            }
+        }
+        if (!id.equals("") && !idTaken) {
+            this.users.add(new User(id));
+        }
+    }
+
     public List<Project> getProject() {
         return this.projects;
     }
