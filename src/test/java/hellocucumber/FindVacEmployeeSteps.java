@@ -1,13 +1,21 @@
 package hellocucumber;
 
 
+import app.PM_App;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
-/*
+
 public class FindVacEmployeeSteps {
-    private PM_App app;
+
     private Project currentProject;
     private List<Employee> foundEmployees;
     private ErrorMessageHolder errorMessageHolder;
+    private PM_App app;
+
+    public FindVacEmployeeSteps(PM_App app, ErrorMessageHolder errorMessageHolder){
+        this.errorMessageHolder = errorMessageHolder;
+        this.app = app;
+    }
 
     public FindVacEmployeeSteps(){
         Employer employer = new EmployerHelper().getEmployer();
@@ -19,4 +27,3 @@ public class FindVacEmployeeSteps {
     public
 }
 
-*/

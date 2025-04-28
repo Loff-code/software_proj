@@ -3,7 +3,7 @@ package app;
 import java.util.*;
 
 
-public class PM_App {
+public class PM_App extends Observable  {
 
     public  PM_App(){
         this.users.add(new User("bob"));
@@ -84,7 +84,9 @@ public class PM_App {
     }
 
     public Project getProjectByName(String name){
+        System.out.println(name);
         for (Project project : this.projects){
+            System.out.println(project.getName());
             if (project.getName().equals(name)){
                 return project;
             }

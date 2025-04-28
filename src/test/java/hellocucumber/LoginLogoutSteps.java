@@ -13,11 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LoginLogoutSteps {
 
    private ErrorMessageHolder errorMessageHolder;
+   private PM_App app;
 
-   public LoginLogoutSteps(){
-
+   public LoginLogoutSteps(PM_App app, ErrorMessageHolder errorMessageHolder){
+      this.errorMessageHolder = errorMessageHolder;
+      this.app = app;
    }
-   PM_App app = new PM_App();
+
+
 
 
    @Given("the user with the ID {string} exists")
