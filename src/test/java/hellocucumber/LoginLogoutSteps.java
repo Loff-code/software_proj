@@ -19,13 +19,6 @@ public class LoginLogoutSteps {
       this.errorMessageHolder = errorMessageHolder;
       this.app = app;
    }
-<<<<<<< HEAD
-
-
-=======
-   PM_App app = AppHolder.app;
->>>>>>> 0e46d6e66d5a5f62ade05faa5d0e9aa5a66d4862
-
 
    @Given("the user with the ID {string} exists")
    public void the_user_with_the_id_exists(String id) {
