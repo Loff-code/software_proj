@@ -1,10 +1,15 @@
 package app;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 
 public class PM_App extends Observable  {
-
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    public void addObserver(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
     public  PM_App(){
         this.users.add(new User("bob"));
     }
@@ -84,9 +89,8 @@ public class PM_App extends Observable  {
     }
 
     public Project getProjectByName(String name){
-        System.out.println(name);
+
         for (Project project : this.projects){
-            System.out.println(project.getName());
             if (project.getName().equals(name)){
                 return project;
             }
