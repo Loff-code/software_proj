@@ -9,42 +9,36 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AddProjectLeaderSteps {
 
-    Project project;
+    private Project project;
     private ErrorMessageHolder errorMessageHolder;
     String assignedUserID;
     private PM_App app;
 
 
-    public AddProjectLeaderSteps() {
-        this.errorMessageHolder = new ErrorMessageHolder();
+    public AddProjectLeaderSteps(PM_App app, ErrorMessageHolder errorMessageHolder) {
+        this.app = app;
+        this.errorMessageHolder = errorMessageHolder;
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // scenario 1: User assigns a project leader successfully
 
-    @Given("that a project with ID {int} exists")
-    public void that_a_project_with_id_exists(int id) throws OperationNotAllowedException {
+    @Given("a project with ID {int} exists")
+    public void a_project_with_id_exists(int id) throws OperationNotAllowedException {
         project = new Project("Projectx", "DTU");
         project.assignProjectID(id);
         app.getProject().add(project);
 
     }
 
+    // jeg har bare brugt viktors kode, men måske ændre jeg det til at
     @Given("the user {string} exists")
     public void the_user_exists(String name) {
-        app.getUsers().add(new User(name));
+        assignedUserID = name;
+        if (app.getUserByID(name) == null) {
+            app.getUsers().add(new User(name));
+        }
     }
 
     @Given("the user {string} is not already a leader of the project")
@@ -54,14 +48,16 @@ public class AddProjectLeaderSteps {
     }
 
     @When("the user assigns {string} as the project leader to the project {int}")
-    public void user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException {
+    public void the_user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException {
+        assignedUserID = name;
         app.assignProjectLeader(project.getProjectID(), assignedUserID);
 
     }
 
     @Then("the user {string} is set as the leader of project {int}")
     public void the_project_leader_of_the_project_is(String name, int id) {
-        assertEquals(assignedUserID, project.getProjectLeaderID());
+        assignedUserID = name;
+        assertEquals(name, project.getProjectLeaderID());
     }
 
 
