@@ -21,10 +21,10 @@ public class registerTimeSteps {
         this.errorMessageHolder = errorMessageHolder;
 
 
-        // 👇 Setup mock date
         this.mockDateServer = new MockDateServer();
-        this.mockDateServer.setDate(LocalDate.of(2025, 5, 3));  // sæt datoen til 2025-05-03
-        this.app.setDateServer(mockDateServer);                 // sæt den i appen
+        // kun til testing. Fungere ikke lige nu
+        this.mockDateServer.setDate(LocalDate.of(2025, 5, 3));
+        this.app.setDateServer(mockDateServer);
     }
 
 
