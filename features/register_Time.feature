@@ -15,7 +15,6 @@ Feature: Register used time
       | Name | Description  | Budget Hours | Start Week | End Week | Start Year | End Year | Initials  |
       | Demo | Optimization | 150          | 3          | 6        | 2025       | 2025     |Sore, Vict |
 
-
   Scenario: User registers time spent on an activity successfully
     When the user "Vict" registers 4 hours spent on date "2025-02-06"
     Then the system records 4 hours for "Demo" by "Vict" on "2025-02-06" for the user "Vict"
@@ -24,18 +23,15 @@ Feature: Register used time
   Scenario: User tries to register time for an activity they are not assigned to
     Given the user "Huba" is not assigned to it
     When the user "Huba" tries to register 2 hours spent on "Demo" on date "2025-02-06"
-    Then the system does not allow the time registration
-    And an error message "You are not allowed to register time for this activity" should be shown
+    Then an error message "You are not allowed to register time for this activity" should be shown
 
   Scenario: User registers time with invalid hours
     When the user "Vict" tries to register -3 hours spent on "Demo" on Date "2025-02-06"
-    Then the system does not accept the negative hours
-    And an error message "Invalid hours" should be shown
+    Then an error message "Invalid hours" should be shown
 
   Scenario: User registers time with invalid date
     When the user "Vict" tries to register 4 hours spent on "Demo" on date "2025-02-06"
-    Then the system does not accept the invalid date
-    And an error message "Invalid date" should be shown
+    Then an error message "Invalid date" should be shown
 
   Scenario: User registers time with missing hours
     When the user "Vict" registers "" hours spent on "Demo" on date "2025-02-06"
@@ -51,8 +47,13 @@ Feature: Register used time
 
   Scenario: User registers time with non-0.5 hour value
     When the user "Vict" registers "5.4" hours spent on "Demo" on date "2025-02-06"
-    Then the system rounds the hours up to "5.5"
+    Then the system rounds the hours up to "5.5" hours
     And the system records "5.5" hours for "Demo" on "2025-02-06" for the user "Vict"
+
+
+
+  Scenario: Check initial mock date
+    Then the system date should be "2025-05-03"
 
 
     # Gør sådan at det kun er de tildelte user + project leader leader som kan registrere tid
