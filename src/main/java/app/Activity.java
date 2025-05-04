@@ -16,6 +16,27 @@ public Activity(String name, int budgetTime, int startWeek, int endWeek){
     this.startWeek = startWeek;
     this.endWeek = endWeek;
 }
+    private String status = "";
+    private List<String> log = new ArrayList<>();
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void addLog(String entry) {
+        this.log.add(entry);
+    }
+
+    public List<String> getLog() {
+        return this.log;
+    }
+
+
+
 public void assignEmployeeToActivity(String userID){
     this.assignedUsers.add(userID);
 }
@@ -34,5 +55,5 @@ public String getName(){
     public List<String> getAssignedUsers(){
     return this.assignedUsers;
     }
-
 }
+
