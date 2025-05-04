@@ -52,7 +52,8 @@ Feature: Register used time
 
 
 
-  Scenario: Check initial mock date
+  Scenario: Test mock date is returned
+    Given the system date is mocked
     Then the system date should be "2025-05-03"
 
 

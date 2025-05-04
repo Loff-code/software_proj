@@ -6,6 +6,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,15 +18,13 @@ public class registerTimeSteps {
     private MockDateServer mockDateServer;
 
 
-    public registerTimeSteps(PM_App app, ErrorMessageHolder errorMessageHolder) {
+
+
+    public registerTimeSteps(PM_App app, ErrorMessageHolder errorMessageHolder, MockDateServer mockDateServer) {
         this.app = app;
         this.errorMessageHolder = errorMessageHolder;
+        this.mockDateServer = mockDateServer;
 
-
-        this.mockDateServer = new MockDateServer();
-        // kun til testing. Fungere ikke lige nu
-        this.mockDateServer.setDate(LocalDate.of(2025, 5, 3));
-        this.app.setDateServer(mockDateServer);
     }
 
 
@@ -101,11 +101,22 @@ public class registerTimeSteps {
 
 
     //test for the date server
+
+
+
+    @Given("the system date is mocked")
+    public void the_system_date_is_mocked() {
+        mockDateServer.setDate(LocalDate.of(2025, 5, 3));
+        app.setDateServer(mockDateServer);
+        System.out.println("Test");
+    }
+
     @Then("the system date should be {string}")
     public void the_system_date_should_be(String expectedDate) {
-        LocalDate actualDate = app.getDateServer().getDate();
-        assertEquals(expectedDate, actualDate.toString());
+        String actualDate = app.getDateServer().dateToString(app.getDateServer().getDate());
+        assertEquals(expectedDate, actualDate);
     }
+
 
 
 
