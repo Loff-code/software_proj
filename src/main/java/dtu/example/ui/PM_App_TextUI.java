@@ -191,6 +191,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	}
 
 	private void logout() {
+		userID = null;
 		app.logout();
 		processStep = ProcessStep.LOGIN;
 	}

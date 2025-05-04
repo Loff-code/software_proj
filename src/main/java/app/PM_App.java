@@ -11,7 +11,7 @@ public class PM_App extends Observable  {
         support.addPropertyChangeListener(listener);
     }
     public  PM_App(){
-        this.users.add(new User("bob"));
+        this.users.add(new User("huba"));
     }
     private List<Project> projects = new ArrayList<>();
     private List<User> users = new ArrayList<>();
