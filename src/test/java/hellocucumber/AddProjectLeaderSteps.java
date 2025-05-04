@@ -44,7 +44,7 @@ public class AddProjectLeaderSteps {
     @Given("the user {string} is not already a leader of the project")
     public void the_user_is_not_already_a_leader_of_the_project(String name) {
         assignedUserID = name;
-        assertNull(project.getProjectLeaderID());
+        assertNull(project.getLeaderManager().getLeaderID());
     }
 
     @When("the user assigns {string} as the project leader to the project {int}")

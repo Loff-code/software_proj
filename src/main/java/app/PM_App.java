@@ -44,7 +44,7 @@ public class PM_App extends Observable  {
     public int getUserActivityCount(String ID) {
         int cnt = 0;
         for (Project proj : this.projects) {
-            for (Activity activity : proj.getActivities()) {
+            for (Activity activity : proj.getActivityManager().getActivities()) {
                 for (String userID : activity.getAssignedUsers()) {
                     if (userID.equals(ID)) {
                         cnt++;
@@ -67,7 +67,7 @@ public class PM_App extends Observable  {
 
     public boolean isAvailable(String userID, int startWeek, int endWeek) {
         for (Project project : projects) {
-            for (Activity activity : project.getActivities()) {
+            for (Activity activity : project.getActivityManager().getActivities()) {
                 if (activity.getAssignedUsers().contains(userID)
                         && activity.getStartWeek() < endWeek
                         && activity.getEndWeek() > startWeek) {
@@ -92,21 +92,25 @@ public class PM_App extends Observable  {
     public void createProject(String name, String client)throws OperationNotAllowedException{
         boolean nameTaken = false;
         for (Project project : projects){
-            if (project.getName().equals(name)){
+            if (project.getInfo().getProjectName().equals(name)){
                 nameTaken = true;
                 throw new OperationNotAllowedException("Project name is taken");
             }
         }
 
         if (!name.equals("") && !(client.equals("")) && !nameTaken){
-            this.projects.add(new Project(name,  client));
+            List<String> userIDs = new ArrayList<>();
+            for (User user : getUsers()){
+                userIDs.add(user.getID());
+            }
+            this.projects.add(new Project(name,  client,Collections.unmodifiableList(userIDs)));
         }
     }
 
     public Project getProjectByName(String name){
 
         for (Project project : this.projects){
-            if (project.getName().equals(name)){
+            if (project.getInfo().getProjectName().equals(name)){
                 return project;
             }
 
@@ -116,7 +120,7 @@ public class PM_App extends Observable  {
 
     public Project getProjectByID(int id){
         for (Project project : this.projects){
-            if (project.getProjectID() == id){
+            if (project.getInfo().getProjectID() == id){
                 return project;
             }
         }
@@ -147,28 +151,28 @@ public class PM_App extends Observable  {
     }
 
 
-    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException{
-        Project project = getProjectByID(projectID);
-        if (project == null) {
-            throw new OperationNotAllowedException("Project does not exist");
-        }
-
-        if (project.getProjectLeader() != null) {
-            throw new OperationNotAllowedException("User is already a project leader");
-        }
-
-        User user = getUserByID(assignedUserID);
-        if (user == null) {
-            throw new OperationNotAllowedException("User does not exist");
-        }
-
-        if(assignedUserID.equals(userID)){
-            throw new OperationNotAllowedException("User cannot assign themselves as project leader");
-        }
-
-        project.setProjectLeader(user);
-
-    }
+//    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException{
+//        Project project = getProjectByID(projectID);
+//        if (project == null) {
+//            throw new OperationNotAllowedException("Project does not exist");
+//        }
+//
+//        if (project.getProjectLeader() != null) {
+//            throw new OperationNotAllowedException("User is already a project leader");
+//        }
+//
+//        User user = getUserByID(assignedUserID);
+//        if (user == null) {
+//            throw new OperationNotAllowedException("User does not exist");
+//        }
+//
+//        if(assignedUserID.equals(userID)){
+//            throw new OperationNotAllowedException("User cannot assign themselves as project leader");
+//        }
+//
+//        project.setProjectLeader(user);
+//
+//    }
 
 
     // register  date

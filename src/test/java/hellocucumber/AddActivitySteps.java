@@ -32,7 +32,7 @@ public class AddActivitySteps {
     @Then("the activity {string} is added to project {string}")
     public void the_activity_is_added_to_project(String activityName, String projectName) {
        String tmpActivityName = "";
-        for (Activity activity : app.getProjectByName(projectName).getActivities()){
+        for (Activity activity : app.getProjectByName(projectName).getActivityManager().getActivities()){
            tmpActivityName = activity.getName();
        }
         assertTrue(tmpActivityName.equals(activityName));
