@@ -11,7 +11,7 @@ public class PM_App extends Observable  {
         support.addPropertyChangeListener(listener);
     }
     public  PM_App(){
-        this.users.add(new User("bob"));
+        this.users.add(new User("huba"));
     }
     private List<Project> projects = new ArrayList<>();
     private List<User> users = new ArrayList<>();
@@ -27,6 +27,9 @@ public class PM_App extends Observable  {
                 idTaken = true;
                 throw new OperationNotAllowedException("User ID is taken");
             }
+        }
+        if (id.length() < 1 || id.length() > 4) {
+            throw new OperationNotAllowedException("User ID must be between 1 and 4 characters");
         }
         if (!id.equals("") && !idTaken) {
             this.users.add(new User(id));
@@ -54,13 +57,13 @@ public class PM_App extends Observable  {
         return cnt;
     }
 
-    public User getUserByID (String ID){
+    public User getUserByID (String ID) throws  OperationNotAllowedException{
         for (User user : users){
             if (user.getID().equals(ID)){
                 return user;
             }
         }
-        return null;
+        throw new OperationNotAllowedException("User does not exist");
     }
 
 
@@ -146,8 +149,8 @@ public class PM_App extends Observable  {
     }
 
 
-    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException{
-        Project project = getProjectByID(projectID);
+    public void assignProjectLeader(String projectID, String assignedUserID) throws OperationNotAllowedException{
+        Project project = getProjectByName(projectID);
         if (project == null) {
             throw new OperationNotAllowedException("Project does not exist");
         }
@@ -188,6 +191,8 @@ public class PM_App extends Observable  {
         }
         return null;
     }
+
+    public DateServer getDateServer() {return this.dateServer;}
 
 }
 

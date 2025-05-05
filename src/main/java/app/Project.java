@@ -16,8 +16,8 @@ public class Project {
         this.client = client;
     }
 
-    public void addActivity(String name, int budgetTime, int startWeek, int endWeek) {
-        this.activities.add(new Activity(name, budgetTime, startWeek, endWeek));
+    public void addActivity(Activity activity) {
+        this.activities.add(activity);
     }
 
     public List<Activity> getActivities() {

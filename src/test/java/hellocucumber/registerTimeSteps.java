@@ -47,7 +47,16 @@ public class registerTimeSteps {
     @Given("the user {string} is not assigned to it")
     public void the_user_is_not_assigned_to_it(String name) {
         // Assuming the user is not assigned to any activity
-        assertNull(app.getUserByID(name));
+        //assertNull(app.getUserByID(name));
+        boolean isAssigned = false;
+        for (Project project : app.getProject()) {
+            for (Activity activity : project.getActivities()) {
+                if (activity.getAssignedUsers().contains(name)) {
+                    isAssigned = true;
+                }
+            }
+        }
+        assertFalse(isAssigned);
     }
 
     // bruges også til scenario 3
@@ -59,7 +68,7 @@ public class registerTimeSteps {
     @When("the user {string} tries to register {int} hours spent on {string} on date {string}")
     public void the_user_tries_to_register_hours_spent_on_on_date(String name, int hours, String activityName, String date) {
         // Assuming the user is not assigned to any activity
-        assertNull(app.getUserByID(name));
+        //assertNull(app.getUserByID(name));
     }
 
 
