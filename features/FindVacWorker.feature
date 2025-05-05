@@ -1,4 +1,4 @@
-Feature: Find vacant employees
+Feature: Find vacant Workers
 
   Scenario: Find available employees when some are free
     Given the following users are registered
