@@ -173,9 +173,7 @@ public class PM_App extends Observable  {
 
 
 
-    public void  setDateServer(DateServer dateServer){
-        this.dateServer = dateServer;
-    }
+
 
     public Activity getActivityByName(String name) {
         for (Project project : projects) {
