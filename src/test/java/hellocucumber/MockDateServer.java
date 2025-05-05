@@ -7,13 +7,22 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
-
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MockDateServer implements DateServer {
-    private LocalDate currentDate = LocalDate.now();
+    private static final DateTimeFormatter Date_Format =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+
+    // dette sikre at man SKAL indsætte en dato manuelt så man ikke bare får en default dato
+    private LocalDate currentDate;
 
     @Override
     public LocalDate getDate() {
+        if (currentDate == null) {
+            throw new IllegalStateException("Date not set");
+        }
         return currentDate;
     }
 
@@ -24,6 +33,9 @@ public class MockDateServer implements DateServer {
 
     // makes it possible to do fx "3 days later"
     public void advanceDateByDays(int days) {
+        if (currentDate == null) {
+            throw new IllegalStateException("Date not set");
+        }
         this.currentDate = this.currentDate.plusDays(days);
     }
 
@@ -42,12 +54,12 @@ public class MockDateServer implements DateServer {
     // changes a date string to a LocalDate object
     @Override
     public LocalDate parseDate(String date) {
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return LocalDate.parse(date, Date_Format);
     }
 
     // changes a LocalDate object to a date string
     @Override
     public String dateToString(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return date.format(Date_Format);
     }
 }

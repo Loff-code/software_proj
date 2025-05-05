@@ -1,20 +1,26 @@
 -------------------------------------------------------------------------------
 Test set: io.cucumber.junit.platform.engine.CucumberTestEngine
 -------------------------------------------------------------------------------
-Tests run: 31, Failures: 0, Errors: 31, Skipped: 0, Time elapsed: 0.107 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
-Add activity to project.Add activity to project - Employee adds an activity successfully -- Time elapsed: 0.035 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+Tests run: 32, Failures: 2, Errors: 20, Skipped: 0, Time elapsed: 0.202 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
+Test date.Test date - Test mock date is returned -- Time elapsed: 0.060 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the system date is mocked' and 1 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("the system date is mocked")
+public void theSystemDateIsMocked() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system date should be {string}")
+public void theSystemDateShouldBe(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -23,42 +29,41 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Add activity to project.Add activity to project - Employee adds an activity successfully -- Time elapsed: 0.012 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at hellocucumber.AddActivitySteps.the_user_adds_an_activity_with_name_budgeted_time_hours_start_week_end_week_to_project(AddActivitySteps.java:29)
+	at ✽.the user adds an activity with name "A", budgeted time 1 hours, start week 1, end week 4 to project "P"(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/addActivity.feature:9)
 
-Add project leader.Add project leader - User assigns a project leader successfully -- Time elapsed: 0.002 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+Create activity.Create activity - User adds an activity -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'that the employee Bob is logged in' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("that the employee Bob is logged in")
+public void thatTheEmployeeBobIsLoggedIn() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("that a project called {string}")
+public void thatAProjectCalled(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("an activity called {string} is added")
+public void anActivityCalledIsAdded(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the activity is in the project {string}")
+public void theActivityIsInTheProject(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -67,42 +72,31 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Create activity.Create activity - Employee adds an activity with an empty name -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'that the employee Bob is logged in' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Add project leader.Add project leader - User assigns a project leader who is already assigned -- Time elapsed: 0.002 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("that the employee Bob is logged in")
+public void thatTheEmployeeBobIsLoggedIn() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("that a project called {string}")
+public void thatAProjectCalled(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("an activity called {string} is added")
+public void anActivityCalledIsAdded(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -111,42 +105,36 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Create activity.Create activity - Employee adds an activity which is already created -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'that the employee Bob is logged in' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Add project leader.Add project leader - User assigns a non existing user as project leader -- Time elapsed: 0.002 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("that the employee Bob is logged in")
+public void thatTheEmployeeBobIsLoggedIn() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("that a project called {string} is created")
+public void thatAProjectCalledIsCreated(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("an activity called {string} is already present")
+public void anActivityCalledIsAlreadyPresent(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("an activity called {string} is added")
+public void anActivityCalledIsAdded(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -155,42 +143,36 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Edit data.Edit data - User edits registered hours -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'The user is logged in' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Add project leader.Add project leader - User assigns a project leader to a non existing project -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("The user is logged in")
+public void theUserIsLoggedIn() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user has registered {int} hours on an activity called {string} in project {int}")
+public void theUserHasRegisteredHoursOnAnActivityCalledInProject(Integer int1, String string, Integer int2) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user changes the registered from {int} hours to {int} hours on the {string} activity")
+public void theUserChangesTheRegisteredFromHoursToHoursOnTheActivity(Integer int1, Integer int2, String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system updates the registered hours to {int} hours on the {string} activity")
+public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1, String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -199,42 +181,31 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.002 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'The user is logged in' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Create activity.Create activity - User adds an activity -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("The user is logged in")
+public void theUserIsLoggedIn() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the activity {string} does not exist in the project {int}")
+public void theActivityDoesNotExistInTheProject(String string, Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user tries to edit hours for the {string} activity")
+public void theUserTriesToEditHoursForTheActivity(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -243,42 +214,26 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user has registered 3 hours on an activity called "Test 2"' and 1 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Create activity.Create activity - Employee adds an activity with an empty name -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("the user has registered {int} hours on an activity called {string}")
+public void theUserHasRegisteredHoursOnAnActivityCalled(Integer int1, String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user tries to change the registered hours to {int} on the activity {string}")
+public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -287,42 +242,31 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Edit Project.Edit Project - Successfully edit a project's name -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'a project with project number "24001" exists' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Create activity.Create activity - Employee adds an activity which is already created -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("a project with project number {string} exists")
+public void aProjectWithProjectNumberExists(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("I update the project's name to {string}")
+public void iUpdateTheProjectSNameTo(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the project's name should be {string}")
+public void theProjectSNameShouldBe(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -331,394 +275,31 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Create Project.Create Project - User creates a project successfully -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Create Project.Create Project - User fails to create project with no name -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Create Project.Create Project - User fails to create project without client -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Create Project.Create Project - User fails to create project with identical name -- Time elapsed: 0 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Edit data.Edit data - User edits registered hours -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Edit Project.Edit Project - Successfully edit a project's name -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
 
 Edit Project.Edit Project - Try to edit a non-existing project -- Time elapsed: 0.002 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'no project with project number "99999" exists' and 2 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("no project with project number {string} exists")
+public void noProjectWithProjectNumberExists(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("I attempt to edit the project")
+public void iAttemptToEditTheProject() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("I should receive an error message saying {string}")
+public void iShouldReceiveAnErrorMessageSaying(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -727,42 +308,36 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Edit Project.Edit Project - Successfully change project leader -- Time elapsed: 0.002 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'a project with project number "24002" exists' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Edit Project.Edit Project - Successfully change project leader -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("a project with project number {string} exists")
+public void aProjectWithProjectNumberExists(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Given("a user with ID {string} exists")
+public void aUserWithIDExists(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("I assign {string} as the new project leader")
+public void iAssignAsTheNewProjectLeader(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the project's leader ID should be {string}")
+public void theProjectSLeaderIDShouldBe(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -771,42 +346,21 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+An example.An example - The example -- Time elapsed: 0.002 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'an employer is logged in' is undefined.
+You can implement this step using the snippet(s) below:
 
-An example.An example - The example -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("an employer is logged in")
+public void anEmployerIsLoggedIn() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -815,42 +369,53 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+User Login.User Login - User can login -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at hellocucumber.LoginLogoutSteps.the_user_with_the_id_exists(LoginLogoutSteps.java:31)
+	at ✽.the user with the ID "bob" exists(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/login.feature:7)
 
-User Login.User Login - User can login -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+Register used time.Register used time - User registers time spent on an activity successfully -- Time elapsed: 0.006 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} registers {int} hours spent on date {string}")
+public void theUserRegistersHoursSpentOnDate(String string, Integer int1, String string2) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system records {int} hours for {string} by {string} on {string} for the user {string}")
+public void theSystemRecordsHoursForByOnForTheUser(Integer int1, String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -859,42 +424,53 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User tries to register time for an activity they are not assigned to -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 4 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-User Login.User Login - user has the wrong password -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user {string} is not assigned to it")
+public void theUserIsNotAssignedToIt(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} tries to register {int} hours spent on {string} on date {string}")
+public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Integer int1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("an error message {string} should be shown")
+public void anErrorMessageShouldBeShown(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -903,42 +479,48 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User registers time with invalid hours -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-User logout.User logout - User logs out -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} tries to register {int} hours spent on {string} on Date {string}")
+public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Integer int1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("an error message {string} should be shown")
+public void anErrorMessageShouldBeShown(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -947,42 +529,48 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User registers time with invalid date -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - User registers time spent on an activity successfully -- Time elapsed: 0.003 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} tries to register {int} hours spent on {string} on date {string}")
+public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Integer int1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("an error message {string} should be shown")
+public void anErrorMessageShouldBeShown(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -991,42 +579,48 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User registers time with missing hours -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - User tries to register time for an activity they are not assigned to -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} registers {string} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("an error message {string} should be shown")
+public void anErrorMessageShouldBeShown(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -1035,42 +629,48 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User registers time with missing date -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - User registers time with invalid hours -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} registers {string} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("an error message {string} should be shown")
+public void anErrorMessageShouldBeShown(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -1079,42 +679,48 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User registers time with missing user -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - User registers time with invalid date -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} registers {string} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("an error message {string} should be shown")
+public void anErrorMessageShouldBeShown(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -1123,42 +729,53 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - User registers time with non-0.5 hour value -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 4 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - User registers time with missing hours -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user {string} registers {string} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system rounds the hours up to {string} hours")
+public void theSystemRoundsTheHoursUpToHours(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system records {string} hours for {string} on {string} for the user {string}")
+public void theSystemRecordsHoursForOnForTheUser(String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -1167,42 +784,48 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
 
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
+Register used time.Register used time - Test mock date is returned -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'there exists users with the following initials in the project' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - User registers time with missing date -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
+@Given("there exists users with the following initials in the project")
+public void thereExistsUsersWithTheFollowingInitialsInTheProject(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the user creates an activity with the following informations")
+public void theUserCreatesAnActivityWithTheFollowingInformations(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+@Given("the system date is mocked")
+public void theSystemDateIsMocked() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system date should be {string}")
+public void theSystemDateShouldBe(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
 	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
 	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
 	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
@@ -1211,158 +834,4 @@ It appears you did not register a parameter type.
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Register used time.Register used time - User registers time with missing user -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Register used time.Register used time - User registers time with non-0.5 hour value -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
-
-Register used time.Register used time - Check initial mock date -- Time elapsed: 0.001 s <<< ERROR!
-io.cucumber.core.exception.CucumberException: 
-Could not create a cucumber expression for 'the user {String} is not assigned to it'.
-It appears you did not register a parameter type.
-	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:99)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:93)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:61)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:49)
-	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$3(CachingGlue.java:273)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:272)
-	at io.cucumber.core.runner.Runner.runPickle(Runner.java:72)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:114)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: This Cucumber Expression has a problem at column 10:
-
-the user {String} is not assigned to it
-         ^------^
-Undefined parameter type 'String'.
-Please register a ParameterType for 'String'
-	at io.cucumber.cucumberexpressions.UndefinedParameterTypeException.createUndefinedParameterType(UndefinedParameterTypeException.java:20)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteParameter(CucumberExpression.java:96)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:54)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1709)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:727)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteExpression(CucumberExpression.java:111)
-	at io.cucumber.cucumberexpressions.CucumberExpression.rewriteToRegex(CucumberExpression.java:56)
-	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:39)
-	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:53)
-	at io.cucumber.core.stepexpression.StepExpressionFactory.crateExpression(StepExpressionFactory.java:88)
-	... 15 more
 
