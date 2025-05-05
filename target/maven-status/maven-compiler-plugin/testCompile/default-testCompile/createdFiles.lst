@@ -5,6 +5,6 @@ hellocucumber/MockDateServer.class
 hellocucumber/AddProjectLeaderSteps.class
 hellocucumber/AddActivitySteps.class
 hellocucumber/LoginLogoutSteps.class
-hellocucumber/registerTimeSteps.class
 hellocucumber/RunCucumberTest.class
 hellocucumber/CreateProjectSteps.class
+app/DateServerTest.class

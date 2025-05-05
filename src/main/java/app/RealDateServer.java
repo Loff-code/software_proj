@@ -5,7 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+
+
 public class RealDateServer implements DateServer {
+    private LocalDate today = LocalDate.now();
 
     @Override
     public LocalDate getDate() {
@@ -15,24 +18,29 @@ public class RealDateServer implements DateServer {
     // returns the current week number, based on the geographic location
     @Override
     public int getWeek() {
-        return LocalDate.now().get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+        return today.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
     }
 
     @Override
     public int getYear() {
-        return LocalDate.now().getYear();
+        return today.getYear();
     }
 
+
+
     // changes a date string to a LocalDate object
+    private static final DateTimeFormatter Date_Format =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @Override
     public LocalDate parseDate(String date) {
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return LocalDate.parse(date, Date_Format);
     }
 
     // changes a LocalDate object to a date string
     @Override
     public String dateToString(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return date.format(Date_Format);
     }
 
 

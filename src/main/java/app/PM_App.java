@@ -169,31 +169,12 @@ public class PM_App extends Observable  {
     }
 
 
-    public void setStatusOfActivity(String activityName, String status) throws OperationNotAllowedException {
-        Activity targetActivity = null;
+    // register  date
 
-        // Find aktiviteten
-        for (Project project : projects) {
-            for (Activity activity : project.getActivities()) {
-                if (activity.getName().equalsIgnoreCase(activityName)) {
-                    targetActivity = activity;
-                    break;
-                }
-            }
-        }
 
-        if (targetActivity == null) {
-            throw new OperationNotAllowedException("Activity does not exist");
-        }
 
-        // Hvis det er en medarbejder, så skal vi tjekke at brugeren er assigned
-        if (!targetActivity.getAssignedUsers().contains(userID)) {
-            throw new OperationNotAllowedException("You are not assigned to this activity");
-        }
-
-        // Opdater status og log ændringen
-        targetActivity.setStatus(status);
-        targetActivity.addLog("Status changed to: " + status);
+    public void  setDateServer(DateServer dateServer){
+        this.dateServer = dateServer;
     }
 
     public Activity getActivityByName(String name) {
