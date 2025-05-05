@@ -43,6 +43,7 @@ public class PM_App extends Observable  {
     public List<User> getUsers() {
         return users;
     }
+
     public int getUserActivityCount(String ID) {
         int cnt = 0;
         for (Project proj : this.projects) {
@@ -57,6 +58,20 @@ public class PM_App extends Observable  {
         return cnt;
     }
 
+    public int getUserActivityCountByWeek(String userID, int startWeek, int endWeek) {
+        int count = 0;
+        for (Project project : projects) {
+            for (Activity activity : project.getActivities()) {
+                if (activity.getAssignedUsers().contains(userID)  && activity.getStartWeek() < startWeek
+                        && activity.getEndWeek() > endWeek ) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
     public User getUserByID (String ID) throws  OperationNotAllowedException{
         for (User user : users){
             if (user.getID().equals(ID)){
@@ -67,19 +82,20 @@ public class PM_App extends Observable  {
     }
 
 
-    public boolean isAvailable(String userID, int startWeek, int endWeek) {
-        for (Project project : projects) {
-            for (Activity activity : project.getActivities()) {
-                if (activity.getAssignedUsers().contains(userID)
-                        && activity.getStartWeek() < endWeek
-                        && activity.getEndWeek() > startWeek) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public boolean isVacant(String userID, int startWeek, int endWeek) {
+     return getUserActivityCountByWeek(userID, startWeek, endWeek) == 0;
     }
-    
+    public boolean isAvailable(String userID, int startWeek, int endWeek) {
+        for (int i = startWeek; i <= endWeek; i++) {
+            if (getUserActivityCountByWeek(userID, startWeek, i) >= 20){
+                return false;
+            }
+
+        }
+    return true;
+    }
+
+
     public List<String> getAvailableUserIDs(int startWeek, int endWeek){
         List<String>  availables = new ArrayList<>();
         for (User user : users){
@@ -88,6 +104,43 @@ public class PM_App extends Observable  {
             }
         }
         return  availables;
+    }
+    // Mainly for UI
+    public List<String> getAvailableUserIDsForActivity(String projectName, String activityName){
+        Activity activity = getProjectByName(projectName).getActivityByName(activityName);
+        List<String>  availables = getAvailableUserIDs(activity.getStartWeek(), activity.getEndWeek());
+            for (String userID : activity.getAssignedUsers()) {
+                availables.remove(userID);
+            }
+        return  availables;
+    }
+
+
+    public void assignActivityToUser(String userID, String activityName, String projectName) throws OperationNotAllowedException {
+        Activity  activity = getProjectByName(projectName).getActivityByName(activityName);
+
+        if (activity.getAssignedUsers().contains(userID)) {
+            throw new OperationNotAllowedException("User is already assigned to this activity");
+        }
+        if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
+            throw new OperationNotAllowedException("User has already 20 Activities in this week");
+        }
+        for (String user : activity.getAssignedUsers()) {
+            if (user.equals(userID)) {
+                throw new OperationNotAllowedException("User is already assigned to this activity");
+            }
+        }
+        activity.assignEmployeeToActivity(userID);
+    }
+
+    public List<String> getVacantUserIDs(int startWeek, int endWeek){
+        List<String>  vacantUserIDs = new ArrayList<>();
+        for (User user : users){
+            if (isVacant(user.getID(),startWeek,endWeek)){
+                vacantUserIDs.add(user.getID());
+            }
+        }
+        return  vacantUserIDs;
     }
 
 

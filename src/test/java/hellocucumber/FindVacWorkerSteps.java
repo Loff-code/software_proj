@@ -39,17 +39,17 @@ public class FindVacWorkerSteps {
     }
 
     @Given("the user {string} is assigned to an activity from week {int} to {int}")
-    public void the_user_is_assigned_to_an_activity_from_week_to_week(String userID, Integer startWeek, Integer endWeek) {
+    public void the_user_is_assigned_to_an_activity_from_week_to_week(String userID, Integer startWeek, Integer endWeek) throws OperationNotAllowedException {
         Project project = new Project("TestProject", "TestClient");
         Activity activity = new Activity("TestActivity", 10, startWeek, endWeek);
-        activity.assignEmployeeToActivity(userID);
         project.getActivities().add(activity);
         app.getProject().add(project);
+        app.assignActivityToUser(userID, activity.getName(), project.getName());
     }
 
     @When("the user searches for available employees between week {int} and week {int}")
     public void the_user_searches_for_available_employees_between_week_and_week(Integer startWeek, Integer endWeek) {
-        foundEmployees = app.getAvailableUserIDs(startWeek, endWeek);
+        foundEmployees = app.getVacantUserIDs(startWeek, endWeek);
     }
 
     @Then("the available employees list should contain {string}")

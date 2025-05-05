@@ -37,7 +37,10 @@ public Activity(String name, int budgetTime, int startWeek, int endWeek){
 
 
 
-public void assignEmployeeToActivity(String userID){
+public void assignEmployeeToActivity(String userID)throws IllegalArgumentException{
+    if (this.assignedUsers.contains(userID)){
+        throw new IllegalArgumentException("User is already assigned to this activity");
+    }
     this.assignedUsers.add(userID);
 }
 public String getName(){
