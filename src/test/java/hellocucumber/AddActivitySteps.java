@@ -1,9 +1,6 @@
 package hellocucumber;
 
-import app.Activity;
-import app.OperationNotAllowedException;
-import app.PM_App;
-import app.Project;
+import app.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
