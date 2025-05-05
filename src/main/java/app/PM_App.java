@@ -16,6 +16,7 @@ public class PM_App extends Observable  {
     private List<Project> projects = new ArrayList<>();
     private List<User> users = new ArrayList<>();
 
+    private DateServer dateServer ;
     private boolean isEmployer;
     private String userID = "";
 
@@ -173,7 +174,9 @@ public class PM_App extends Observable  {
 
 
 
-
+    public void setDateServer(DateServer dateServer){
+        this.dateServer = dateServer;
+    }
 
     public Activity getActivityByName(String name) {
         for (Project project : projects) {
