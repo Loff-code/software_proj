@@ -16,6 +16,8 @@ public class Project {
         this.client = client;
     }
 
+
+
     public void addActivity(Activity activity) {
         this.activities.add(activity);
     }
@@ -35,6 +37,8 @@ public class Project {
     public String getName() {
         return this.name;
     }
+
+    public String getClient() {return this.client;}
 
 
     public void setProjectLeader(User user) {

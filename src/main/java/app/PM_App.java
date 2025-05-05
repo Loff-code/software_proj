@@ -44,6 +44,7 @@ public class PM_App extends Observable  {
         return users;
     }
 
+
     public int getUserActivityCount(String ID) {
         int cnt = 0;
         for (Project proj : this.projects) {
@@ -58,6 +59,7 @@ public class PM_App extends Observable  {
         return cnt;
     }
 
+    // Get the number of activities assigned to a user in a specific week range
     public int getUserActivityCountByWeek(String userID, int startWeek, int endWeek) {
         int count = 0;
         for (Project project : projects) {
@@ -81,10 +83,12 @@ public class PM_App extends Observable  {
         throw new OperationNotAllowedException("User does not exist");
     }
 
-
+    // Check if user is vacant for the given weeks
     public boolean isVacant(String userID, int startWeek, int endWeek) {
      return getUserActivityCountByWeek(userID, startWeek, endWeek) == 0;
     }
+
+    // Check if user is available for the given weeks
     public boolean isAvailable(String userID, int startWeek, int endWeek) {
         for (int i = startWeek; i <= endWeek; i++) {
             if (getUserActivityCountByWeek(userID, startWeek, i) >= 20){
@@ -95,7 +99,7 @@ public class PM_App extends Observable  {
     return true;
     }
 
-
+    // Mainly for UI
     public List<String> getAvailableUserIDs(int startWeek, int endWeek){
         List<String>  availables = new ArrayList<>();
         for (User user : users){
@@ -144,7 +148,7 @@ public class PM_App extends Observable  {
     }
 
 
-    public void createProject(String name, String client)throws OperationNotAllowedException{
+    public void createProject(String name, String client) throws OperationNotAllowedException{
         boolean nameTaken = false;
         for (Project project : projects){
             if (project.getName().equals(name)){

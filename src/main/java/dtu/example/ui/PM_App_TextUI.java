@@ -327,11 +327,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Create Activity", "Assign Project Leader");
 			case SELECT_ACTIVITY -> printList(out, app.getProjectByName(projectName).getActivities(), Activity::getName, "Select an Activity:");
 			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Status Report", "Back to Project Menu");
-			case ASSIGN_USER -> printList(out,
-					app.getAvailableUserIDsForActivity(projectName,activityName),
-					id -> id,
-					"Select a User:"
-			);
+			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectName,activityName), id -> id, "Select a User:");
 			case ASSIGN_PROJECT_LEADER -> printList(out, app.getUsers(), User::getID, "Select a Project Leader:");
 			case CREATE_ACTIVITY -> out.println("Enter: activityName expectedTime startWeek endWeek (or 0 to cancel)");
 			case CREATE_PROJECT -> out.println("Enter: projectName clientName (or 0 to cancel)");
