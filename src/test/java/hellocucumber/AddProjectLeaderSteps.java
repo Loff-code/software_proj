@@ -24,11 +24,12 @@ public class AddProjectLeaderSteps {
 
     // scenario 1: User assigns a project leader successfully
     @Given("a project with ID {int} exists")
-    public void a_project_with_id_exists(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
+    public void a_project_with_id_exists(int id) throws OperationNotAllowedException {
+        project = new Project("Projectx", "DTU");
+        project.assignProjectID(id);
+        app.getProject().add(project);
 
+    }
 
     // jeg har bare brugt
     // viktors kode, men måske ændre jeg det til at
