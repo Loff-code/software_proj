@@ -6,7 +6,7 @@ Feature: Set status log
     Given that the employee is logged in
     And the employee is assigned to an activity named "Coding"
     When the employee sets the status of "Coding" to "Completed"
-    Then the status of "Coding" is updated to "completed"
+    Then the status of "Coding" is updated to "Completed"
     And a log entry is created with the new status
 
   Scenario: Employee tries to set the status of an activity they are not assigned to

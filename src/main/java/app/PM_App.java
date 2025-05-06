@@ -251,7 +251,40 @@ public class PM_App extends Observable  {
 
     public DateServer getDateServer() {return this.dateServer;}
 
+
+
+
+
+
+    public void setStatusOfActivity(String activityName, String status) throws OperationNotAllowedException {
+        Activity activity = getActivityByName(activityName);
+        if (activity == null) {
+            throw new OperationNotAllowedException("Activity not found");
+        }
+
+        Project containingProject = null;
+        for (Project project : projects) {
+            if (project.getActivities().contains(activity)) {
+                containingProject = project;
+                break;
+            }
+        }
+
+        if (containingProject == null) {
+            throw new OperationNotAllowedException("Activity does not belong to any project");
+        }
+
+        boolean isAssigned = activity.getAssignedUsers().contains(userID);
+        boolean isProjectLeader = userID.equals(containingProject.getProjectLeaderID());
+
+        if (!isAssigned && !isProjectLeader) {
+            throw new OperationNotAllowedException("Only assigned employees or the project leader can set the status");
+        }
+
+        activity.setStatus(status);
+        activity.addLog("Status changed to: " + status + " by " + userID);
+    }
+
+
 }
-
-
 
