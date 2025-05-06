@@ -22,20 +22,17 @@ public class PM_App extends Observable  {
     private String userID = "";
 
     public void createUser(User newUser) throws OperationNotAllowedException {
-        boolean idTaken = false;
         String newUserID = newUser.getID();
         for (User user1 : users) {
             if (user1.getID().equals(newUserID)) {
-                idTaken = true;
                 throw new OperationNotAllowedException("User ID is taken");
             }
         }
         if (newUserID.length() < 1 || newUserID.length() > 4) {
             throw new OperationNotAllowedException("User ID must be between 1 and 4 characters");
         }
-        if (!newUserID.equals("") && !idTaken) {
             this.users.add(newUser);
-        }
+
     }
 
     public List<Project> getProjects() {
@@ -113,7 +110,7 @@ public class PM_App extends Observable  {
     }
     // Mainly for UI
     public List<String> getAvailableUserIDsForActivity(String projectName, String activityName) throws OperationNotAllowedException {
-        Activity activity = getProjectByName(projectName).getActivityByName(activityName);
+        Activity activity = getProject(projectName).getActivityByName(activityName);
         List<String>  availables = getAvailableUserIDs(activity.getStartWeek(), activity.getEndWeek());
             for (String userID : activity.getAssignedUsers()) {
                 availables.remove(userID);
@@ -121,27 +118,15 @@ public class PM_App extends Observable  {
         return  availables;
     }
     public String getProjectLeaderID(int projectID) throws OperationNotAllowedException {
-        Project project = getProjectByID(projectID);
-        if (project == null) {
-            throw new OperationNotAllowedException("Project not found");
-        }
+        Project project = getProject(projectID);
         return project.getProjectLeaderID();
     }
 
 
     public void assignActivityToUser(String userID, String activityName, String projectName) throws OperationNotAllowedException {
-        Activity  activity = getProjectByName(projectName).getActivityByName(activityName);
-
-        if (activity.getAssignedUsers().contains(userID)) {
-            throw new OperationNotAllowedException("User is already assigned to this activity");
-        }
+        Activity  activity = getProject(projectName).getActivityByName(activityName);
         if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
             throw new OperationNotAllowedException("User has already 20 Activities in this week");
-        }
-        for (String user : activity.getAssignedUsers()) {
-            if (user.equals(userID)) {
-                throw new OperationNotAllowedException("User is already assigned to this activity");
-            }
         }
         activity.assignEmployeeToActivity(userID);
     }
@@ -155,6 +140,8 @@ public class PM_App extends Observable  {
         }
         return  vacantUserIDs;
     }
+
+
     public int createProjectID() {
         int year = 25;
         int counterForProjectsCreatedThisYear = 0;
@@ -185,7 +172,7 @@ public class PM_App extends Observable  {
 
     }
 
-    public Project getProjectByName(String name) throws OperationNotAllowedException {
+    public Project getProject(String name) throws OperationNotAllowedException {
         for (Project project : this.projects){
             if (project.getName().equals(name)){
                 return project;
@@ -195,7 +182,7 @@ public class PM_App extends Observable  {
         throw new OperationNotAllowedException("Project does not exist");
     }
 
-    public Project getProjectByID(int id) throws  OperationNotAllowedException {
+    public Project getProject(int id) throws  OperationNotAllowedException {
         for (Project project : this.projects){
             if (project.getProjectID() == id){
                 return project;
@@ -230,38 +217,14 @@ public class PM_App extends Observable  {
     }
 
 
-    public void assignProjectLeader(String projectName, String assignedUserID) throws OperationNotAllowedException{
-        Project project = getProjectByName(projectName);
-        if (project == null) {
-            throw new OperationNotAllowedException("Project does not exist");
-        }
-
-        if (project.getProjectLeader() != null) {
-            throw new OperationNotAllowedException("User is already a project leader");
-        }
-
-        User user = getUserByID(assignedUserID);
-        if (user == null) {
-            throw new OperationNotAllowedException("User does not exist");
-        }
-        project.setProjectLeader(user);
+    public void assignProjectLeader(String projectName, String assignedUserID) throws IllegalArgumentException, OperationNotAllowedException {
+        Project project = getProject(projectName);
+        project.setProjectLeader(assignedUserID,userID);
 
     }
-    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException{
-        Project project = getProjectByID(projectID);
-        if (project == null) {
-            throw new OperationNotAllowedException("Project does not exist");
-        }
-
-        if (project.getProjectLeader() != null) {
-            throw new OperationNotAllowedException("User is already a project leader");
-        }
-
-        User user = getUserByID(assignedUserID);
-        if (user == null) {
-            throw new OperationNotAllowedException("User does not exist");
-        }
-        project.setProjectLeader(user);
+    public void assignProjectLeader(int projectID, String assignedUserID) throws IllegalArgumentException, OperationNotAllowedException {
+        Project project = getProject(projectID);
+        project.setProjectLeader(assignedUserID,userID);
 
     }
 
@@ -291,10 +254,12 @@ public class PM_App extends Observable  {
 
 
     public void addActivityToProject(String projectName, Activity activity) throws IllegalArgumentException, OperationNotAllowedException {
-            getProjectByName(projectName).addActivity(activity);
+        Project project = getProject(projectName);
+        project.addActivity(activity,userID);
     }
     public void addActivityToProject(int projectID, Activity activity) throws IllegalArgumentException, OperationNotAllowedException {
-            getProjectByID(projectID).addActivity(activity);
+        Project project = getProject(projectID);
+      project.addActivity(activity,userID);
     }
 
     public void setStatusOfActivity(String activityName, String status) throws OperationNotAllowedException {

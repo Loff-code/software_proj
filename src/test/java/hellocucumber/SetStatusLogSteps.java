@@ -99,7 +99,7 @@ public class SetStatusLogSteps {
         app.createProject(new Project("LeaderProject", "Client"));
         app.assignProjectLeader("LeaderProject", "lead");
 
-        project = app.getProjectByName("LeaderProject");
+        project = app.getProject("LeaderProject");
         activity = new Activity(activityName, 10, 1, 10);
         project.getActivities().add(activity); // VIGTIGT!
         app.login("lead");

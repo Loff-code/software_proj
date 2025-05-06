@@ -41,6 +41,7 @@ public void assignEmployeeToActivity(String userID)throws IllegalArgumentExcepti
     if (this.assignedUsers.contains(userID)){
         throw new IllegalArgumentException("User is already assigned to this activity");
     }
+
     this.assignedUsers.add(userID);
 }
 public void setBudgetTime(int budgetTime) throws IllegalArgumentException{

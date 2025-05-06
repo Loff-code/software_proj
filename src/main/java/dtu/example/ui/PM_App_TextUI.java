@@ -111,7 +111,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case LOG_TIME -> processStep = ProcessStep.ACTIVITY_MENU;
 			case STATUS_REPORT -> {
 				out.println("Status for Activity: " + activityName);
-				Activity a = app.getProjectByName(projectName).getActivityByName(activityName);
+				Activity a = app.getProject(projectName).getActivityByName(activityName);
 				out.println("Press enter to continue...");
 				reader.readLine();
 				processStep = ProcessStep.ACTIVITY_MENU;
@@ -175,7 +175,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.PROJECT_MENU;
 			return;
 		}
-		activityName = selectFromList(app.getProjectByName(projectName).getActivities(), choice, Activity::getName);
+		activityName = selectFromList(app.getProject(projectName).getActivities(), choice, Activity::getName);
 		if (activityName != null) processStep = ProcessStep.ACTIVITY_MENU;
 	}
 
@@ -227,7 +227,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		String[] parts = input.split(" ");
 		if (parts.length == 4) {
 			try {
-				app.getProjectByName(projectName).addActivity(new Activity(
+				app.addActivityToProject(projectName, new Activity(
 						parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
 				out.println("Activity created successfully.");
 			} catch (NumberFormatException e) {
@@ -325,7 +325,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case MAIN_MENU -> printOptions(out, "Logout", "Select Project", "Create Project", "Users Menu", "Log Time");
 			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Create Activity", "Assign Project Leader");
-			case SELECT_ACTIVITY -> printList(out, app.getProjectByName(projectName).getActivities(), Activity::getName, "Select an Activity:");
+			case SELECT_ACTIVITY -> printList(out, app.getProject(projectName).getActivities(), Activity::getName, "Select an Activity:");
 			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Status Report", "Back to Project Menu");
 			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectName,activityName), id -> id, "Select a User:");
 			case ASSIGN_PROJECT_LEADER -> printList(out, app.getUsers(), User::getID, "Select a Project Leader:");
@@ -335,7 +335,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case LIST_ALL_USERS -> printListReadOnly(out, app.getUsers(), User::getID, "All Users:");
 			case LIST_VACANT_USERS_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
 			case LIST_VACANT_USERS -> printListReadOnly(out, lastVacantUsers, id -> id, "Vacant Users:");
-			case VIEW_ASSIGNED_USERS -> printListReadOnly(out, app.getProjectByName(projectName).getActivityByName(activityName).getAssignedUsers(), id -> id, "Assigned Users:");
+			case VIEW_ASSIGNED_USERS -> printListReadOnly(out, app.getProject(projectName).getActivityByName(activityName).getAssignedUsers(), id -> id, "Assigned Users:");
 			case CREATE_USER -> out.println("Enter UserID (max 4 chars) or 0 to cancel:");
 			case EDIT_ACTIVITY -> printOptions(out, "Back", "Edit Name", "Edit Start Week", "Edit End Week", "Edit Budget Time");
 			case EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START, EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME -> out.println("Enter new value:");
@@ -346,7 +346,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 
 	private void printHeader(PrintStream out) throws OperationNotAllowedException {
 		if (projectName != null) {
-			Project project = app.getProjectByName(projectName);
+			Project project = app.getProject(projectName);
 			String header = "[Project: " + project.getName();
 			User leader = project.getProjectLeader();
 			if (leader != null) {

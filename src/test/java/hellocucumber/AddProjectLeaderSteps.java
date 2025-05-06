@@ -74,8 +74,8 @@ public class AddProjectLeaderSteps {
         project = new Project("Projectx", "DTU");
         project.assignProjectID(id);
 
-        project.setProjectLeader(user);
         app.createProject(project);
+        app.assignProjectLeader(project.getProjectID(), user.getID());
 
         assignedUserID = name;
 
@@ -83,8 +83,10 @@ public class AddProjectLeaderSteps {
 
     @When("the user {string} tries to assign {string} as the project leader to project {int} again")
     public void the_user_tries_to_assign_as_the_project_leader_to_project_again(String user, String name, int id) throws OperationNotAllowedException {
+        app.logout();
+        app.login(user);
         try {
-            app.assignProjectLeader(project.getProjectID(), assignedUserID);
+            app.assignProjectLeader(id, name);
         } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -138,9 +140,8 @@ public class AddProjectLeaderSteps {
     }
     @When("the user {string} tries to assign themselves as project leader to project {int}")
     public void the_user_tries_to_assign_themselves_as_project_leader_to_project(String user1, Integer projectID) throws OperationNotAllowedException {
-
         assertTrue(app.getUserID().equals(user1));
-        app.getProjectByID(projectID).setProjectLeader(app.getUserByID(user1));
+        app.assignProjectLeader(projectID, user1);
     }
 
     // scenario 5: User tries to assign themselves as project leader

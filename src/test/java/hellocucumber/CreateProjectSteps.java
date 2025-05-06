@@ -29,12 +29,12 @@ public class CreateProjectSteps {
     }
     @Then("the project is created with the name {string}")
     public void the_project_is_created_with_the_name(String projectName) throws OperationNotAllowedException {
-        app.getProjectByName(projectName);
+        app.getProject(projectName);
     }
 
     @Then("the project {string} is not created")
     public void the_project_is_not_created(String projectName) throws OperationNotAllowedException {
-        try{app.getProjectByName(projectName);}
+        try{app.getProject(projectName);}
         catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
             assertTrue(errorMessageHolder.getErrorMessage().equals("Project does not exist"));

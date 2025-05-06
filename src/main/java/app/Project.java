@@ -18,8 +18,18 @@ public class Project {
 
 
 
-
-    public void addActivity(Activity activity) throws IllegalArgumentException {
+    public void addActivity(Activity activity, String userID) throws IllegalArgumentException {
+        if (activity.getEndWeek() < activity.getStartWeek()) {
+            throw new IllegalArgumentException("End week cannot be before start week");
+        }
+        if (userID == null || userID.isEmpty()) {
+            throw new IllegalArgumentException("User ID cannot be null or empty");
+        }
+        if (projectLeaderID != null) {
+            if (!userID.equals(projectLeaderID)) {
+                throw new IllegalArgumentException("Only the project leader can add activities");
+            }
+        }
         if (activity == null) {
             throw new IllegalArgumentException("Activity cannot be null");
         }
@@ -53,10 +63,16 @@ public class Project {
     public String getClient() {return this.client;}
 
 
-    public void setProjectLeader(User user) {
-        this.projectLeader = user;
-        this.projectLeaderID = user.getID();
-
+    public void setProjectLeader(String projectLeaderID, String userID) throws IllegalArgumentException {
+        if (projectLeaderID == null || projectLeaderID.isEmpty()) {
+            throw new IllegalArgumentException("Project leader ID cannot be null or empty");
+        }
+        if (this.projectLeaderID != null){
+            if (!userID.equals(this.projectLeaderID)){
+                throw new IllegalArgumentException("Only the project leader can assign a project leader");
+            }
+        }
+        this.projectLeaderID = projectLeaderID;
     }
 
     public User getProjectLeader() {
