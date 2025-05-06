@@ -4,6 +4,7 @@ Feature: Add project leader
 
   Background:
     Given the user "huba" exists
+    Given the user "Hamz" exists
     Given the user is logged in
 
   Scenario: User assigns a project leader successfully
@@ -28,7 +29,7 @@ Feature: Add project leader
     When the user assigns "huba" as project leader to project with ID 25002 that does not exist
     Then an error message happens about the project not existing
 
-# Man kan godt assigne sig selv ;) 
+# Man kan godt assigne sig selv ;)
   #Scenario: User tries to assign themselves as project leader
   #  Given that a project with ID 25001 exists
   #  When the user "huba" tries to assign themselves as project leader to project 25001
