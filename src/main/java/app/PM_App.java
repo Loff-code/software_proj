@@ -148,19 +148,39 @@ public class PM_App extends Observable  {
     }
 
 
-    public void createProject(String name, String client) throws OperationNotAllowedException{
-        boolean nameTaken = false;
-        for (Project project : projects){
-            if (project.getName().equals(name)){
-                nameTaken = true;
-                throw new OperationNotAllowedException("Project name is taken");
-            }
+    public void createProject(String projectName, String client) throws OperationNotAllowedException {
+
+        //preconditions
+        if (projectName == null || projectName.isEmpty()) {
+            throw new OperationNotAllowedException("Project name empty");
         }
 
-        if (!name.equals("") && !(client.equals("")) && !nameTaken){
-            this.projects.add(new Project(name,  client));
+        if (client == null || client.isEmpty()) {
+            throw new OperationNotAllowedException("Client name empty");
         }
+
+        if(projectDuplicateChecker(projectName)){
+            throw new OperationNotAllowedException("Project name already exist");
+        }
+
+        assert  !projectName.trim().isEmpty() && !client.trim().isEmpty() && projectDuplicateChecker(projectName): "Precondition createProject";
+
+        Project project = new Project(projectName, client);
+        projects.add(project);
+
+        assert projects.contains(project) : "Postcondition createProject";
     }
+
+    public boolean projectDuplicateChecker(String projectName) {
+        for (Project project : projects) {
+            if (getProjectByName(projectName).equals(projectName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 
     public Project getProjectByName(String name){
 
