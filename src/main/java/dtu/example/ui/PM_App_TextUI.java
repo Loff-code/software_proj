@@ -152,7 +152,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.MAIN_MENU;
 			return;
 		}
-		projectName = selectFromList(app.getProject(), choice, Project::getName);
+		projectName = selectFromList(app.getProjects(), choice, Project::getName);
 		if (projectName != null) processStep = ProcessStep.PROJECT_MENU;
 	}
 
@@ -169,7 +169,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 	}
 
-	private void handleSelectActivity(int choice) {
+	private void handleSelectActivity(int choice) throws OperationNotAllowedException {
 		if (choice == 0) {
 			activityName = null;
 			processStep = ProcessStep.PROJECT_MENU;
@@ -246,7 +246,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 		String[] parts = input.split(" ");
 		if (parts.length == 2) {
-			app.createProject(parts[0], parts[1]);
+			app.createProject(new Project(parts[0], parts[1]));
 			out.println("Project created successfully.");
 		} else {
 			lastError = "Invalid input. Format: projectName clientName";
@@ -270,7 +270,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			return;
 		}
 		if (input.length() <= 5) {
-			app.createUser(input);
+			app.createUser(new User(input));
 			out.println("User created successfully.");
 		} else {
 			lastError = "Invalid userID. Maximum 4 characters allowed.";
@@ -323,7 +323,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		switch (processStep) {
 			case LOGIN -> out.println("Enter UserID:");
 			case MAIN_MENU -> printOptions(out, "Logout", "Select Project", "Create Project", "Users Menu", "Log Time");
-			case SELECT_PROJECT -> printList(out, app.getProject(), Project::getName, "Select a Project:");
+			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Create Activity", "Assign Project Leader");
 			case SELECT_ACTIVITY -> printList(out, app.getProjectByName(projectName).getActivities(), Activity::getName, "Select an Activity:");
 			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Status Report", "Back to Project Menu");
@@ -344,7 +344,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 	}
 
-	private void printHeader(PrintStream out) {
+	private void printHeader(PrintStream out) throws OperationNotAllowedException {
 		if (projectName != null) {
 			Project project = app.getProjectByName(projectName);
 			String header = "[Project: " + project.getName();

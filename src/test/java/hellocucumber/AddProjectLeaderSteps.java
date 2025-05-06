@@ -24,20 +24,23 @@ public class AddProjectLeaderSteps {
 
     // scenario 1: User assigns a project leader successfully
 
-    @Given("a project with ID {int} exists")
-    public void a_project_with_id_exists(int id) throws OperationNotAllowedException {
+    @Given("that a project with ID {int} exists")
+    public void that_a_project_with_id_exists(Integer id) throws OperationNotAllowedException {
         project = new Project("Projectx", "DTU");
         project.assignProjectID(id);
-        app.getProject().add(project);
+        app.createProject(project);
 
     }
 
     // jeg har bare brugt viktors kode, men måske ændre jeg det til at
     @Given("the user {string} exists")
-    public void the_user_exists(String name) {
+    public void the_user_exists(String name) throws OperationNotAllowedException {
         assignedUserID = name;
-        if (app.getUserByID(name) == null) {
-            app.getUsers().add(new User(name));
+        try {
+            app.getUserByID(name);
+        } catch ( OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+            app.createUser(new User(name));
         }
     }
 
@@ -72,8 +75,7 @@ public class AddProjectLeaderSteps {
         project.assignProjectID(id);
 
         project.setProjectLeader(user);
-
-        app.getProject().add(project);
+        app.createProject(project);
 
         assignedUserID = name;
 
@@ -88,10 +90,7 @@ public class AddProjectLeaderSteps {
         }
     }
 
-    @Then("an error message happens")
-    public void an_error_message_happens() {
-        assertEquals("User is already a project leader", errorMessageHolder.getErrorMessage());
-    }
+
 
 
 
@@ -137,7 +136,12 @@ public class AddProjectLeaderSteps {
     public void an_error_message_happens_about_the_project_not_existing() {
         assertEquals("Project does not exist", errorMessageHolder.getErrorMessage());
     }
+    @When("the user {string} tries to assign themselves as project leader to project {int}")
+    public void the_user_tries_to_assign_themselves_as_project_leader_to_project(String user1, Integer projectID) throws OperationNotAllowedException {
 
+        assertTrue(app.getUserID().equals(user1));
+        app.getProjectByID(projectID).setProjectLeader(app.getUserByID(user1));
+    }
 
     // scenario 5: User tries to assign themselves as project leader
 

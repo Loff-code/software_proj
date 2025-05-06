@@ -21,14 +21,14 @@ public class LoginLogoutSteps {
    }
 
    @Given("the user with the ID {string} exists")
-   public void the_user_with_the_id_exists(String id) {
-      String tmpID = "";
-      for (User user: app.getUsers()){
-         if (user.getID().equals(id)){
-            tmpID = id;
-         }
+   public void the_user_with_the_id_exists(String id) throws OperationNotAllowedException {
+
+      try {
+         app.getUserByID(id);
+      } catch (OperationNotAllowedException e) {
+         assertEquals("User does not exist", e.getMessage());
+         app.createUser(new User(id));
       }
-      assertTrue(tmpID.equals(id));
    }
 
    @When("the user logs in with the ID {string}")
@@ -56,7 +56,7 @@ public class LoginLogoutSteps {
    }
    @Then("the user is not logged in")
    public void the_user_is_not_logged_in() {
-    assertTrue(app.getUserID().equals(""));
+       assertEquals("", app.getUserID());
    }
 
    @When("the user logs out")
@@ -66,7 +66,7 @@ public class LoginLogoutSteps {
 
    @Given("the user is logged in")
    public void the_user_is_logged_in() throws  OperationNotAllowedException{
-      try{app.login("bob");}
+      try{app.login("huba");}
       catch (OperationNotAllowedException e) {
          assertEquals("User does not exist", e.getMessage());
       }

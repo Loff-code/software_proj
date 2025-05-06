@@ -22,25 +22,28 @@ public class CreateProjectSteps {
 
     @When("the user creates a project with the name {string}, client {string}")
     public void the_user_creates_a_project_with_the_name_client(String projectName, String clientName) throws OperationNotAllowedException {
-        try{app.createProject(projectName, clientName);}
+        try{app.createProject(new Project(projectName, clientName));}
         catch (OperationNotAllowedException e) {
-            assertEquals("Project name is taken", e.getMessage());
+            errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
     @Then("the project is created with the name {string}")
-    public void the_project_is_created_with_the_name(String projectName) {
+    public void the_project_is_created_with_the_name(String projectName) throws OperationNotAllowedException {
         app.getProjectByName(projectName);
     }
 
     @Then("the project {string} is not created")
-    public void the_project_is_not_created(String projectName) {
-        System.out.println("name" + app.getProjectByName(projectName));
-        assertTrue(app.getProjectByName(projectName) == null);
+    public void the_project_is_not_created(String projectName) throws OperationNotAllowedException {
+        try{app.getProjectByName(projectName);}
+        catch (OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+            assertTrue(errorMessageHolder.getErrorMessage().equals("Project does not exist"));
+        }
     }
 
     @Given("project with name {string} exists")
     public void project_with_name_exists(String projectName) throws OperationNotAllowedException {
-        try{app.createProject(projectName, "client");}
+        try{app.createProject(new Project(projectName, "client"));}
         catch (OperationNotAllowedException e) {
             assertEquals("Project name is taken", e.getMessage());
         }
@@ -49,7 +52,7 @@ public class CreateProjectSteps {
     @Then("there are no duplicates of the project {string}")
     public void there_are_no_duplicates_of_the_project(String name) {
         int cnt = 0;
-      for (Project project : app.getProject()){
+      for (Project project : app.getProjects()){
             cnt += project.getName().equals((name))?1:0;
         }
         assertTrue(cnt==1);

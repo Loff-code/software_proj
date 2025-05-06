@@ -49,7 +49,7 @@ public class registerTimeSteps {
         // Assuming the user is not assigned to any activity
         //assertNull(app.getUserByID(name));
         boolean isAssigned = false;
-        for (Project project : app.getProject()) {
+        for (Project project : app.getProjects()) {
             for (Activity activity : project.getActivities()) {
                 if (activity.getAssignedUsers().contains(name)) {
                     isAssigned = true;

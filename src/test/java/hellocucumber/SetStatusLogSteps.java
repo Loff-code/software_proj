@@ -20,17 +20,17 @@ public class SetStatusLogSteps {
 
     @Given("that the employee is logged in")
     public void that_the_employee_is_logged_in() throws OperationNotAllowedException {
-        app.createUser("emp");
+        app.createUser(new User("emp"));
         app.login("emp");
     }
 
     @Given("the employee is assigned to an activity named {string}")
-    public void the_employee_is_assigned_to_an_activity_named(String activityName) {
+    public void the_employee_is_assigned_to_an_activity_named(String activityName) throws OperationNotAllowedException {
         project = new Project("TestProject", "TestClient");
         activity = new Activity(activityName, 10, 1, 10);
         activity.assignEmployeeToActivity("emp");
         project.getActivities().add(activity);
-        app.getProject().add(project); // VIGTIGT!
+        app.createProject(project); // VIGTIGT!
     }
 
     @When("the employee sets the status of {string} to {string}")
@@ -58,11 +58,11 @@ public class SetStatusLogSteps {
     // === UNAUTHORIZED EMPLOYEE SCENARIO ===
 
     @Given("there is an activity named {string} that the employee is not assigned to")
-    public void there_is_an_activity_named_that_the_employee_is_not_assigned_to(String activityName) {
+    public void there_is_an_activity_named_that_the_employee_is_not_assigned_to(String activityName) throws OperationNotAllowedException {
         project = new Project("UnassignedProject", "Client");
         activity = new Activity(activityName, 10, 1, 10);
         project.getActivities().add(activity);
-        app.getProject().add(project); // VIGTIGT!
+        app.createProject(project); // VIGTIGT!
     }
 
     @When("the employee tries to set the status of {string} to {string}")
@@ -88,15 +88,15 @@ public class SetStatusLogSteps {
 
     @Given("that the project leader is logged in")
     public void that_the_project_leader_is_logged_in() throws OperationNotAllowedException {
-        app.createUser("lead");
+        app.createUser(new User("lead"));
         app.login("lead");
     }
 
     @Given("there is an activity named {string} in their project")
     public void there_is_an_activity_named_in_their_project(String activityName) throws OperationNotAllowedException {
-        app.createUser("adm");
+        app.createUser(new User("adm"));
         app.login("adm");
-        app.createProject("LeaderProject", "Client");
+        app.createProject(new Project("LeaderProject", "Client"));
         app.assignProjectLeader("LeaderProject", "lead");
 
         project = app.getProjectByName("LeaderProject");

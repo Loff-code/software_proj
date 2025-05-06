@@ -10,8 +10,7 @@ Feature: Create Project
   Scenario: User fails to create project with no name
     Given the user is logged in
     When the user creates a project with the name "", client "a"
-    Then the project "" is not created
-    #And an error message happens
+    And an error message happens
 
   Scenario: User fails to create project without client
     Given the user is logged in

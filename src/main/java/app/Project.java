@@ -18,7 +18,19 @@ public class Project {
 
 
 
-    public void addActivity(Activity activity) {
+
+    public void addActivity(Activity activity) throws IllegalArgumentException {
+        if (activity == null) {
+            throw new IllegalArgumentException("Activity cannot be null");
+        }
+        if (activity.getName() == null || activity.getName().isEmpty()) {
+            throw new IllegalArgumentException("Activity name cannot be null or empty");
+        }
+        for (Activity existingActivity : activities) {
+            if (existingActivity.getName().equals(activity.getName())) {
+                throw new IllegalArgumentException("Activity with the same name already exists");
+            }
+        }
         this.activities.add(activity);
     }
 
@@ -59,6 +71,9 @@ public class Project {
         this.projectID = id;
     }
 
+    public void setProjectID(int id) {
+        this.projectID = id;
+    }
 
     public int getProjectID() {
         return this.projectID;

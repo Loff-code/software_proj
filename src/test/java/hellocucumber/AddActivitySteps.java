@@ -23,17 +23,24 @@ public class AddActivitySteps {
     }
 
     @When("the user adds an activity with name {string}, budgeted time {int} hours, start week {int}, end week {int} to project {string}")
-    public void the_user_adds_an_activity_with_name_budgeted_time_hours_start_week_end_week_to_project(String activityName, Integer budgetTime, Integer startWeek, Integer endWeek, String projectName) {
+    public void the_user_adds_an_activity_with_name_budgeted_time_hours_start_week_end_week_to_project(String activityName, Integer budgetTime, Integer startWeek, Integer endWeek, String projectName) throws OperationNotAllowedException {
 //        System.out.println("activityName: " + activityName);
 //        app.getProjectByName(projectName).addActivity(activityName, budgetTime, startWeek, endWeek);
-        assertTrue(app.getProjectByName(projectName).equals(projectName));
+        assertTrue(app.getProjectByName(projectName).getName().equals(projectName));
+        try {
+            app.addActivityToProject(projectName,new Activity(activityName, budgetTime, startWeek, endWeek));
+        } catch (IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
     }
 
     @Then("the activity {string} is added to project {string}")
-    public void the_activity_is_added_to_project(String activityName, String projectName) {
+    public void the_activity_is_added_to_project(String activityName, String projectName) throws OperationNotAllowedException {
        String tmpActivityName = "";
         for (Activity activity : app.getProjectByName(projectName).getActivities()){
-           tmpActivityName = activity.getName();
+           if (activity.getName().equals(activityName)) {
+               tmpActivityName = activity.getName();
+           }
        }
         assertTrue(tmpActivityName.equals(activityName));
     }

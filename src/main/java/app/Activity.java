@@ -43,6 +43,27 @@ public void assignEmployeeToActivity(String userID)throws IllegalArgumentExcepti
     }
     this.assignedUsers.add(userID);
 }
+public void setBudgetTime(int budgetTime) throws IllegalArgumentException{
+    if (budgetTime < 0){
+        throw new IllegalArgumentException("Budget time cannot be negative");
+    }
+    this.budgetTime = budgetTime;
+}
+public void setStartWeek(int startWeek) throws IllegalArgumentException{
+    if (startWeek < 0){
+        throw new IllegalArgumentException("Start week cannot be negative");
+    }
+    this.startWeek = startWeek;
+}
+public void setEndWeek(int endWeek) throws IllegalArgumentException{
+    if (endWeek < 0){
+        throw new IllegalArgumentException("End week cannot be negative");
+    }
+    if (endWeek < startWeek){
+        throw new IllegalArgumentException("End week cannot be before start week");
+    }
+    this.endWeek = endWeek;
+}
 public String getName(){
     return this.name;
 }

@@ -1,9 +1,6 @@
 package hellocucumber;
 
-import app.Activity;
-import app.OperationNotAllowedException;
-import app.PM_App;
-import app.Project;
+import app.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -31,7 +28,7 @@ public class FindVacWorkerSteps {
         List<String> userIDs = dataTable.asList();
         for (String userID : userIDs) {
             try {
-                app.createUser(userID);
+                app.createUser(new User(userID));
             } catch (OperationNotAllowedException e) {
                 errorMessageHolder.setErrorMessage(e.getMessage());
             }
@@ -43,7 +40,7 @@ public class FindVacWorkerSteps {
         Project project = new Project("TestProject", "TestClient");
         Activity activity = new Activity("TestActivity", 10, startWeek, endWeek);
         project.getActivities().add(activity);
-        app.getProject().add(project);
+        app.getProjects().add(project);
         app.assignActivityToUser(userID, activity.getName(), project.getName());
     }
 
