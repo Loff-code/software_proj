@@ -1,6 +1,7 @@
 package app;
 
 import java.util.*;
+import java.time.LocalDate;
 
 public class Activity {
 private String name;
@@ -8,7 +9,8 @@ private int budgetTime;
 private int startWeek;
 private int endWeek;
 private List<String> assignedUsers = new ArrayList<>();
-private Map<String,Integer> timeMap =new HashMap<>();
+private Map<String,Double> timeMap =new HashMap<>();
+
 
 public Activity(String name, int budgetTime, int startWeek, int endWeek){
     this.name = name;
@@ -65,6 +67,30 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
     }
     this.endWeek = endWeek;
 }
+
+// registertime - Ali
+    public void registerTime(String userID, double hours, LocalDate date, String activityName) throws IllegalArgumentException{
+        // tjek om brugeren er assigned til aktiviteten
+        if(!assignedUsers.contains(userID)){
+            throw new IllegalArgumentException("Not allowed: User is not assigned to this activity");
+        }
+        if (hours <= 0 ){
+            throw new IllegalArgumentException("Not allowed: Hours have to be positive");
+        }
+        if (date == null){
+            throw new IllegalArgumentException("Not allowed: Date cannot be null");
+        }
+
+        // runde op til nærmeste halve time
+        double roundedHours = (double) Math.round(hours * 2.0) / 2;
+        timeMap.put("[" + userID + "]|" + activityName +"|"+ date, roundedHours);
+
+
+    }
+
+
+
+
 public String getName(){
     return this.name;
 }

@@ -4,6 +4,8 @@ import app.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.datatable.DataTable;
+import java.util.List;
 
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +17,7 @@ public class registerTimeSteps {
     private Project project;
     private ErrorMessageHolder errorMessageHolder;
     private PM_App app;
+
     private MockDateServer mockDateServer;
 
 
@@ -28,10 +31,48 @@ public class registerTimeSteps {
     }
 
 
+    // Background
+
+    @Given("there exists users with the following initials in the project")
+    public void there_exists_users_with_the_following_initials_in_the_project(DataTable dataTable) throws OperationNotAllowedException {
+        List<String> initials = dataTable.asList();
+        for (String id : initials) {
+            app.createUser(new User(id));
+        }
+    }
+
+
+
+
+
+    @Given("the user creates an activity with the following informations")
+    public void the_user_creates_an_activity_with_the_following_informations(DataTable dataTable) {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // scenario 1: User registers time spent on an activity successfully
 
-    @When("the user {string} registers {int} hours spent on date {string}")
-    public void the_user_registers_hours_spent_on_date(String name, int hours, String date) throws OperationNotAllowedException {
+    @When("the user {string} registers {int} hours spent on activity {string} on date {string}")
+    public void the_user_registers_hours_spent_on_activity_on_date(String userID, double hours, String activityName, String date) throws OperationNotAllowedException {
+
+        LocalDate date1=mockDateServer.parseDate(date);
+
+        activity.registerTime(userID, hours, date1, activityName);
 
     }
 
@@ -127,28 +168,6 @@ public class registerTimeSteps {
     }
 
 
-    @Given("there exists users with the following initials in the project")
-    public void there_exists_users_with_the_following_initials_in_the_project(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new io.cucumber.java.PendingException();
-    }
-    @Given("the user creates an activity with the following informations")
-    public void the_user_creates_an_activity_with_the_following_informations(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new io.cucumber.java.PendingException();
-    }
 
 
 
