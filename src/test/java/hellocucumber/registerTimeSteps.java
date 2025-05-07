@@ -1,6 +1,7 @@
 package hellocucumber;
 
 import app.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,13 +9,15 @@ import io.cucumber.datatable.DataTable;
 import java.util.List;
 
 import java.time.LocalDate;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class registerTimeSteps {
-    private Project project;
+
     private ErrorMessageHolder errorMessageHolder;
     private PM_App app;
 
@@ -31,54 +34,39 @@ public class registerTimeSteps {
     }
 
 
-    // Background
-
-    @Given("there exists users with the following initials in the project")
-    public void there_exists_users_with_the_following_initials_in_the_project(DataTable dataTable) throws OperationNotAllowedException {
-        List<String> initials = dataTable.asList();
-        for (String id : initials) {
-            app.createUser(new User(id));
-        }
+    @And("the user {string} is assigned to the activity {string} in project {string}")
+    public void theUserIsAssignedToTheActivityInProject(String userID, String activityName, String projectName) throws OperationNotAllowedException {
+        app.assignActivityToUser(userID, activityName, projectName);
     }
-
-
-
-
-
-    @Given("the user creates an activity with the following informations")
-    public void the_user_creates_an_activity_with_the_following_informations(DataTable dataTable) {
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
     // scenario 1: User registers time spent on an activity successfully
 
-    @When("the user {string} registers {int} hours spent on activity {string} on date {string}")
-    public void the_user_registers_hours_spent_on_activity_on_date(String userID, double hours, String activityName, String date) throws OperationNotAllowedException {
+    @When("the user {string} registers {double} hours spent on activity {string} on date {string}")
+    public void the_user_registers_hours_spent_on_activity_on_date(String userID, Double hours, String activityName, String date) throws OperationNotAllowedException {
+        try {
+            System.out.println("Time registered");
+            Activity activity = app.getActivityByName(activityName);
+            LocalDate localDate = app.getDateServer().parseDate(date);
+            activity.registerTime(userID, hours, localDate, activityName);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
 
-        LocalDate date1=mockDateServer.parseDate(date);
-
-        activity.registerTime(userID, hours, date1, activityName);
 
     }
 
 
-    @Then("the system records {int} hours for {string} by {string} on {string} for the user {string}")
-    public void the_system_records_hours_for_by_on_for_the_user(int hours, String activityName, String initials, String date, String name) throws OperationNotAllowedException {
+    @Then("the system records {double} hours for {string} by {string} on {string} for the user {string}")
+    public void the_system_records_hours_for_by_on_for_the_user(Double hours, String activityName, String userID, String date, String name) throws OperationNotAllowedException {
+        Activity activity = app.getActivityByName(activityName);
+        String key = "[" + userID + "]|" + activityName + "|" + date;
+        Map<String, Double> timeMap = activity.getTimeMap();
+
+        assertTrue(timeMap.containsKey(key), "Time registration not found");
+        assertEquals(hours, timeMap.get(key));
+
 
     }
 
@@ -87,8 +75,6 @@ public class registerTimeSteps {
 
     @Given("the user {string} is not assigned to it")
     public void the_user_is_not_assigned_to_it(String name) {
-        // Assuming the user is not assigned to any activity
-        //assertNull(app.getUserByID(name));
         boolean isAssigned = false;
         for (Project project : app.getProjects()) {
             for (Activity activity : project.getActivities()) {
@@ -100,60 +86,49 @@ public class registerTimeSteps {
         assertFalse(isAssigned);
     }
 
-    // bruges også til scenario 3
-    // bruges også til scenario 4
-    // bruges også til scenario 5
-    // bruges også til scenario 6
-    // bruges også til scenario 7
-    // bruges også til scenario 8
-    @When("the user {string} tries to register {int} hours spent on {string} on date {string}")
-    public void the_user_tries_to_register_hours_spent_on_on_date(String name, int hours, String activityName, String date) {
-        // Assuming the user is not assigned to any activity
-        //assertNull(app.getUserByID(name));
-    }
 
 
-    // bruges også til scenario 3
-    // bruges også til scenario 4
-    // bruges også til scenario 5
-    // bruges også til scenario 6
-    // bruges også til scenario 7
+
+
+
+
     @Then("an error message {string} should be shown")
     public void an_error_message_should_be_shown(String errorMessage) {
-        // Assuming the error message is stored in the errorMessageHolder
         assertEquals(errorMessage, errorMessageHolder.getErrorMessage());
     }
 
 
-    // scenario 3: User registers time with invalid hours (oppe)
 
 
-    // scenario 4: User registers time with invalid date (oppe)
+    @Then("the system does not accept the negative hours")
+    public void theSystemDoesNotAcceptTheNegativeHours() {
+    }
 
-    // scenario 5: User registers time with missing hours (oppe)
 
-    // scenario 6: User registers time with missing date (oppe)
-
-    // scenario 7: User registers time with missing user (oppe)
 
     // scenario 8: User registers time with non-0.5 hour value (oppe)
-    @Then("the system rounds the hours up to {string} hours")
-    public void the_system_rounds_the_hours_up_to_hours(String hours) {
-        // Assuming the system rounds the hours up to the nearest 0.5
-        assertEquals(hours, errorMessageHolder.getErrorMessage());
+
+
+    @Then("the system records {double} hours for {string} on {string} for the user {string}")
+    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String userID, String date) {
+        Activity activity = app.getActivityByName(activityName);
+
+        String key = "[" + userID + "]|" + activityName + "|" + date;
+
+        Map<String, Double> timeMap = activity.getTimeMap();
+
+        assertTrue(timeMap.containsKey(key), "Expected time entry not found");
+
+        assertEquals(hours, timeMap.get(key));
+
     }
 
-    @Then("the system records {string} hours for {string} on {string} for the user {string}")
-    public void the_system_records_hours_for_on_for_the_user(String hours, String activityName, String initials, String date, String name) {
-        // Assuming the system records the hours for the user
-        assertEquals(hours, errorMessageHolder.getErrorMessage());
-    }
-
-
-    //test for the date server
 
 
 
+
+
+    // only for testing purposes
     @Given("the system date is mocked")
     public void the_system_date_is_mocked() {
         mockDateServer.setDate(LocalDate.of(2025, 5, 3));
@@ -166,10 +141,6 @@ public class registerTimeSteps {
         String actualDate = app.getDateServer().dateToString(app.getDateServer().getDate());
         assertEquals(expectedDate, actualDate);
     }
-
-
-
-
 
 
 

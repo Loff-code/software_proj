@@ -1,321 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: io.cucumber.junit.platform.engine.CucumberTestEngine
 -------------------------------------------------------------------------------
-Tests run: 32, Failures: 1, Errors: 16, Skipped: 0, Time elapsed: 0.419 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
-Add project leader.Add project leader - User assigns a project leader successfully -- Time elapsed: 0.038 s <<< ERROR!
+Tests run: 32, Failures: 2, Errors: 9, Skipped: 0, Time elapsed: 0.218 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
+Edit data.Edit data - User edits registered hours -- Time elapsed: 0.023 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "Huba" exists' and 4 other step(s) are undefined.
+The step 'the user has registered 3 hours on an activity called "Test" in project 25002' and 2 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
 
-@Given("the user {string} exists")
-public void theUserExists(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("that a project with ID {int} exists")
-public void thatAProjectWithIDExists(Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("the user {string} is not already a leader of the project")
-public void theUserIsNotAlreadyALeaderOfTheProject(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user assigns {string} as the project leader to the project {int}")
-public void theUserAssignsAsTheProjectLeaderToTheProject(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("the user {string} is set as the leader of project {int}")
-public void theUserIsSetAsTheLeaderOfProject(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Add project leader.Add project leader - User assigns a project leader who is already assigned -- Time elapsed: 0.010 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "Huba" exists' and 2 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("the user {string} exists")
-public void theUserExists(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("the user {string} is already a project leader to project {int}")
-public void theUserIsAlreadyAProjectLeaderToProject(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user {string} tries to assign {string} as the project leader to project {int} again")
-public void theUserTriesToAssignAsTheProjectLeaderToProjectAgain(String string, String string2, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Add project leader.Add project leader - User assigns a non existing user as project leader -- Time elapsed: 0.009 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "Huba" exists' and 4 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("the user {string} exists")
-public void theUserExists(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("that a project with ID {int} exists")
-public void thatAProjectWithIDExists(Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("the user {string} does not exist")
-public void theUserDoesNotExist(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user assigns {string} as project leader to project {int}")
-public void theUserAssignsAsProjectLeaderToProject(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("an error message happens about the user not existing")
-public void anErrorMessageHappensAboutTheUserNotExisting() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Add project leader.Add project leader - User assigns a project leader to a non existing project -- Time elapsed: 0.011 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "Huba" exists' and 3 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("the user {string} exists")
-public void theUserExists(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("the project with ID {int} does not exist")
-public void theProjectWithIDDoesNotExist(Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user assigns {string} as project leader to project with ID {int} that does not exist")
-public void theUserAssignsAsProjectLeaderToProjectWithIDThatDoesNotExist(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("an error message happens about the project not existing")
-public void anErrorMessageHappensAboutTheProjectNotExisting() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Add project leader.Add project leader - User tries to assign themselves as project leader -- Time elapsed: 0.011 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "Huba" exists' and 3 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("the user {string} exists")
-public void theUserExists(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("that a project with ID {int} exists")
-public void thatAProjectWithIDExists(Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user {string} tries to assign themselves as project leader to project {int}")
-public void theUserTriesToAssignThemselvesAsProjectLeaderToProject(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("an error message happens about the user not being able to assign themselves as project leader")
-public void anErrorMessageHappensAboutTheUserNotBeingAbleToAssignThemselvesAsProjectLeader() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Create activity.Create activity - User adds an activity -- Time elapsed: 0.013 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'that the employee Bob is logged in' and 3 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("that the employee Bob is logged in")
-public void thatTheEmployeeBobIsLoggedIn() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("that a project called {string}")
-public void thatAProjectCalled(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("an activity called {string} is added")
-public void anActivityCalledIsAdded(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("the activity is in the project {string}")
-public void theActivityIsInTheProject(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Create activity.Create activity - Employee adds an activity with an empty name -- Time elapsed: 0.007 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'that the employee Bob is logged in' and 2 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("that the employee Bob is logged in")
-public void thatTheEmployeeBobIsLoggedIn() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("that a project called {string}")
-public void thatAProjectCalled(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("an activity called {string} is added")
-public void anActivityCalledIsAdded(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Create activity.Create activity - Employee adds an activity which is already created -- Time elapsed: 0.007 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'that the employee Bob is logged in' and 3 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("that the employee Bob is logged in")
-public void thatTheEmployeeBobIsLoggedIn() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("that a project called {string} is created")
-public void thatAProjectCalledIsCreated(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Given("an activity called {string} is already present")
-public void anActivityCalledIsAlreadyPresent(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("an activity called {string} is added")
-public void anActivityCalledIsAdded(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-Edit data.Edit data - User edits registered hours -- Time elapsed: 0.006 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'The user is logged in' and 3 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("The user is logged in")
-public void theUserIsLoggedIn() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
 @Given("the user has registered {int} hours on an activity called {string} in project {int}")
 public void theUserHasRegisteredHoursOnAnActivityCalledInProject(Integer int1, String string, Integer int2) {
     // Write code here that turns the phrase above into concrete actions
@@ -341,19 +32,14 @@ public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1,
 	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.006 s <<< ERROR!
+Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.005 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'The user is logged in' and 2 other step(s) are undefined.
+The step 'the activity "Test 1" does not exist in the project 25003' and 1 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
 
-@Given("The user is logged in")
-public void theUserIsLoggedIn() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
 @Given("the activity {string} does not exist in the project {int}")
 public void theActivityDoesNotExistInTheProject(String string, Integer int1) {
     // Write code here that turns the phrase above into concrete actions
@@ -374,10 +60,10 @@ public void theUserTriesToEditHoursForTheActivity(String string) {
 	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.006 s <<< ERROR!
+Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.005 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
 The step 'the user has registered 3 hours on an activity called "Test 2"' and 1 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
@@ -402,16 +88,31 @@ public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, 
 	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-An example.An example - The example -- Time elapsed: 0.004 s <<< ERROR!
+Register used time.Register used time - User registers time spent on an activity successfully -- Time elapsed: 0.010 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Time registration not found ==> expected: <true> but was: <false>
+	at hellocucumber.registerTimeSteps.the_system_records_hours_for_by_on_for_the_user(registerTimeSteps.java:67)
+	at ✽.the system records 4.0 hours for "Demo" by "vict" on "2025-02-06" for the user "vict"(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/register_Time.feature:20)
+
+Register used time.Register used time - User tries to register time for an activity they are not assigned to -- Time elapsed: 0.005 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Not allowed: User is not assigned to this activity> but was: <Cannot invoke "app.DateServer.parseDate(String)" because the return value of "app.PM_App.getDateServer()" is null>
+	at hellocucumber.registerTimeSteps.the_system_does_not_allow_the_time_registration(registerTimeSteps.java:93)
+	at ✽.the system does not allow the time registration(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/register_Time.feature:26)
+
+Register used time.Register used time - User registers time with invalid hours -- Time elapsed: 0.004 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'an employer is logged in' is undefined.
-You can implement this step using the snippet(s) below:
+The step 'the user "vict" tries to register -3 hours spent on "Demo" on Date "2025-02-06"' and 1 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-@Given("an employer is logged in")
-public void anEmployerIsLoggedIn() {
+@When("the user {string} tries to register {int} hours spent on {string} on Date {string}")
+public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Integer int1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system does not accept the negative hours")
+public void theSystemDoesNotAcceptTheNegativeHours() {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
@@ -425,31 +126,126 @@ public void anEmployerIsLoggedIn() {
 	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
 	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-User Login.User Login - User can login -- Time elapsed: 0.007 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at hellocucumber.LoginLogoutSteps.the_user_with_the_id_exists(LoginLogoutSteps.java:31)
-	at ✽.the user with the ID "bob" exists(file:///home/swaggo/Code/soft/software_proj/features/login.feature:7)
+Register used time.Register used time - User registers time with invalid date -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user "vict" tries to register 4.0 hours spent on "Demo" on date "2025-02-06"' and 1 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
 
-Register used time.Register used time - The user registers time spent on an activity -- Time elapsed: 0.008 s <<< ERROR!
-io.cucumber.java.PendingException: TODO: implement me
-	at hellocucumber.registerTimeSteps.there_exists_users_with_the_following_initials_in_the_project(registerTimeSteps.java:139)
-	at ✽.there exists users with the following initials in the project(file:///home/swaggo/Code/soft/software_proj/features/register_Time.feature:7)
+@When("the user {string} tries to register {double} hours spent on {string} on date {string}")
+public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Double double1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the system does not accept the invalid date")
+public void theSystemDoesNotAcceptTheInvalidDate() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
 
-Register used time.Register used time - User tries to register time for an activity they are not assigned to -- Time elapsed: 0.004 s <<< ERROR!
-io.cucumber.java.PendingException: TODO: implement me
-	at hellocucumber.registerTimeSteps.there_exists_users_with_the_following_initials_in_the_project(registerTimeSteps.java:139)
-	at ✽.there exists users with the following initials in the project(file:///home/swaggo/Code/soft/software_proj/features/register_Time.feature:7)
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Register used time.Register used time - User registers time with invalid hours -- Time elapsed: 0.006 s <<< ERROR!
-io.cucumber.java.PendingException: TODO: implement me
-	at hellocucumber.registerTimeSteps.there_exists_users_with_the_following_initials_in_the_project(registerTimeSteps.java:139)
-	at ✽.there exists users with the following initials in the project(file:///home/swaggo/Code/soft/software_proj/features/register_Time.feature:7)
+Register used time.Register used time - User registers time with missing hours -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user "vict" registers "" hours spent on "Demo" on date "2025-02-06"' is undefined.
+You can implement this step using the snippet(s) below:
 
-Register used time.Register used time - User registers time with invalid date -- Time elapsed: 0.005 s <<< ERROR!
-io.cucumber.java.PendingException: TODO: implement me
-	at hellocucumber.registerTimeSteps.there_exists_users_with_the_following_initials_in_the_project(registerTimeSteps.java:139)
-	at ✽.there exists users with the following initials in the project(file:///home/swaggo/Code/soft/software_proj/features/register_Time.feature:7)
+@When("the user {string} registers {string} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, String string2, String string3, String string4) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+Register used time.Register used time - User registers time with missing date -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user "vict" registers 4.0 hours spent on "Demo" on date ""' is undefined.
+You can implement this step using the snippet(s) below:
+
+@When("the user {string} registers {double} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, Double double1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+Register used time.Register used time - User registers time with missing user -- Time elapsed: 0.004 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user "" registers 4.0 hours spent on "Demo" on date "2025-02-06"' is undefined.
+You can implement this step using the snippet(s) below:
+
+@When("the user {string} registers {double} hours spent on {string} on date {string}")
+public void theUserRegistersHoursSpentOnOnDate(String string, Double double1, String string2, String string3) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+Register used time.Register used time - User registers time with non-0.5 hour value -- Time elapsed: 0.003 s <<< ERROR!
+io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the system rounds the hours up to "5.5"' is undefined.
+You can implement this step using the snippet(s) below:
+
+@Then("the system rounds the hours up to {string}")
+public void theSystemRoundsTheHoursUpTo(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 

@@ -89,7 +89,9 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
     }
 
 
-
+    public Map<String, Double> getTimeMap() {
+        return this.timeMap;
+    }
 
 public String getName(){
     return this.name;
