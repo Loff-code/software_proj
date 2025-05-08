@@ -67,6 +67,12 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
     }
     this.endWeek = endWeek;
 }
+    public void setName(String name) throws IllegalArgumentException {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Activity name cannot be null or empty");
+        }
+        this.name = name;
+    }
 
     public void registerTime(String userID, double hours, LocalDate date, String activityName, DateServer dateServer) throws IllegalArgumentException{
         // tjek om brugeren er assigned til aktiviteten
