@@ -2,6 +2,7 @@ package app;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -249,6 +250,14 @@ public class PM_App extends Observable  {
     }
 
     public DateServer getDateServer() {return this.dateServer;}
+
+
+    public void registerTimeForActivity(String userID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
+        Activity activity = getActivityByName(activityName);
+        LocalDate date = dateServer.parseDate(dateStr);
+        activity.registerTime(userID, hours, date, activityName, dateServer);
+    }
+
 
 
 

@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: io.cucumber.junit.platform.engine.CucumberTestEngine
 -------------------------------------------------------------------------------
-Tests run: 32, Failures: 2, Errors: 9, Skipped: 0, Time elapsed: 0.218 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
-Edit data.Edit data - User edits registered hours -- Time elapsed: 0.023 s <<< ERROR!
+Tests run: 28, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.188 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
+Edit data.Edit data - User edits registered hours -- Time elapsed: 0.064 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
 The step 'the user has registered 3 hours on an activity called "Test" in project 25002' and 2 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
@@ -35,7 +35,7 @@ public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1,
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.005 s <<< ERROR!
+Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.007 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
 The step 'the activity "Test 1" does not exist in the project 25003' and 1 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
@@ -63,7 +63,7 @@ public void theUserTriesToEditHoursForTheActivity(String string) {
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.005 s <<< ERROR!
+Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.007 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
 The step 'the user has registered 3 hours on an activity called "Test 2"' and 1 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
@@ -75,164 +75,6 @@ public void theUserHasRegisteredHoursOnAnActivityCalled(Integer int1, String str
 }
 @When("the user tries to change the registered hours to {int} on the activity {string}")
 public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Register used time.Register used time - User registers time spent on an activity successfully -- Time elapsed: 0.010 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: Time registration not found ==> expected: <true> but was: <false>
-	at hellocucumber.registerTimeSteps.the_system_records_hours_for_by_on_for_the_user(registerTimeSteps.java:67)
-	at ✽.the system records 4.0 hours for "Demo" by "vict" on "2025-02-06" for the user "vict"(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/register_Time.feature:20)
-
-Register used time.Register used time - User tries to register time for an activity they are not assigned to -- Time elapsed: 0.005 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <Not allowed: User is not assigned to this activity> but was: <Cannot invoke "app.DateServer.parseDate(String)" because the return value of "app.PM_App.getDateServer()" is null>
-	at hellocucumber.registerTimeSteps.the_system_does_not_allow_the_time_registration(registerTimeSteps.java:93)
-	at ✽.the system does not allow the time registration(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/register_Time.feature:26)
-
-Register used time.Register used time - User registers time with invalid hours -- Time elapsed: 0.004 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "vict" tries to register -3 hours spent on "Demo" on Date "2025-02-06"' and 1 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@When("the user {string} tries to register {int} hours spent on {string} on Date {string}")
-public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Integer int1, String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("the system does not accept the negative hours")
-public void theSystemDoesNotAcceptTheNegativeHours() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Register used time.Register used time - User registers time with invalid date -- Time elapsed: 0.004 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "vict" tries to register 4.0 hours spent on "Demo" on date "2025-02-06"' and 1 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@When("the user {string} tries to register {double} hours spent on {string} on date {string}")
-public void theUserTriesToRegisterHoursSpentOnOnDate(String string, Double double1, String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("the system does not accept the invalid date")
-public void theSystemDoesNotAcceptTheInvalidDate() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Register used time.Register used time - User registers time with missing hours -- Time elapsed: 0.004 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "vict" registers "" hours spent on "Demo" on date "2025-02-06"' is undefined.
-You can implement this step using the snippet(s) below:
-
-@When("the user {string} registers {string} hours spent on {string} on date {string}")
-public void theUserRegistersHoursSpentOnOnDate(String string, String string2, String string3, String string4) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Register used time.Register used time - User registers time with missing date -- Time elapsed: 0.004 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "vict" registers 4.0 hours spent on "Demo" on date ""' is undefined.
-You can implement this step using the snippet(s) below:
-
-@When("the user {string} registers {double} hours spent on {string} on date {string}")
-public void theUserRegistersHoursSpentOnOnDate(String string, Double double1, String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Register used time.Register used time - User registers time with missing user -- Time elapsed: 0.004 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user "" registers 4.0 hours spent on "Demo" on date "2025-02-06"' is undefined.
-You can implement this step using the snippet(s) below:
-
-@When("the user {string} registers {double} hours spent on {string} on date {string}")
-public void theUserRegistersHoursSpentOnOnDate(String string, Double double1, String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Register used time.Register used time - User registers time with non-0.5 hour value -- Time elapsed: 0.003 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the system rounds the hours up to "5.5"' is undefined.
-You can implement this step using the snippet(s) below:
-
-@Then("the system rounds the hours up to {string}")
-public void theSystemRoundsTheHoursUpTo(String string) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }

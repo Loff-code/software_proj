@@ -31,6 +31,11 @@ public class registerTimeSteps {
         this.errorMessageHolder = errorMessageHolder;
         this.mockDateServer = mockDateServer;
 
+        if (this.app.getDateServer() == null) {
+            this.app.setDateServer(new RealDateServer());
+        }
+
+
     }
 
 
@@ -45,11 +50,24 @@ public class registerTimeSteps {
 
     @When("the user {string} registers {double} hours spent on activity {string} on date {string}")
     public void the_user_registers_hours_spent_on_activity_on_date(String userID, Double hours, String activityName, String date) throws OperationNotAllowedException {
+
+
+        if (app.getDateServer() == null) {
+            app.setDateServer(new RealDateServer());
+        }
+
+        if(date == null || date.isBlank()){
+            errorMessageHolder.setErrorMessage("Not allowed: Date cannot be null");
+            return;
+        }
+
+        if(userID.isBlank()){
+            errorMessageHolder.setErrorMessage("Not allowed: User ID cannot be blank");
+            return;
+        }
+
         try {
-            System.out.println("Time registered");
-            Activity activity = app.getActivityByName(activityName);
-            LocalDate localDate = app.getDateServer().parseDate(date);
-            activity.registerTime(userID, hours, localDate, activityName);
+            app.registerTimeForActivity(userID, activityName, hours, date);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -58,17 +76,6 @@ public class registerTimeSteps {
     }
 
 
-    @Then("the system records {double} hours for {string} by {string} on {string} for the user {string}")
-    public void the_system_records_hours_for_by_on_for_the_user(Double hours, String activityName, String userID, String date, String name) throws OperationNotAllowedException {
-        Activity activity = app.getActivityByName(activityName);
-        String key = "[" + userID + "]|" + activityName + "|" + date;
-        Map<String, Double> timeMap = activity.getTimeMap();
-
-        assertTrue(timeMap.containsKey(key), "Time registration not found");
-        assertEquals(hours, timeMap.get(key));
-
-
-    }
 
 
     // scenario 2: User tries to register time for an activity they are not assigned to
@@ -87,11 +94,6 @@ public class registerTimeSteps {
     }
 
 
-
-
-
-
-
     @Then("an error message {string} should be shown")
     public void an_error_message_should_be_shown(String errorMessage) {
         assertEquals(errorMessage, errorMessageHolder.getErrorMessage());
@@ -99,26 +101,16 @@ public class registerTimeSteps {
 
 
 
-
-    @Then("the system does not accept the negative hours")
-    public void theSystemDoesNotAcceptTheNegativeHours() {
-    }
-
-
-
-    // scenario 8: User registers time with non-0.5 hour value (oppe)
-
-
-    @Then("the system records {double} hours for {string} on {string} for the user {string}")
-    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String userID, String date) {
+    @Then("the system records {double} hours for {string} on {string} for the user {string}")//hh
+    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String date, String userID) {
         Activity activity = app.getActivityByName(activityName);
+        String parsedDate = app.getDateServer().dateToString(app.getDateServer().parseDate(date));
 
-        String key = "[" + userID + "]|" + activityName + "|" + date;
+        String key = "[" + userID + "]|" + activityName + "|" + parsedDate;
 
         Map<String, Double> timeMap = activity.getTimeMap();
 
         assertTrue(timeMap.containsKey(key), "Expected time entry not found");
-
         assertEquals(hours, timeMap.get(key));
 
     }
@@ -127,14 +119,17 @@ public class registerTimeSteps {
 
 
 
-
-    // only for testing purposes
     @Given("the system date is mocked")
     public void the_system_date_is_mocked() {
-        mockDateServer.setDate(LocalDate.of(2025, 5, 3));
+        mockDateServer.setDate(LocalDate.of(2025, 2, 6));
         app.setDateServer(mockDateServer);
-        System.out.println("Test");
     }
+
+
+
+
+    // only for testing purposes
+
 
     @Then("the system date should be {string}")
     public void the_system_date_should_be(String expectedDate) {
