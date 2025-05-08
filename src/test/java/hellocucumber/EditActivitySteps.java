@@ -6,91 +6,38 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EditActivitySteps {
 
-    private final PM_App app;
-    private final ErrorMessageHolder errorMessageHolder;
+    private PM_App app;
+    private ErrorMessageHolder errorMessageHolder;
 
     public EditActivitySteps(PM_App app, ErrorMessageHolder errorMessageHolder) {
         this.app = app;
         this.errorMessageHolder = errorMessageHolder;
     }
 
-    private Project getProjectSafe(int id) throws OperationNotAllowedException {
-        for (Project p : app.getProjects()) {
-            if (p.getProjectID() == id) return p;
-        }
-        throw new OperationNotAllowedException("Project not found");
-    }
 
-    @Given("that a project with ID {int} exists")
-    public void that_a_project_with_ID_exists(int id) {
-        for (Project p : app.getProjects()) {
-            if (p.getProjectID() == id) return;
-        }
-        Project project = new Project("P" + id, "ClientX");
-        project.assignProjectID(id);
-        app.getProjects().add(project);
-    }
-
-    @Given("activity with name {string}, budgeted time {int} hours, start week {int}, end week {int} exists in project with ID {int}")
-    public void activity_with_details_exists(String name, int budget, int start, int end, int projectID) {
+// jeg har sat budgethours som int i stedet for double lige pt. Det skal ændres til double men så fucker det op i andre filer. og magter ikke at kigge på det lige nu
+    @When("the user edits activity {string} in project {string} to name {string}, budgeted time {int} hours, start week {int}, end week {int}")
+    public void the_user_edits_activity_in_project_to_name_budgeted_time_hours_start_week_end_week(String actNameOld, String projectName1, String actNameNew, int budgetHours, int start, int end) {
         try {
-            Project project = getProjectSafe(projectID);
-            Activity activity = new Activity(name, budget, start, end);
-            project.getActivities().add(activity);
-        } catch (Exception e) {
+            app.editActivityInProject(actNameOld, projectName1, actNameNew, budgetHours, start, end);
+        } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
+
     }
 
-    @Given("activity with name {string} exists in project with ID {int}")
-    public void activity_with_name_exists(String name, int projectID) {
-        try {
-            Project project = getProjectSafe(projectID);
-            Activity activity = new Activity(name, 10, 1, 2);
-            project.getActivities().add(activity);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-    }
+    // der er fejl i den her. Det er en lille fejl. det er noget med at man skal sikre at den nye er lavet.
+    @Then("the activity {string} exists in project {string} with budgeted time {int} hours, start week {int}, end week {int}")
+    public void theActivityExistsInProjectWithBudgetedTimeHoursStartWeekEndWeek(String actName, String projectName1, int budgetHours, int start, int end) throws OperationNotAllowedException {
+        Activity activity = app.getProject(projectName1).getActivityByName(actName);
 
-    @When("the user edits activity {string} in project with ID {int} to name {string}, budgeted time {int} hours, start week {int}, end week {int}")
-    public void edit_activity(String oldName, int projectID, String newName, int budget, int start, int end) {
-        try {
-            Project project = getProjectSafe(projectID);
-            Activity activity = project.getActivityByName(oldName);
+        assertNotNull(activity, "Activity should exist");
 
-            if (activity == null)
-                throw new IllegalArgumentException("Activity not found");
-
-            if (!oldName.equals(newName) && project.getActivityByName(newName) != null)
-                throw new IllegalArgumentException("Activity with the new name already exists");
-
-            activity.setName(newName);
-            activity.setBudgetTime(budget);
-            activity.setStartWeek(start);
-            activity.setEndWeek(end);
-
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-    }
-
-    @Then("the activity {string} exists in project with ID {int}")
-    public void verify_activity_exists(String name, int projectID) throws OperationNotAllowedException {
-        Activity activity = getProjectSafe(projectID).getActivityByName(name);
-        assertNotNull(activity);
-    }
-
-    @Then("the activity {string} in project with ID {int} has budgeted time {int} hours, start week {int}, end week {int}")
-    public void verify_activity_values(String name, int projectID, int budget, int start, int end) throws OperationNotAllowedException {
-        Activity activity = getProjectSafe(projectID).getActivityByName(name);
-        assertEquals(budget, activity.getBudgetTime());
+        assertEquals(budgetHours, activity.getBudgetTime());
         assertEquals(start, activity.getStartWeek());
         assertEquals(end, activity.getEndWeek());
     }
 
-    @Then("an error message occurs with text {string}")
-    public void error_message_occurs(String expectedMessage) {
-        assertEquals(expectedMessage, errorMessageHolder.getErrorMessage());
-    }
+
+
 }

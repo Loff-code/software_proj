@@ -252,7 +252,7 @@ public class PM_App extends Observable  {
     public DateServer getDateServer() {return this.dateServer;}
 
 
-    public void registerTimeForActivity(String userID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
+    public void registerTimeForActivity(String userID, String activityName, Double hours, String dateStr) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName);
         LocalDate date = dateServer.parseDate(dateStr);
         activity.registerTime(userID, hours, date, activityName, dateServer);
@@ -270,6 +270,41 @@ public class PM_App extends Observable  {
         Project project = getProject(projectID);
       project.addActivity(activity,userID);
     }
+
+
+    public void editActivityInProject(String projectName, String oldName, String newName, int budgetHours, int startWeek, int endWeek) throws OperationNotAllowedException {
+
+        if (!projects.contains(projectName)) {
+            throw new OperationNotAllowedException("Not allowed: Project does not exist");
+        }
+
+        Project project = getProject(projectName);
+
+
+        // det her er for dine error message steps. du skal gøre sådan at den passer.
+        // lige nu sammenligner den med en forkert betingelse
+        // hvis du ændre betingelsen til noget rigtigt så burde det virke
+
+        Activity activity = project.getActivityByName(oldName);
+        if (true) { // ændrer betingelsen
+            throw new OperationNotAllowedException("Not allowed: Activity not found");
+        }
+
+        if (true) { // ændrer betingelsen
+            throw new OperationNotAllowedException("Not allowed: Activity with the new name already exists");
+        }
+
+
+
+        activity.setName(newName);
+        activity.setBudgetTime(budgetHours);
+        activity.setStartWeek(startWeek);
+        activity.setEndWeek(endWeek);
+    }
+
+
+
+
 
     public void setStatusOfActivity(String activityName, String status) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName);

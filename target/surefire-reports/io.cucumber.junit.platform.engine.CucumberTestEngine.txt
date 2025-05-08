@@ -1,93 +1,29 @@
 -------------------------------------------------------------------------------
 Test set: io.cucumber.junit.platform.engine.CucumberTestEngine
 -------------------------------------------------------------------------------
-Tests run: 28, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.188 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
-Edit data.Edit data - User edits registered hours -- Time elapsed: 0.066 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user has registered 3 hours on an activity called "Test" in project 25002' and 2 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
+Tests run: 30, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.188 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
+Edit activity.Edit activity - User edits an activity successfully -- Time elapsed: 0.060 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Activity should exist ==> expected: not <null>
+	at hellocucumber.EditActivitySteps.theActivityExistsInProjectWithBudgetedTimeHoursStartWeekEndWeek(EditActivitySteps.java:32)
+	at ✽.the activity "B" exists in project "P" with budgeted time 100 hours, start week 11, end week 13(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/editActivity.feature:11)
 
-@Given("the user has registered {int} hours on an activity called {string} in project {int}")
-public void theUserHasRegisteredHoursOnAnActivityCalledInProject(Integer int1, String string, Integer int2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user changes the registered from {int} hours to {int} hours on the {string} activity")
-public void theUserChangesTheRegisteredFromHoursToHoursOnTheActivity(Integer int1, Integer int2, String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@Then("the system updates the registered hours to {int} hours on the {string} activity")
-public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1, String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
+Edit activity.Edit activity - User edits activity without changing name -- Time elapsed: 0.006 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Activity should exist ==> expected: not <null>
+	at hellocucumber.EditActivitySteps.theActivityExistsInProjectWithBudgetedTimeHoursStartWeekEndWeek(EditActivitySteps.java:32)
+	at ✽.the activity "A" exists in project "P" with budgeted time 90 hours, start week 12, end week 14(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/editActivity.feature:16)
 
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Edit activity.Edit activity - Editing activity fails because project does not exist -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Not allowed: Project not found> but was: <Project does not exist>
+	at hellocucumber.registerTimeSteps.an_error_message_should_be_shown(registerTimeSteps.java:99)
+	at ✽.an error message "Not allowed: Project not found" should be shown(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/editActivity.feature:21)
 
-Edit data.Edit data - User try to edit a non existing activity -- Time elapsed: 0.007 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the activity "Test 1" does not exist in the project 25003' and 1 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
+Edit activity.Edit activity - Editing activity fails because activity does not exist -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Not allowed: Activity not found> but was: <Project does not exist>
+	at hellocucumber.registerTimeSteps.an_error_message_should_be_shown(registerTimeSteps.java:99)
+	at ✽.an error message "Not allowed: Activity not found" should be shown(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/editActivity.feature:26)
 
-@Given("the activity {string} does not exist in the project {int}")
-public void theActivityDoesNotExistInTheProject(String string, Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user tries to edit hours for the {string} activity")
-public void theUserTriesToEditHoursForTheActivity(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Edit data.Edit data - User try to edit registered time with an invalid input -- Time elapsed: 0.007 s <<< ERROR!
-io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user has registered 3 hours on an activity called "Test 2"' and 1 other step(s) are undefined.
-You can implement these steps using the snippet(s) below:
-
-@Given("the user has registered {int} hours on an activity called {string}")
-public void theUserHasRegisteredHoursOnAnActivityCalled(Integer int1, String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-@When("the user tries to change the registered hours to {int} on the activity {string}")
-public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
-	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
-	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
-	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
-	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
-	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
-	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Edit activity.Edit activity - Editing activity fails because new name already exists -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Not allowed: Activity with the new name already exists> but was: <Project does not exist>
+	at hellocucumber.registerTimeSteps.an_error_message_should_be_shown(registerTimeSteps.java:99)
+	at ✽.an error message "Not allowed: Activity with the new name already exists" should be shown(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/not_working/editActivity.feature:33)
 
