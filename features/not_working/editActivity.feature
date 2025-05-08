@@ -1,4 +1,4 @@
-Feature: Edit data
+Feature: Edit activity
   Description: User can edit registered hours for a given activity
 
   Actor: User
