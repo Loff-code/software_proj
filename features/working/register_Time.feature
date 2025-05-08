@@ -48,13 +48,15 @@ Feature: Register used time
     Then an error message "Not allowed: User ID cannot be blank" should be shown
 
 
-
   Scenario: User registers time with non-0.5 hour value
     Given the system date is mocked
     When the user "vict" registers 5.4 hours spent on activity "Demo" on date "2025-02-06"
     Then the system records 5.5 hours for "Demo" on "2025-02-06" for the user "vict"
 
 
-
+  Scenario: User registers time with non-0.5 hour value
+    Given the system date is mocked
+    When the user "vict" registers 5.2 hours spent on activity "Demo" on date "2025-02-06"
+    Then the system records 5.0 hours for "Demo" on "2025-02-06" for the user "vict"
 
 
