@@ -33,19 +33,9 @@ Feature: Register used time
     And an error message "Not allowed: Hours have to be positive" should be shown
 
 
-
-    #føler ikke de er vigtig da den alligevel vil få fejl hvis man ikke taster noget
-
-  #Scenario: User registers time with invalid date
-   # When the user "vict" registers 4.0 hours spent on activity "Demo" on date ""
-    #And an error message "Invalid date" should be shown
-
   #Scenario: User registers time with missing hours
    # When the user "vict" registers "" hours spent on "Demo" on date "2025-02-06"
     #Then an error message "Hours missing" should be shown
-
-
-
 
 
   Scenario: User registers time with missing date

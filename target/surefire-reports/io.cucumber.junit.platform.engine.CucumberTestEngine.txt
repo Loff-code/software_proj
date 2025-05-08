@@ -2,7 +2,7 @@
 Test set: io.cucumber.junit.platform.engine.CucumberTestEngine
 -------------------------------------------------------------------------------
 Tests run: 28, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.188 s <<< FAILURE! -- in io.cucumber.junit.platform.engine.CucumberTestEngine
-Edit data.Edit data - User edits registered hours -- Time elapsed: 0.064 s <<< ERROR!
+Edit data.Edit data - User edits registered hours -- Time elapsed: 0.066 s <<< ERROR!
 io.cucumber.junit.platform.engine.UndefinedStepException: 
 The step 'the user has registered 3 hours on an activity called "Test" in project 25002' and 2 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
