@@ -110,8 +110,8 @@ public class PM_App extends Observable  {
         return  availables;
     }
     // Mainly for UI
-    public List<String> getAvailableUserIDsForActivity(String projectName, String activityName) throws OperationNotAllowedException {
-        Activity activity = getProject(projectName).getActivityByName(activityName);
+    public List<String> getAvailableUserIDsForActivity(int projectID, String activityName) throws OperationNotAllowedException {
+        Activity activity = getActivityByName(activityName, projectID);
         List<String>  availables = getAvailableUserIDs(activity.getStartWeek(), activity.getEndWeek());
             for (String userID : activity.getAssignedUsers()) {
                 availables.remove(userID);
@@ -126,8 +126,8 @@ public class PM_App extends Observable  {
     }
 
 
-    public void assignActivityToUser(String userID, String activityName, String projectName) throws OperationNotAllowedException {
-        Activity  activity = getProject(projectName).getActivityByName(activityName);
+    public void assignActivityToUser(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+        Activity  activity = getActivityByName(activityName, projectID);
         if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
             throw new OperationNotAllowedException("User has already 20 Activities in this week");
         }

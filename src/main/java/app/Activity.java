@@ -46,6 +46,13 @@ public void assignEmployeeToActivity(String userID)throws IllegalArgumentExcepti
 
     this.assignedUsers.add(userID);
 }
+public void setName(String name) throws IllegalArgumentException{
+    if (name.isBlank()){
+        throw new IllegalArgumentException("Name cannot be blank");
+    }
+    this.name = name;
+}
+
 public void setBudgetTime(int budgetTime) throws IllegalArgumentException{
     if (budgetTime < 0){
         throw new IllegalArgumentException("Budget time cannot be negative");

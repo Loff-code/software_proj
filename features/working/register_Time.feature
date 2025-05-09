@@ -12,7 +12,7 @@ Feature: Register used time
       | hamz     |
       | zoha     |
     And the user adds an activity with name "Demo", budgeted time 100 hours, start week 3, end week 6 to project "P"
-    And the user "vict" is assigned to the activity "Demo" in project "P"
+    And the user "vict" is assigned to the activity "Demo" in project "P" with ID 25000
 
 
   Scenario: User registers time spent on an activity successfully
