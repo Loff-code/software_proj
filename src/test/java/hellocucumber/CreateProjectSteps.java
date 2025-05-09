@@ -6,6 +6,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,17 +52,18 @@ public class CreateProjectSteps {
         }
     }
 
-    @Then("there are no duplicates of the project {string}")
-    public void there_are_no_duplicates_of_the_project(String name) {
+
+    @Then("the projects have different IDs")
+    public void theProjectsHaveDifferentIDs() {
         int cnt = 0;
-      for (Project project : app.getProjects()){
-            cnt += project.getName().equals((name))?1:0;
+        for (Project project1 : app.getProjects()){
+           for (Project project2 : app.getProjects()){
+               if (project1.getName().equals(project2.getName()) && project1.getProjectID() == project2.getProjectID()){
+                   cnt++;
+               }
+           }
+            assertTrue(cnt == 1);// counts itself
+            cnt = 0;
         }
-        assertTrue(cnt==1);
-
     }
-
-
-
-
 }

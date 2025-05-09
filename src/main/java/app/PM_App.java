@@ -130,18 +130,12 @@ public class PM_App extends Observable {
     }
 
     public void createProject(Project project) throws OperationNotAllowedException {
-        for (Project p : projects) {
-            if (p.getName().equals(project.getName())) {
-                throw new OperationNotAllowedException("Project name is taken");
-            }
-        }
         if (project.getName().length() < 1 || project.getName().length() > 20) {
             throw new OperationNotAllowedException("Project name must be between 1 and 20 characters");
         }
         if (project.getClient().length() < 1 || project.getClient().length() > 20) {
             throw new OperationNotAllowedException("Client name must be between 1 and 20 characters");
         }
-
         project.setProjectID(createProjectID());
         projects.add(project);
     }

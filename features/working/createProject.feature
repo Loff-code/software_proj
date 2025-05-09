@@ -18,10 +18,10 @@ Feature: Create Project
     Then the project "P" is not created
     #And an error message happens
 
-  Scenario: User fails to create project with identical name
+  Scenario: User creates project with identical name, but gets different IDs
     Given the user is logged in
     And project with name "P" exists
     When the user creates a project with the name "P", client "a"
-    Then there are no duplicates of the project "P"
+    Then the projects have different IDs
     #And an error message happens
 
