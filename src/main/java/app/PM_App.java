@@ -15,6 +15,7 @@ public class PM_App extends Observable  {
     }
     public  PM_App(){
         this.users.add(new User("huba"));
+        setDateServer(new RealDateServer());
     }
     private List<Project> projects = new ArrayList<>();
     private List<User> users = new ArrayList<>();
@@ -146,7 +147,7 @@ public class PM_App extends Observable  {
 
 
     public int createProjectID() {
-        int year = 25;
+        int year = getDateServer().getYear()%100;
         int counterForProjectsCreatedThisYear = 0;
         for (Project project : projects){
             if (project.getProjectID()/1000 == year){
