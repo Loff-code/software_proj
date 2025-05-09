@@ -185,6 +185,16 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.ACTIVITY_MENU;
 			return;
 		}
+		List<User> users = app.getUsers();
+		List<String> assignedUsers = app.getActivityByName(activityName, app.getProject(projectName).getProjectID()).getAssignedUsers();
+		for (User user :users){
+			for (String assignedUser : assignedUsers){
+				if (user.getID().equals(assignedUser)){
+					users.remove(user);
+				}
+			}
+		}
+
 		String userId = selectFromList(app.getUsers(), choice, User::getID);
 		if (userId != null) {
 			app.assignActivityToUser(userId, activityName, projectName);
