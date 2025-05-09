@@ -82,14 +82,10 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         if (date == null){
             throw new IllegalArgumentException("Not allowed: Date cannot be null");
         }
-
-
         // runde op til nærmeste halve time
         double roundedHours = (double) Math.round(hours * 2.0) / 2;
         String formattedDate = dateServer.dateToString(date);
         timeMap.put("[" + userID + "]|" + getName() +"|"+ formattedDate, roundedHours);
-
-
 
     }
 

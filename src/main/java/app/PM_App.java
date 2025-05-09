@@ -308,7 +308,7 @@ public class PM_App extends Observable  {
 
 
 
-    public List<String> getActivitiesByUser(String userID) {
+    public List<String> getAssignedActivitiesByUser(String userID) {
         List<String> activitiesByUser = new ArrayList<>();
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {

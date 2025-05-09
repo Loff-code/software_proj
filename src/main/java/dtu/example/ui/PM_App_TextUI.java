@@ -5,6 +5,7 @@ import app.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 public class PM_App_TextUI implements PropertyChangeListener {
@@ -17,16 +18,20 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	private BufferedReader reader;
 	private List<String> lastVacantUsers = new ArrayList<>();
 
+
 	private enum ProcessStep {
 		LOGIN, MAIN_MENU, SELECT_PROJECT, PROJECT_MENU, SELECT_ACTIVITY, ACTIVITY_MENU,
-		LOG_TIME, EDIT_ACTIVITY, STATUS_REPORT, EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START,
+		EDIT_ACTIVITY, STATUS_REPORT, EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START,
 		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME,
 		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER,
 		CREATE_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
-		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER
+		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
+		SELECT_ASSIGNED_ACTIVITY, ENTER_LOG_TIME_HOURS, CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE
+
 	}
 
 	private ProcessStep processStep = ProcessStep.LOGIN;
+	private double tempLogHours = 0;
 
 	public PM_App_TextUI() {
 		this(new PM_App());
@@ -35,6 +40,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	public PM_App_TextUI(PM_App app) {
 		this.app = app;
 		this.app.addObserver(this);
+		this.app.setDateServer(new RealDateServer());
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -83,39 +89,17 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case CREATE_PROJECT -> handleCreateProject(input, out);
 			case USERS_MENU -> handleUsersMenu(number);
 			case LIST_ALL_USERS -> processStep = ProcessStep.USERS_MENU;
-
-			case LIST_VACANT_USERS_INPUT -> {
-				if (input.equals("0")) {
-					processStep = ProcessStep.USERS_MENU;
-					return;
-				}
-				String[] parts = input.trim().split(" ");
-				if (parts.length == 2) {
-					try {
-						int start = Integer.parseInt(parts[0]);
-						int end = Integer.parseInt(parts[1]);
-						lastVacantUsers = app.getVacantUserIDs(start, end);
-						processStep = ProcessStep.LIST_VACANT_USERS;
-					} catch (NumberFormatException e) {
-						lastError = "Invalid input. Please enter two integers: startWeek endWeek.";
-					}
-				} else {
-					lastError = "Invalid input. Format: startWeek endWeek";
-				}
-			}
-
-			case LIST_VACANT_USERS -> processStep = ProcessStep.USERS_MENU;
+			case LIST_VACANT_USERS_INPUT -> handleListVacantUsersInput(input);
+			case LIST_VACANT_USERS -> handleListVacantUsers();
 			case CREATE_USER -> handleCreateUser(input, out);
 			case EDIT_ACTIVITY -> handleEditActivity(number);
 			case EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START, EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME -> processStep = ProcessStep.EDIT_ACTIVITY;
-			case LOG_TIME -> processStep = ProcessStep.ACTIVITY_MENU;
-			case STATUS_REPORT -> {
-				out.println("Status for Activity: " + activityName);
-				Activity a = app.getProject(projectName).getActivityByName(activityName);
-				out.println("Press enter to continue...");
-				reader.readLine();
-				processStep = ProcessStep.ACTIVITY_MENU;
-			}
+			case STATUS_REPORT -> handleStatusReport(out);
+			case SELECT_ASSIGNED_ACTIVITY -> handleSelectAssignedActivity(number);
+			case ENTER_LOG_TIME_HOURS -> handleLogTimeHours(input);
+			case CHOOSE_LOG_DATE_METHOD -> handleChooseLogDateMethod(number);
+			case ENTER_LOG_TIME_DATE -> handleLogTimeDate(input);
+
 		}
 	}
 
@@ -125,7 +109,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 				ProcessStep.CREATE_PROJECT, ProcessStep.CREATE_USER,
 				ProcessStep.EDIT_ACTIVITY_NAME, ProcessStep.EDIT_ACTIVITY_START,
 				ProcessStep.EDIT_ACTIVITY_END, ProcessStep.EDIT_ACTIVITY_BUDGET_TIME,
-				ProcessStep.LOG_TIME, ProcessStep.LIST_VACANT_USERS_INPUT
+				ProcessStep.LIST_VACANT_USERS_INPUT,
+				ProcessStep.ENTER_LOG_TIME_HOURS, ProcessStep.ENTER_LOG_TIME_DATE
 		).contains(step);
 	}
 
@@ -141,7 +126,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 1 -> processStep = ProcessStep.SELECT_PROJECT;
 			case 2 -> processStep = ProcessStep.CREATE_PROJECT;
 			case 3 -> processStep = ProcessStep.USERS_MENU;
-			case 4 -> processStep = ProcessStep.LOG_TIME;
+			case 4 -> processStep = ProcessStep.SELECT_ASSIGNED_ACTIVITY;
 			default -> setInvalidChoice();
 		}
 	}
@@ -188,7 +173,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 1 -> processStep = ProcessStep.ASSIGN_USER;
 			case 2 -> processStep = ProcessStep.VIEW_ASSIGNED_USERS;
 			case 3 -> processStep = ProcessStep.EDIT_ACTIVITY;
-			case 4 -> processStep = ProcessStep.LOG_TIME;
+			case 4 -> processStep = ProcessStep.ENTER_LOG_TIME_HOURS;
 			case 5 -> processStep = ProcessStep.STATUS_REPORT;
 			case 6 -> processStep = ProcessStep.PROJECT_MENU;
 			default -> setInvalidChoice();
@@ -289,6 +274,113 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 	}
 
+	private void handleListVacantUsersInput(String input) {
+		if (input.equals("0")) {
+			processStep = ProcessStep.USERS_MENU;
+			return;
+		}
+		String[] parts = input.trim().split(" ");
+		if (parts.length == 2) {
+			try {
+				int start = Integer.parseInt(parts[0]);
+				int end = Integer.parseInt(parts[1]);
+				lastVacantUsers = app.getVacantUserIDs(start, end);
+				processStep = ProcessStep.LIST_VACANT_USERS;
+			} catch (NumberFormatException e) {
+				lastError = "Invalid input. Please enter two integers: startWeek endWeek.";
+			}
+		} else {
+			lastError = "Invalid input. Format: startWeek endWeek";
+		}
+	}
+
+	private void handleListVacantUsers() {
+		processStep = ProcessStep.USERS_MENU;
+	}
+
+	private void handleStatusReport(PrintStream out) throws IOException, OperationNotAllowedException {
+		out.println("Status for Activity: " + activityName);
+		Activity a = app.getProject(projectName).getActivityByName(activityName);
+		out.println("   Name: " + a.getName());
+		out.println("   Start Week: " + a.getStartWeek());
+		out.println("   End Week: " + a.getEndWeek());
+		out.println("   Expected Time: " + a.getBudgetTime());
+		out.println("   Assigned Users:");
+		for (String user : a.getAssignedUsers()) {
+			out.println("     - " + user);
+		}
+		out.println("\nPress enter to continue...");
+		reader.readLine();
+		processStep = ProcessStep.ACTIVITY_MENU;
+	}
+
+	private void handleSelectAssignedActivity(int choice) throws OperationNotAllowedException {
+		if (choice == 0) {
+			processStep = ProcessStep.MAIN_MENU;
+			return;
+		}
+		List<String> list = app.getAssignedActivitiesByUser(userID);
+		if (choice < 1 || choice > list.size()) {
+			setInvalidChoice();
+			return;
+		}
+		String[] parts = list.get(choice - 1).split(" ");
+		if (parts.length < 3) {
+			lastError = "Unexpected format from getAssignedActivitiesByUser.";
+			processStep = ProcessStep.MAIN_MENU;
+			return;
+		}
+		activityName = parts[0];
+		projectName = parts[1];
+		processStep = ProcessStep.ACTIVITY_MENU;
+	}
+
+	private void handleLogTimeHours(String input) {
+		if (input.equals("0")) {
+			processStep = ProcessStep.ACTIVITY_MENU;
+			return;
+		}
+		try {
+			tempLogHours = Double.parseDouble(input);
+			processStep = ProcessStep.CHOOSE_LOG_DATE_METHOD;
+		} catch (NumberFormatException e) {
+			lastError = "Invalid number. Enter a valid number of hours.";
+		}
+	}
+	private void handleChooseLogDateMethod(int choice) {
+		switch (choice) {
+			case 0 -> processStep = ProcessStep.ENTER_LOG_TIME_HOURS;
+			case 1 -> {
+				String today = app.getDateServer().dateToString(LocalDate.now());
+				try {
+					int projectID = app.getProject(projectName).getProjectID();
+					app.registerTimeForActivity(userID, projectID, activityName, tempLogHours, today);
+				} catch (Exception e) {
+					lastError = "Failed to log time: " + e.getMessage();
+				}
+				processStep = ProcessStep.ACTIVITY_MENU;
+			}
+			case 2 -> processStep = ProcessStep.ENTER_LOG_TIME_DATE;
+			default -> setInvalidChoice();
+		}
+	}
+
+
+
+	private void handleLogTimeDate(String input) {
+		if (input.equals("0")) {
+			processStep = ProcessStep.ACTIVITY_MENU;
+			return;
+		}
+		try {
+			int projectID = app.getProject(projectName).getProjectID();
+			app.registerTimeForActivity(userID, projectID, activityName, tempLogHours, input);
+		} catch (Exception e) {
+			lastError = "Failed to log time: " + e.getMessage();
+		}
+		processStep = ProcessStep.ACTIVITY_MENU;
+	}
+
 	private void logout() {
 		userID = null;
 		projectName = null;
@@ -322,12 +414,12 @@ public class PM_App_TextUI implements PropertyChangeListener {
 
 		switch (processStep) {
 			case LOGIN -> out.println("Enter UserID:");
-			case MAIN_MENU -> printOptions(out, "Logout", "Select Project", "Create Project", "Users Menu", "Log Time");
+			case MAIN_MENU -> printOptions(out, "Logout", "Select Project", "Create Project", "Users Menu", "My Assigned Activities");
 			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Create Activity", "Assign Project Leader");
 			case SELECT_ACTIVITY -> printList(out, app.getProject(projectName).getActivities(), Activity::getName, "Select an Activity:");
 			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Status Report", "Back to Project Menu");
-			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectName,activityName), id -> id, "Select a User:");
+			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectName, activityName), id -> id, "Select a User:");
 			case ASSIGN_PROJECT_LEADER -> printList(out, app.getUsers(), User::getID, "Select a Project Leader:");
 			case CREATE_ACTIVITY -> out.println("Enter: activityName expectedTime startWeek endWeek (or 0 to cancel)");
 			case CREATE_PROJECT -> out.println("Enter: projectName clientName (or 0 to cancel)");
@@ -339,7 +431,10 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case CREATE_USER -> out.println("Enter UserID (max 4 chars) or 0 to cancel:");
 			case EDIT_ACTIVITY -> printOptions(out, "Back", "Edit Name", "Edit Start Week", "Edit End Week", "Edit Budget Time");
 			case EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START, EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME -> out.println("Enter new value:");
-			case LOG_TIME -> out.println("Enter time to log (hours):");
+			case ENTER_LOG_TIME_HOURS -> out.println("Enter time to log (hours) or 0 to go back:");
+			case CHOOSE_LOG_DATE_METHOD -> printOptions(out, "Back", "Log for Today", "Enter Date Manually");
+			case ENTER_LOG_TIME_DATE -> out.println("Enter date (YYYY-MM-DD) or 0 to go back:");
+			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUser(userID), s -> s, "Select an Assigned Activity:");
 			case STATUS_REPORT -> {}
 		}
 	}
@@ -353,7 +448,6 @@ public class PM_App_TextUI implements PropertyChangeListener {
 				header += " (" + leader.getID() + ")";
 			}
 			header += "]";
-
 			if (activityName != null) {
 				Activity activity = project.getActivityByName(activityName);
 				header += " -> [Activity: " + activity.getName()
