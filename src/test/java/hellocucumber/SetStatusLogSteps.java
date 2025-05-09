@@ -16,16 +16,16 @@ public class SetStatusLogSteps {
         this.errorMessageHolder = errorMessageHolder;
     }
 
-    // === EMPLOYEE SCENARIO ===
+    // === User SCENARIO ===
 
-    @Given("that the employee is logged in")
-    public void that_the_employee_is_logged_in() throws OperationNotAllowedException {
+    @Given("that the User is logged in")
+    public void that_the_User_is_logged_in() throws OperationNotAllowedException {
         app.createUser(new User("emp"));
         app.login("emp");
     }
 
-    @Given("the employee is assigned to an activity named {string} in project with ID {int}")
-    public void the_employee_is_assigned_to_an_activity_named(String activityName, int projectID) throws OperationNotAllowedException {
+    @Given("the User is assigned to an activity named {string} in project with ID {int}")
+    public void the_User_is_assigned_to_an_activity_named(String activityName, int projectID) throws OperationNotAllowedException {
         project = new Project("TestProject", "TestClient");
         activity = new Activity(activityName, 10, 1, 10);
         activity.assignEmployeeToActivity("emp");
@@ -33,8 +33,8 @@ public class SetStatusLogSteps {
         app.addActivityToProject(projectID, activity);
     }
 
-    @When("the employee sets the status of {string} to {string} in project with ID {int}")
-    public void the_employee_sets_the_status_of_to(String activityName, String status, int projectID) {
+    @When("the User sets the status of {string} to {string} in project with ID {int}")
+    public void the_User_sets_the_status_of_to(String activityName, String status, int projectID) {
         try {
             app.setStatusOfActivity(activityName, projectID, status);
         } catch (OperationNotAllowedException e) {
@@ -55,18 +55,18 @@ public class SetStatusLogSteps {
     }
 
 
-    // === UNAUTHORIZED EMPLOYEE SCENARIO ===
+    // === UNAUTHORIZED User SCENARIO ===
 
-    @Given("there is an activity named {string} that the employee is not assigned to in project with ID {int}")
-    public void there_is_an_activity_named_that_the_employee_is_not_assigned_to(String activityName, int projectID) throws OperationNotAllowedException {
+    @Given("there is an activity named {string} that the User is not assigned to in project with ID {int}")
+    public void there_is_an_activity_named_that_the_User_is_not_assigned_to(String activityName, int projectID) throws OperationNotAllowedException {
         project = new Project("UnassignedProject", "Client");
         activity = new Activity(activityName, 10, 1, 10);
         app.createProject(project); // VIGTIGT!
         app.addActivityToProject(projectID, activity);
     }
 
-    @When("the employee tries to set the status of {string} to {string} in project with ID {int}")
-    public void the_employee_tries_to_set_the_status_of_to(String activityName, String status, int projectID) {
+    @When("the User tries to set the status of {string} to {string} in project with ID {int}")
+    public void the_User_tries_to_set_the_status_of_to(String activityName, String status, int projectID) {
         try {
             app.setStatusOfActivity(activityName, projectID,status);
         } catch (OperationNotAllowedException e) {
