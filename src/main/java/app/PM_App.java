@@ -273,34 +273,43 @@ public class PM_App extends Observable  {
 
 
     public void editActivityInProject(String projectName, String oldName, String newName, int budgetHours, int startWeek, int endWeek) throws OperationNotAllowedException {
+        System.out.println("🔧 editActivityInProject called with projectName='" + projectName + "', oldName='" + oldName + "', newName='" + newName + "'");
 
-        if (!projects.contains(projectName)) {
+        Project project;
+        try {
+            project = getProject(projectName);
+        } catch (OperationNotAllowedException e) {
+            System.out.println("❌ Project '" + projectName + "' not found.");
             throw new OperationNotAllowedException("Not allowed: Project does not exist");
         }
 
-        Project project = getProject(projectName);
-
-
-        // det her er for dine error message steps. du skal gøre sådan at den passer.
-        // lige nu sammenligner den med en forkert betingelse
-        // hvis du ændre betingelsen til noget rigtigt så burde det virke
-
         Activity activity = project.getActivityByName(oldName);
-        if (true) { // ændrer betingelsen
+        if (activity == null) {
+            System.out.println("❌ Activity '" + oldName + "' not found in project '" + projectName + "'");
             throw new OperationNotAllowedException("Not allowed: Activity not found");
         }
 
-        if (true) { // ændrer betingelsen
+        if (!oldName.equals(newName) && project.getActivityByName(newName) != null) {
+            System.out.println("❌ New name '" + newName + "' already exists in project '" + projectName + "'");
             throw new OperationNotAllowedException("Not allowed: Activity with the new name already exists");
         }
 
+        // Hvis navnet ændres, skal vi opdatere projektets aktivitetssamling
+        if (!oldName.equals(newName)) {
+            project.removeActivityByName(oldName);
+            activity.setName(newName);
+            project.getActivities().add(activity);  // Tilføj med nyt navn
+        }
 
-
-        activity.setName(newName);
         activity.setBudgetTime(budgetHours);
         activity.setStartWeek(startWeek);
         activity.setEndWeek(endWeek);
+
+        System.out.println("✅ Activity updated successfully.");
     }
+
+
+
 
 
 

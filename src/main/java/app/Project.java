@@ -94,4 +94,10 @@ public class Project {
     public int getProjectID() {
         return this.projectID;
     }
+
+    public void removeActivityByName(String name) {
+        activities.removeIf(activity -> activity.getName().equals(name));
+    }
+
+
 }
