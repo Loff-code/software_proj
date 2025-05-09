@@ -18,7 +18,7 @@ public class ActivityTest {
         activity.assignEmployeeToActivity("vict");
 
         Exception e = assertThrows(IllegalArgumentException.class, () ->
-                activity.registerTime("vict", 2.0, null, "Demo", new RealDateServer())
+                activity.registerTime("vict", 2.0, null, new RealDateServer())
         );
 
         assertEquals("Not allowed: Date cannot be null", e.getMessage());
@@ -32,7 +32,7 @@ public class ActivityTest {
         LocalDate date = LocalDate.of(2025, 2, 6);
 
         Exception e = assertThrows(IllegalArgumentException.class, () ->
-                activity.registerTime("", 2.0, date, "Demo", new RealDateServer())
+                activity.registerTime("", 2.0, date, new RealDateServer())
         );
 
         assertEquals("Not allowed: User is not assigned to this activity", e.getMessage());
