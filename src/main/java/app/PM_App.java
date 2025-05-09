@@ -217,7 +217,6 @@ public class PM_App extends Observable  {
         this.userID = "";
     }
 
-
     public void assignProjectLeader(String projectName, String assignedUserID) throws IllegalArgumentException, OperationNotAllowedException {
         Project project = getProject(projectName);
         project.setProjectLeader(assignedUserID,userID);
@@ -261,52 +260,18 @@ public class PM_App extends Observable  {
 
 
 
-
     public void addActivityToProject(String projectName, Activity activity) throws IllegalArgumentException, OperationNotAllowedException {
         Project project = getProject(projectName);
         project.addActivity(activity,userID);
     }
+
     public void addActivityToProject(int projectID, Activity activity) throws IllegalArgumentException, OperationNotAllowedException {
         Project project = getProject(projectID);
       project.addActivity(activity,userID);
     }
 
 
-    public void editActivityInProject(String projectName, String oldName, String newName, int budgetHours, int startWeek, int endWeek) throws OperationNotAllowedException {
-        System.out.println("🔧 editActivityInProject called with projectName='" + projectName + "', oldName='" + oldName + "', newName='" + newName + "'");
 
-        Project project;
-        try {
-            project = getProject(projectName);
-        } catch (OperationNotAllowedException e) {
-            System.out.println("❌ Project '" + projectName + "' not found.");
-            throw new OperationNotAllowedException("Not allowed: Project does not exist");
-        }
-
-        Activity activity = project.getActivityByName(oldName);
-        if (activity == null) {
-            System.out.println("❌ Activity '" + oldName + "' not found in project '" + projectName + "'");
-            throw new OperationNotAllowedException("Not allowed: Activity not found");
-        }
-
-        if (!oldName.equals(newName) && project.getActivityByName(newName) != null) {
-            System.out.println("❌ New name '" + newName + "' already exists in project '" + projectName + "'");
-            throw new OperationNotAllowedException("Not allowed: Activity with the new name already exists");
-        }
-
-        // Hvis navnet ændres, skal vi opdatere projektets aktivitetssamling
-        if (!oldName.equals(newName)) {
-            project.removeActivityByName(oldName);
-            activity.setName(newName);
-            project.getActivities().add(activity);  // Tilføj med nyt navn
-        }
-
-        activity.setBudgetTime(budgetHours);
-        activity.setStartWeek(startWeek);
-        activity.setEndWeek(endWeek);
-
-        System.out.println("✅ Activity updated successfully.");
-    }
 
 
 
@@ -342,6 +307,43 @@ public class PM_App extends Observable  {
 
         activity.setStatus(status);
         activity.addLog("Status changed to: " + status + " by " + userID);
+    }
+
+
+
+    public void editActivityInProject(String projectName, String oldName, String newName, int budgetHours, int startWeek, int endWeek) throws OperationNotAllowedException {
+        System.out.println("🔧 editActivityInProject called with projectName='" + projectName + "', oldName='" + oldName + "', newName='" + newName + "'");
+
+        Project project = getProject(projectName);
+        Activity activity = project.getActivityByName(oldName);
+
+        if (activity == null) {
+            System.out.println("❌ Activity '" + oldName + "' not found in project '" + projectName + "'");
+            throw new OperationNotAllowedException("Not allowed: Activity not found");
+        }
+
+        if (!oldName.equals(newName) && project.getActivityByName(newName) != null) {
+            System.out.println("❌ New name '" + newName + "' already exists in project '" + projectName + "'");
+            throw new OperationNotAllowedException("Not allowed: Activity with the new name already exists");
+        }
+
+        // Fjern aktiviteten med det gamle navn fra projektet
+        project.removeActivityByName(oldName);
+
+        // Opdater attributterne
+        activity.setName(newName);
+        activity.setBudgetTime(budgetHours);
+        activity.setStartWeek(startWeek);
+        activity.setEndWeek(endWeek);
+
+        // Tilføj tilbage til projektet under nyt navn
+        project.getActivities().add(activity);
+
+        // Debug: Vis alle aktiviteter i projektet efter opdatering
+        System.out.println("✅ Aktiviteter i projekt '" + projectName + "' efter ændring:");
+        for (Activity a : project.getActivities()) {
+            System.out.println("• " + a.getName() + " | " + a.getBudgetTime() + "h | uge " + a.getStartWeek() + "–" + a.getEndWeek());
+        }
     }
 
 
