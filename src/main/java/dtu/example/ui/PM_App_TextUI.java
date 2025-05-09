@@ -1,12 +1,23 @@
 package dtu.example.ui;
 
-import app.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+
+import app.Activity;
+import app.OperationNotAllowedException;
+import app.PM_App;
+import app.Project;
+import app.RealDateServer;
+import app.User;
 
 public class PM_App_TextUI implements PropertyChangeListener {
 
@@ -192,8 +203,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.ACTIVITY_MENU;
 			return;
 		}
-		List<String> available = app.getAvailableUserIDsForActivity(projectID, activityName);
-		String userId = selectFromList(available, choice, id -> id);
+		List<String> assignedUsers =app.getAssignedActivitiesByUser(userID);
+		String userId = selectFromList(assignedUsers, choice, id ->id);
 		if (userId != null) {
 			app.assignActivityToUser(userId, activityName, projectID);
 		}
