@@ -43,12 +43,12 @@ public class SetStatusLogSteps {
     }
 
     @Then("the status of {string} is updated to {string} in project with ID {int}")
-    public void the_status_of_is_updated_to(String activityName, String expectedStatus, int projectID) {
+    public void the_status_of_is_updated_to(String activityName, String expectedStatus, int projectID) throws OperationNotAllowedException {
         assertEquals(expectedStatus.toLowerCase(), app.getActivityByName(activityName, projectID).getStatus().toLowerCase());
     }
 
     @Then("a log entry is created with the new status")
-    public void a_log_entry_is_created_with_the_new_status() {
+    public void a_log_entry_is_created_with_the_new_status() throws OperationNotAllowedException {
         String expected = "Status changed to: " + app.getActivityByName(activity.getName(), project.getProjectID()).getStatus() + " by " + app.getUserID();
         assertTrue(app.getActivityByName(activity.getName(), project.getProjectID()).getLog().stream().anyMatch(log -> log.equals(expected)),
                 "Expected log not found: " + expected);

@@ -283,7 +283,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	}
 
 
-	private void handleEditActivityName(String input) {
+	private void handleEditActivityName(String input) throws OperationNotAllowedException {
 		if (input.equals("0")) {
 			processStep = ProcessStep.EDIT_ACTIVITY;
 			return;
@@ -305,7 +305,9 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		} catch (NumberFormatException e) {
 			lastError = "Invalid number. Please enter a valid week number.";
 			processStep = ProcessStep.ACTIVITY_MENU;
-		}
+		} catch (OperationNotAllowedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 	private void handleEditActivityEnd(String input) {
@@ -320,7 +322,9 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		} catch (NumberFormatException e) {
 			lastError = "Invalid number. Please enter a valid week number.";
 			processStep = ProcessStep.ACTIVITY_MENU;
-		}
+		} catch (OperationNotAllowedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 	private void handleEditActivityBudgetTime(String input) {
@@ -332,7 +336,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			int time = Integer.parseInt(input);
 			app.getActivityByName(activityName, projectID).setBudgetTime(time);
 			processStep = ProcessStep.EDIT_ACTIVITY;
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | OperationNotAllowedException e) {
 			lastError = "Invalid number. Please enter a valid number of hours.";
 			processStep = ProcessStep.ACTIVITY_MENU;
 		}

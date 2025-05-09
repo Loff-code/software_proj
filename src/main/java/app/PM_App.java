@@ -7,53 +7,66 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+public class PM_App extends Observable {
 
-public class PM_App extends Observable  {
-    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    /* ── FIELDS & BASIC STATE ────────────────────────────────────────── */
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private final List<Project> projects = new ArrayList<>();
+    private final List<User>    users    = new ArrayList<>();
+
+    private DateServer dateServer = new RealDateServer();
+    private String     userID     = "";
+
+    /* ── CONSTRUCTOR & OBSERVERS ─────────────────────────────────────── */
+    public PM_App() {users.add(new User("huba"));}
+
     public void addObserver(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-    public  PM_App(){
-        this.users.add(new User("huba"));
-        setDateServer(new RealDateServer());
-    }
-    private List<Project> projects = new ArrayList<>();
-    private List<User> users = new ArrayList<>();
 
-    private DateServer dateServer ;
-    private String userID = "";
+    /* ── SIMPLE ACCESSORS ────────────────────────────────────────────── */
+    public List<Project> getProjects() { return projects; }
+    public List<User>    getUsers()    { return users;    }
+    public String        getUserID()   { return userID;   }
+    public DateServer    getDateServer() { return dateServer; }
+    public void setDateServer(DateServer dateServer) { this.dateServer = dateServer; }
+    public void logout() { userID = ""; }
 
+    /* ── USER MANAGEMENT ─────────────────────────────────────────────── */
     public void createUser(User newUser) throws OperationNotAllowedException {
         String newUserID = newUser.getID();
-        for (User user1 : users) {
-            if (user1.getID().equals(newUserID)) {
-                throw new OperationNotAllowedException("User ID is taken");
-            }
+       try {
+            getUserByID(newUserID);
+            throw new OperationNotAllowedException("User ID is already taken");
+        } catch (OperationNotAllowedException e) {
+           users.add(newUser);
         }
-        if (newUserID.length() < 1 || newUserID.length() > 4) {
+    }
+
+    public User getUserByID(String ID) throws OperationNotAllowedException {
+        if (ID.length() < 1 || ID.length() > 4) {
             throw new OperationNotAllowedException("User ID must be between 1 and 4 characters");
         }
-            this.users.add(newUser);
-
+        for (User user : users) {
+            if (user.getID().equals(ID)) {
+                return user;
+            }
+        }
+        throw new OperationNotAllowedException("User does not exist");
     }
 
-    public List<Project> getProjects() {
-        return this.projects;
+    public void login(String id) throws OperationNotAllowedException {
+        this.userID = getUserByID(id).getID();// makes error if user does not exist
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-
-
-    // Get the number of activities assigned to a user in a specific week range
+    /* ── AVAILABILITY ────────────────────────────────────────────────── */
     public int getUserActivityCountByWeek(String userID, int startWeek, int endWeek) {
         int count = 0;
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {
-                if (activity.getAssignedUsers().contains(userID)  && activity.getStartWeek() < startWeek
-                        && activity.getEndWeek() > endWeek ) {
+                if (activity.getAssignedUsers().contains(userID)
+                        && activity.getStartWeek() < startWeek
+                        && activity.getEndWeek()   > endWeek) {
                     count++;
                 }
             }
@@ -61,93 +74,64 @@ public class PM_App extends Observable  {
         return count;
     }
 
-
-    public User getUserByID (String ID) throws  OperationNotAllowedException{
-        for (User user : users){
-            if (user.getID().equals(ID)){
-                return user;
-            }
-        }
-        throw new OperationNotAllowedException("User does not exist");
-    }
-
-    // Check if user is vacant for the given weeks
     public boolean isVacant(String userID, int startWeek, int endWeek) {
-     return getUserActivityCountByWeek(userID, startWeek, endWeek) == 0;
+        return getUserActivityCountByWeek(userID, startWeek, endWeek) == 0;
     }
 
-    // Check if user is available for the given weeks
     public boolean isAvailable(String userID, int startWeek, int endWeek) {
         for (int i = startWeek; i <= endWeek; i++) {
-            if (getUserActivityCountByWeek(userID, startWeek, i) >= 20){
+            if (getUserActivityCountByWeek(userID, startWeek, i) >= 20) {
                 return false;
             }
-
         }
-    return true;
+        return true;
     }
 
-    // Mainly for UI
-    public List<String> getAvailableUserIDs(int startWeek, int endWeek){
-        List<String>  availables = new ArrayList<>();
-        for (User user : users){
-            if (isAvailable(user.getID(),startWeek,endWeek)){
+    public List<String> getAvailableUserIDs(int startWeek, int endWeek) {
+        List<String> availables = new ArrayList<>();
+        for (User user : users) {
+            if (isAvailable(user.getID(), startWeek, endWeek)) {
                 availables.add(user.getID());
             }
         }
-        return  availables;
+        return availables;
     }
-    // Mainly for UI
+
     public List<String> getAvailableUserIDsForActivity(int projectID, String activityName) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
-        List<String>  availables = getAvailableUserIDs(activity.getStartWeek(), activity.getEndWeek());
-            for (String userID : activity.getAssignedUsers()) {
-                availables.remove(userID);
-            }
-        return  availables;
-    }
+        List<String> availables = getAvailableUserIDs(activity.getStartWeek(), activity.getEndWeek());
 
-    // skal viu ikke bare fjerne den. vi bruger jo ikke id i addprojectleader.feature
-    public String getProjectLeaderID(int projectID) throws OperationNotAllowedException {
-        Project project = getProject(projectID);
-        return project.getProjectLeaderID();
-    }
-
-
-    public void assignActivityToUser(String userID, String activityName, int projectID) throws OperationNotAllowedException {
-        Activity  activity = getActivityByName(activityName, projectID);
-        if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
-            throw new OperationNotAllowedException("User has already 20 Activities in this week");
+        for (String id : activity.getAssignedUsers()) {
+            availables.remove(id);
         }
-        activity.assignEmployeeToActivity(userID);
+        return availables;
     }
 
-    public List<String> getVacantUserIDs(int startWeek, int endWeek){
-        List<String>  vacantUserIDs = new ArrayList<>();
-        for (User user : users){
-            if (isVacant(user.getID(),startWeek,endWeek)){
-                vacantUserIDs.add(user.getID());
+    public List<String> getVacantUserIDs(int startWeek, int endWeek) {
+        List<String> vacant = new ArrayList<>();
+        for (User user : users) {
+            if (isVacant(user.getID(), startWeek, endWeek)) {
+                vacant.add(user.getID());
             }
         }
-        return  vacantUserIDs;
+        return vacant;
     }
 
-
+    /* ── PROJECT CREATION & LOOK-UP ──────────────────────────────────── */
     public int createProjectID() {
-        int year = getDateServer().getYear()%100;
-        int counterForProjectsCreatedThisYear = 0;
-        for (Project project : projects){
-            if (project.getProjectID()/1000 == year){
-                counterForProjectsCreatedThisYear++;
+        int year = dateServer.getYear() % 100;
+        int count = 0;
+        for (Project p : projects) {
+            if (p.getProjectID() / 1000 == year) {
+                count++;
             }
         }
-        return year * 1000 + counterForProjectsCreatedThisYear;
+        return year * 1000 + count;
     }
 
-    public void createProject(Project project) throws OperationNotAllowedException{
-
-        for (Project project1 : projects){
-            if (project1.getName().equals(project.getName())){
+    public void createProject(Project project) throws OperationNotAllowedException {
+        for (Project p : projects) {
+            if (p.getName().equals(project.getName())) {
                 throw new OperationNotAllowedException("Project name is taken");
             }
         }
@@ -158,111 +142,70 @@ public class PM_App extends Observable  {
             throw new OperationNotAllowedException("Client name must be between 1 and 20 characters");
         }
 
-            project.setProjectID(createProjectID());
-            this.projects.add(project);
-
+        project.setProjectID(createProjectID());
+        projects.add(project);
     }
 
     public Project getProject(String name) throws OperationNotAllowedException {
-        for (Project project : this.projects){
-            if (project.getName().equals(name)){
-                return project;
-            }
-
-        }
-        throw new OperationNotAllowedException("Project does not exist");
-    }
-
-    public Project getProject(int id) throws  OperationNotAllowedException {
-        for (Project project : this.projects){
-            if (project.getProjectID() == id){
-                return project;
-            }
-        }
-        throw new OperationNotAllowedException("Project does not exist");
-    }
-
-
-
-
-    public String getUserID() {
-        return userID;
-    }
-
-
-    public void login(String id) throws OperationNotAllowedException{
-        for (User user : users){
-            if(user.getID().equals(id)) {
-                this.userID = user.getID();
-            }
-
-        }
-        if (this.userID.equals("")){
-            throw new OperationNotAllowedException("User does not exist");
-        }
-    }
-
-
-    public void logout(){
-        this.userID = "";
-    }
-
-
-    public void assignProjectLeader(String projectName, String assignedUserID) throws IllegalArgumentException, OperationNotAllowedException {
-        Project project = getProject(projectName);
-        project.setProjectLeader(assignedUserID,userID);
-
-    }
-    public void assignProjectLeader(int projectID, String assignedUserID) throws IllegalArgumentException, OperationNotAllowedException {
-        Project project = getProject(projectID);
-        project.setProjectLeader(assignedUserID,userID);
-
-    }
-
-
-    // register  date
-
-
-
-    public void setDateServer(DateServer dateServer){
-        this.dateServer = dateServer;
-    }
-    public DateServer getDateServer() {return this.dateServer;}
-
-
-
-    public Activity getActivityByName(String name, int projectID) {
         for (Project project : projects) {
-            if (project.getProjectID() == projectID) {
-                for (Activity activity : project.getActivities()) {
-                    if (activity.getName().equals(name)) {
-                        return activity;
-                    }
-                }
+            if (project.getName().equals(name)) {
+                return project;
+            }
+        }
+        throw new OperationNotAllowedException("Project does not exist");
+    }
+
+    public Project getProject(int id) throws OperationNotAllowedException {
+        for (Project project : projects) {
+            if (project.getProjectID() == id) {
+                return project;
+            }
+        }
+        throw new OperationNotAllowedException("Project does not exist");
+    }
+
+    public String getProjectLeaderID(int projectID) throws OperationNotAllowedException {
+        return getProject(projectID).getProjectLeaderID();
+    }
+
+    public void assignProjectLeader(String projectName, String assignedUserID) throws OperationNotAllowedException {
+        getProject(projectName).setProjectLeader(assignedUserID, userID);
+    }
+
+    public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException {
+        getProject(projectID).setProjectLeader(assignedUserID, userID);
+    }
+
+    /* ── ACTIVITY MANAGEMENT ─────────────────────────────────────────── */
+    public Activity getActivityByName(String name, int projectID) throws OperationNotAllowedException {
+        for (Activity activity : getProject(projectID).getActivities()) {
+            if (activity.getName().equals(name)) {
+                return activity;
             }
         }
         return null;
     }
 
+    public void addActivityToProject(String projectName, Activity activity) throws OperationNotAllowedException {
+        getProject(projectName).addActivity(activity, userID);
+    }
 
+    public void addActivityToProject(int projectID, Activity activity) throws OperationNotAllowedException {
+        getProject(projectID).addActivity(activity, userID);
+    }
+
+    public void assignActivityToUser(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+        Activity activity = getActivityByName(activityName, projectID);
+        if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
+            throw new OperationNotAllowedException("User has already 20 Activities in this week");
+        }
+        activity.assignEmployeeToActivity(userID);
+    }
 
     public void registerTimeForActivity(String userID, int projectID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
         LocalDate date = dateServer.parseDate(dateStr);
         activity.registerTime(userID, hours, date, dateServer);
-    }
-
-
-
-
-
-    public void addActivityToProject(String projectName, Activity activity) throws IllegalArgumentException, OperationNotAllowedException {
-        Project project = getProject(projectName);
-        project.addActivity(activity,userID);
-    }
-    public void addActivityToProject(int projectID, Activity activity) throws IllegalArgumentException, OperationNotAllowedException {
-        Project project = getProject(projectID);
-      project.addActivity(activity,userID);
     }
 
     public void setStatusOfActivity(String activityName, int projectID, String status) throws OperationNotAllowedException {
@@ -278,13 +221,13 @@ public class PM_App extends Observable  {
                 break;
             }
         }
-
         if (containingProject == null) {
             throw new OperationNotAllowedException("Activity does not belong to any project");
         }
 
-        boolean isAssigned = activity.getAssignedUsers().contains(userID);
+        boolean isAssigned      = activity.getAssignedUsers().contains(userID);
         boolean isProjectLeader = userID.equals(containingProject.getProjectLeaderID());
+
 
         if (!isAssigned && !isProjectLeader) {
             throw new OperationNotAllowedException("Only assigned employees or the project leader can set the status");
@@ -294,19 +237,16 @@ public class PM_App extends Observable  {
         activity.addLog("Status changed to: " + status + " by " + userID);
     }
 
-
-
+    /* ── REPORTS ─────────────────────────────────────────────────────── */
     public List<String> getAssignedActivitiesByUser(String userID) {
-        List<String> activitiesByUser = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {
                 if (activity.getAssignedUsers().contains(userID)) {
-                    activitiesByUser.add(activity.getName() + " " + project.getName() + " " + project.getProjectID());
+                    list.add(activity.getName() + " " + project.getName() + " " + project.getProjectID());
                 }
             }
         }
-        return activitiesByUser;
+        return list;
     }
-
 }
-

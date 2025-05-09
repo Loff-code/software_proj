@@ -102,7 +102,7 @@ public class registerTimeSteps {
 
 
     @Then("the system records {double} hours for {string} on {string} for the user {string} in project with ID {int}")//hh
-    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String date, String userID, int projectID) {
+    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String date, String userID, int projectID) throws OperationNotAllowedException {
         Activity activity = app.getActivityByName(activityName, projectID);
         String parsedDate = app.getDateServer().dateToString(app.getDateServer().parseDate(date));
 
