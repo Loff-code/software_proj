@@ -24,51 +24,51 @@ public class SetStatusLogSteps {
         app.login("emp");
     }
 
-    @Given("the employee is assigned to an activity named {string}")
-    public void the_employee_is_assigned_to_an_activity_named(String activityName) throws OperationNotAllowedException {
+    @Given("the employee is assigned to an activity named {string} in project with ID {int}")
+    public void the_employee_is_assigned_to_an_activity_named(String activityName, int projectID) throws OperationNotAllowedException {
         project = new Project("TestProject", "TestClient");
         activity = new Activity(activityName, 10, 1, 10);
         activity.assignEmployeeToActivity("emp");
-        project.getActivities().add(activity);
         app.createProject(project); // VIGTIGT!
+        app.addActivityToProject(projectID, activity);
     }
 
-    @When("the employee sets the status of {string} to {string}")
-    public void the_employee_sets_the_status_of_to(String activityName, String status) {
+    @When("the employee sets the status of {string} to {string} in project with ID {int}")
+    public void the_employee_sets_the_status_of_to(String activityName, String status, int projectID) {
         try {
-            app.setStatusOfActivity(activityName, status);
+            app.setStatusOfActivity(activityName, projectID, status);
         } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
-    @Then("the status of {string} is updated to {string}")
-    public void the_status_of_is_updated_to(String activityName, String expectedStatus) {
-        assertEquals(expectedStatus.toLowerCase(), app.getActivityByName(activityName).getStatus().toLowerCase());
+    @Then("the status of {string} is updated to {string} in project with ID {int}")
+    public void the_status_of_is_updated_to(String activityName, String expectedStatus, int projectID) {
+        assertEquals(expectedStatus.toLowerCase(), app.getActivityByName(activityName, projectID).getStatus().toLowerCase());
     }
 
     @Then("a log entry is created with the new status")
     public void a_log_entry_is_created_with_the_new_status() {
-        String expected = "Status changed to: " + app.getActivityByName(activity.getName()).getStatus() + " by " + app.getUserID();
-        assertTrue(app.getActivityByName(activity.getName()).getLog().stream().anyMatch(log -> log.equals(expected)),
+        String expected = "Status changed to: " + app.getActivityByName(activity.getName(), project.getProjectID()).getStatus() + " by " + app.getUserID();
+        assertTrue(app.getActivityByName(activity.getName(), project.getProjectID()).getLog().stream().anyMatch(log -> log.equals(expected)),
                 "Expected log not found: " + expected);
     }
 
 
     // === UNAUTHORIZED EMPLOYEE SCENARIO ===
 
-    @Given("there is an activity named {string} that the employee is not assigned to")
-    public void there_is_an_activity_named_that_the_employee_is_not_assigned_to(String activityName) throws OperationNotAllowedException {
+    @Given("there is an activity named {string} that the employee is not assigned to in project with ID {int}")
+    public void there_is_an_activity_named_that_the_employee_is_not_assigned_to(String activityName, int projectID) throws OperationNotAllowedException {
         project = new Project("UnassignedProject", "Client");
         activity = new Activity(activityName, 10, 1, 10);
-        project.getActivities().add(activity);
         app.createProject(project); // VIGTIGT!
+        app.addActivityToProject(projectID, activity);
     }
 
-    @When("the employee tries to set the status of {string} to {string}")
-    public void the_employee_tries_to_set_the_status_of_to(String activityName, String status) {
+    @When("the employee tries to set the status of {string} to {string} in project with ID {int}")
+    public void the_employee_tries_to_set_the_status_of_to(String activityName, String status, int projectID) {
         try {
-            app.setStatusOfActivity(activityName, status);
+            app.setStatusOfActivity(activityName, projectID,status);
         } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -92,8 +92,8 @@ public class SetStatusLogSteps {
         app.login("lead");
     }
 
-    @Given("there is an activity named {string} in their project")
-    public void there_is_an_activity_named_in_their_project(String activityName) throws OperationNotAllowedException {
+    @Given("there is an activity named {string} in their project with ID {int}")
+    public void there_is_an_activity_named_in_their_project(String activityName, int projectID) throws OperationNotAllowedException {
         app.createUser(new User("adm"));
         app.login("adm");
         app.createProject(new Project("LeaderProject", "Client"));
@@ -101,14 +101,14 @@ public class SetStatusLogSteps {
 
         project = app.getProject("LeaderProject");
         activity = new Activity(activityName, 10, 1, 10);
-        project.getActivities().add(activity); // VIGTIGT!
         app.login("lead");
+        app.addActivityToProject(projectID, activity);
     }
 
-    @When("the project leader sets the status of {string} to {string}")
-    public void the_project_leader_sets_the_status_of_to(String activityName, String status) {
+    @When("the project leader sets the status of {string} to {string} in project with ID {int}")
+    public void the_project_leader_sets_the_status_of_to(String activityName, String status, int projectID) {
         try {
-            app.setStatusOfActivity(activityName, status);
+            app.setStatusOfActivity(activityName, projectID, status);
         } catch (OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }

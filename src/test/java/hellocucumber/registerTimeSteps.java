@@ -48,8 +48,8 @@ public class registerTimeSteps {
 
     // scenario 1: User registers time spent on an activity successfully
 
-    @When("the user {string} registers {double} hours spent on activity {string} on date {string}")
-    public void the_user_registers_hours_spent_on_activity_on_date(String userID, Double hours, String activityName, String date) throws OperationNotAllowedException {
+    @When("the user {string} registers {double} hours spent on activity {string} on date {string} in project with ID {int}")
+    public void the_user_registers_hours_spent_on_activity_on_date(String userID, Double hours, String activityName, String date, int projectID) throws OperationNotAllowedException {
 
 
         if (app.getDateServer() == null) {
@@ -67,7 +67,7 @@ public class registerTimeSteps {
         }
 
         try {
-            app.registerTimeForActivity(userID, activityName, hours, date);
+            app.registerTimeForActivity(userID,projectID, activityName, hours, date);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
@@ -101,9 +101,9 @@ public class registerTimeSteps {
 
 
 
-    @Then("the system records {double} hours for {string} on {string} for the user {string}")//hh
-    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String date, String userID) {
-        Activity activity = app.getActivityByName(activityName);
+    @Then("the system records {double} hours for {string} on {string} for the user {string} in project with ID {int}")//hh
+    public void the_system_records_hours_for_on_for_the_user(Double hours, String activityName, String date, String userID, int projectID) {
+        Activity activity = app.getActivityByName(activityName, projectID);
         String parsedDate = app.getDateServer().dateToString(app.getDateServer().parseDate(date));
 
         String key = "[" + userID + "]|" + activityName + "|" + parsedDate;

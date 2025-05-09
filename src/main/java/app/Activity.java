@@ -68,7 +68,7 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
     this.endWeek = endWeek;
 }
 
-    public void registerTime(String userID, double hours, LocalDate date, String activityName, DateServer dateServer) throws IllegalArgumentException{
+    public void registerTime(String userID, double hours, LocalDate date, DateServer dateServer) throws IllegalArgumentException{
 
         if(userID.isBlank()){
             throw new IllegalArgumentException("Not allowed: User ID cannot be blank");
@@ -87,7 +87,7 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         // runde op til nærmeste halve time
         double roundedHours = (double) Math.round(hours * 2.0) / 2;
         String formattedDate = dateServer.dateToString(date);
-        timeMap.put("[" + userID + "]|" + activityName +"|"+ formattedDate, roundedHours);
+        timeMap.put("[" + userID + "]|" + getName() +"|"+ formattedDate, roundedHours);
 
 
 

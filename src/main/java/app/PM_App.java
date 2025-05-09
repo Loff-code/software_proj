@@ -243,11 +243,13 @@ public class PM_App extends Observable  {
 
 
 
-    public Activity getActivityByName(String name) {
+    public Activity getActivityByName(String name, int projectID) {
         for (Project project : projects) {
-            for (Activity activity : project.getActivities()) {
-                if (activity.getName().equalsIgnoreCase(name)) {
-                    return activity;
+            if (project.getProjectID() == projectID) {
+                for (Activity activity : project.getActivities()) {
+                    if (activity.getName().equals(name)) {
+                        return activity;
+                    }
                 }
             }
         }
@@ -256,10 +258,10 @@ public class PM_App extends Observable  {
 
 
 
-    public void registerTimeForActivity(String userID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
-        Activity activity = getActivityByName(activityName);
+    public void registerTimeForActivity(String userID, int projectID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
+        Activity activity = getActivityByName(activityName, projectID);
         LocalDate date = dateServer.parseDate(dateStr);
-        activity.registerTime(userID, hours, date, activityName, dateServer);
+        activity.registerTime(userID, hours, date, dateServer);
     }
 
 
@@ -275,8 +277,8 @@ public class PM_App extends Observable  {
       project.addActivity(activity,userID);
     }
 
-    public void setStatusOfActivity(String activityName, String status) throws OperationNotAllowedException {
-        Activity activity = getActivityByName(activityName);
+    public void setStatusOfActivity(String activityName, int projectID, String status) throws OperationNotAllowedException {
+        Activity activity = getActivityByName(activityName, projectID);
         if (activity == null) {
             throw new OperationNotAllowedException("Activity not found");
         }
@@ -305,6 +307,18 @@ public class PM_App extends Observable  {
     }
 
 
+
+    public List<String> getActivitiesByUser(String userID) {
+        List<String> activitiesByUser = new ArrayList<>();
+        for (Project project : projects) {
+            for (Activity activity : project.getActivities()) {
+                if (activity.getAssignedUsers().contains(userID)) {
+                    activitiesByUser.add(activity.getName() + " " + project.getName() + " " + project.getProjectID());
+                }
+            }
+        }
+        return activitiesByUser;
+    }
 
 }
 
