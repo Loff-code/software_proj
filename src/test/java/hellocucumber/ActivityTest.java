@@ -35,7 +35,7 @@ public class ActivityTest {
                 activity.registerTime("", 2.0, date, new RealDateServer())
         );
 
-        assertEquals("Not allowed: User is not assigned to this activity", e.getMessage());
+        assertEquals("Not allowed: User ID cannot be blank", e.getMessage());
     }
 
 
