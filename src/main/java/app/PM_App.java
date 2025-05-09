@@ -46,19 +46,6 @@ public class PM_App extends Observable  {
     }
 
 
-    public int getUserActivityCount(String ID) {
-        int cnt = 0;
-        for (Project proj : this.projects) {
-            for (Activity activity : proj.getActivities()) {
-                for (String userID : activity.getAssignedUsers()) {
-                    if (userID.equals(ID)) {
-                        cnt++;
-                    }
-                }
-            }
-        }
-        return cnt;
-    }
 
     // Get the number of activities assigned to a user in a specific week range
     public int getUserActivityCountByWeek(String userID, int startWeek, int endWeek) {
