@@ -565,8 +565,9 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	}
 
 	private void clearScreen(PrintStream out) {
-		   out.print("\033[H\033[2J");
-		   out.flush();
+		for (int i = 0; i < 20; i++) {
+			out.println();
+		}
 		}
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
