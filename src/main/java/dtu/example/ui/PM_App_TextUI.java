@@ -533,9 +533,9 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		if (projectID != 0) {
 			Project project = app.getProject(projectID);
 			String header = "[Project: " + project.getName();
-			User leader = project.getProjectLeader();
-			if (leader != null) {
-				header += " (" + leader.getID() + ")";
+			String leaderID = app.getProjectLeaderID(projectID);
+			if (leaderID != null) {
+				header += " (" + leaderID + ")";
 			}
 			header += "]";
 			if (activityName != null) {

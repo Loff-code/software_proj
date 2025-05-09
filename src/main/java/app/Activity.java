@@ -10,7 +10,8 @@ private int startWeek;
 private int endWeek;
 private List<String> assignedUsers = new ArrayList<>();
 private Map<String,Double> timeMap =new HashMap<>();
-
+    private String status = "";
+    private List<String> log = new ArrayList<>();
 
 public Activity(String name, int budgetTime, int startWeek, int endWeek){
     this.name = name;
@@ -18,26 +19,17 @@ public Activity(String name, int budgetTime, int startWeek, int endWeek){
     this.startWeek = startWeek;
     this.endWeek = endWeek;
 }
-    private String status = "";
-    private List<String> log = new ArrayList<>();
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void addLog(String entry) {
-        this.log.add(entry);
-    }
-
-    public List<String> getLog() {
-        return this.log;
-    }
-
-
+    public void addLog(String entry) {this.log.add(entry);}
+    public void setStatus(String status) {this.status = status;}
+    public String getStatus() {return this.status;}
+    public List<String> getLog() {return this.log;}
+    public Map<String, Double> getTimeMap() {return this.timeMap;}
+    public String getName(){return this.name;}
+    public int getBudgetTime(){return this.budgetTime;}
+    public int getStartWeek(){return this.startWeek;}
+    public int getEndWeek(){return this.endWeek;}
+    public List<String> getAssignedUsers(){return this.assignedUsers;}
 
 public void assignEmployeeToActivity(String userID)throws IllegalArgumentException{
     if (this.assignedUsers.contains(userID)){
@@ -52,7 +44,6 @@ public void setName(String name) throws IllegalArgumentException{
     }
     this.name = name;
 }
-
 public void setBudgetTime(int budgetTime) throws IllegalArgumentException{
     if (budgetTime < 0){
         throw new IllegalArgumentException("Budget time cannot be negative");
@@ -93,28 +84,6 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         double roundedHours = (double) Math.round(hours * 2.0) / 2;
         String formattedDate = dateServer.dateToString(date);
         timeMap.put("[" + userID + "]|" + getName() +"|"+ formattedDate, roundedHours);
-
-    }
-
-
-    public Map<String, Double> getTimeMap() {
-        return this.timeMap;
-    }
-
-public String getName(){
-    return this.name;
-}
-    public int getBudgetTime(){
-        return this.budgetTime;
-    }
-    public int getStartWeek(){
-        return this.startWeek;
-    }
-    public int getEndWeek(){
-        return this.endWeek;
-    }
-    public List<String> getAssignedUsers(){
-    return this.assignedUsers;
     }
 }
 

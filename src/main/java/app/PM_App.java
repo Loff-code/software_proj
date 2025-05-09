@@ -177,11 +177,7 @@ public class PM_App extends Observable {
                 return activity;
             }
         }
-        return null;
-    }
-
-    public void addActivityToProject(String projectName, Activity activity) throws OperationNotAllowedException {
-        getProject(projectName).addActivity(activity, userID);
+        throw new OperationNotAllowedException("Activity does not exist");
     }
 
     public void addActivityToProject(int projectID, Activity activity) throws OperationNotAllowedException {
@@ -204,11 +200,9 @@ public class PM_App extends Observable {
 
     public void setStatusOfActivity(String activityName, int projectID, String status) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
-        if (activity == null) {
-            throw new OperationNotAllowedException("Activity not found");
-        }
-
         Project containingProject = null;
+        //  Tænker det her kan erstattes med "containingProject = getProjectByID(projectID)"
+        //HERFRA
         for (Project project : projects) {
             if (project.getActivities().contains(activity)) {
                 containingProject = project;
@@ -219,10 +213,13 @@ public class PM_App extends Observable {
             throw new OperationNotAllowedException("Activity does not belong to any project");
         }
 
+        //HERTIL
         boolean isAssigned      = activity.getAssignedUsers().contains(userID);
         boolean isProjectLeader = userID.equals(containingProject.getProjectLeaderID());
 
 
+        // Tænker umiddelbart at der ikke er behov for denne. Alle kan registrere timer til aktiviteten,
+        // Så jeg tænker at det enten er alle som kan eller kun Project Leader
         if (!isAssigned && !isProjectLeader) {
             throw new OperationNotAllowedException("Only assigned employees or the project leader can set the status");
         }

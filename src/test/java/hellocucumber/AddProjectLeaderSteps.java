@@ -27,7 +27,7 @@ public class AddProjectLeaderSteps {
     @Given("that a project with ID {int} exists")
     public void that_a_project_with_id_exists(Integer id) throws OperationNotAllowedException {
         project = new Project("Projectx", "DTU");
-        project.assignProjectID(id);
+        project.setProjectID(id);
         app.createProject(project);
 
     }
@@ -72,7 +72,7 @@ public class AddProjectLeaderSteps {
         app.getUsers().add(user);
 
         project = new Project("Projectx", "DTU");
-        project.assignProjectID(id);
+        project.setProjectID(id);
 
         app.createProject(project);
         app.assignProjectLeader(project.getProjectID(), user.getID());

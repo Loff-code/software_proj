@@ -26,9 +26,10 @@ public class AddActivitySteps {
     public void the_user_adds_an_activity_with_name_budgeted_time_hours_start_week_end_week_to_project(String activityName, Integer budgetTime, Integer startWeek, Integer endWeek, String projectName) throws OperationNotAllowedException {
 //        System.out.println("activityName: " + activityName);
 //        app.getProjectByName(projectName).addActivity(activityName, budgetTime, startWeek, endWeek);
-        assertTrue(app.getProject(projectName).getName().equals(projectName));
+        Project project = app.getProject(projectName);
+        assertTrue(project.getName().equals(projectName));
         try {
-            app.addActivityToProject(projectName,new Activity(activityName, budgetTime, startWeek, endWeek));
+            app.addActivityToProject(project.getProjectID(),new Activity(activityName, budgetTime, startWeek, endWeek));
         } catch (IllegalArgumentException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
