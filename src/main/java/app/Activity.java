@@ -69,7 +69,10 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
 }
 
     public void registerTime(String userID, double hours, LocalDate date, String activityName, DateServer dateServer) throws IllegalArgumentException{
-        // tjek om brugeren er assigned til aktiviteten
+
+        if(userID.isBlank()){
+            throw new IllegalArgumentException("Not allowed: User ID cannot be blank");
+        }
         if(!assignedUsers.contains(userID)){
             throw new IllegalArgumentException("Not allowed: User is not assigned to this activity");
         }
@@ -79,9 +82,7 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         if (date == null){
             throw new IllegalArgumentException("Not allowed: Date cannot be null");
         }
-        if(userID.isBlank()){
-            throw new IllegalArgumentException("Not allowed: User ID cannot be blank");
-        }
+
 
         // runde op til nærmeste halve time
         double roundedHours = (double) Math.round(hours * 2.0) / 2;

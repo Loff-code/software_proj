@@ -118,6 +118,8 @@ public class PM_App extends Observable  {
             }
         return  availables;
     }
+
+    // skal viu ikke bare fjerne den. vi bruger jo ikke id i addprojectleader.feature
     public String getProjectLeaderID(int projectID) throws OperationNotAllowedException {
         Project project = getProject(projectID);
         return project.getProjectLeaderID();
@@ -237,6 +239,9 @@ public class PM_App extends Observable  {
     public void setDateServer(DateServer dateServer){
         this.dateServer = dateServer;
     }
+    public DateServer getDateServer() {return this.dateServer;}
+
+
 
     public Activity getActivityByName(String name) {
         for (Project project : projects) {
@@ -249,7 +254,6 @@ public class PM_App extends Observable  {
         return null;
     }
 
-    public DateServer getDateServer() {return this.dateServer;}
 
 
     public void registerTimeForActivity(String userID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
