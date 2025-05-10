@@ -14,16 +14,7 @@ public class EditActivitySteps {
         this.errorMessageHolder = errorMessageHolder;
     }
 
-    @Given("that a project with ID {int} exists")
-    public void that_a_project_with_ID_exists(int projectID) {
-        try {
-            Project project = new Project("default", "client");
-            project.setProjectID(projectID);
-            app.createProject(project);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-    }
+
 
     @Given("the user adds an activity named {string} with budget {int}, start week {int}, end week {int} to project {int}")
     public void the_user_adds_an_activity_named(String name, int budget, int start, int end, int projectID) {

@@ -36,12 +36,14 @@ public class Project {
         if (activity.getBudgetTime() < 0) {
             throw new IllegalArgumentException("Budget time cannot be negative");
         }
+
         try {
             getActivityByName(activity.getName());
             throw new OperationNotAllowedException("Activity already exists");
         } catch (IllegalArgumentException e) {
             // Activity does not exist, so it's safe to add
         }
+
         activities.add(activity);
     }
 

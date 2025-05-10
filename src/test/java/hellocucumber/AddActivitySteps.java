@@ -51,6 +51,15 @@ public class AddActivitySteps {
     public void theActivityIsAddedToProjectWithID(String activityName, int projectID) throws OperationNotAllowedException {
         assertEquals(app.getActivityByName(activityName, projectID).getName(), activityName);
     }
+
+    @When("the user adds an activity with name {string}, budgeted time {int} hours, start week {int}, end week {int} to project with ID {int}")
+    public void theUserAddsAnActivityWithNameBudgetedTimeHoursStartWeekEndWeekToProjectWithID(String activityName, int budgetHours, int startWeek, int endWeek, int proejctID) {
+        try {
+            app.addActivityToProject(proejctID, new Activity(activityName, budgetHours, startWeek, endWeek));
+        } catch (OperationNotAllowedException | IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
 }
 
 
