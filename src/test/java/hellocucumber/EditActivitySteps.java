@@ -89,4 +89,22 @@ public class EditActivitySteps {
     public void an_error_message_is_shown(String expectedMessage) {
         assertEquals(expectedMessage, errorMessageHolder.getErrorMessage());
     }
+
+    @And("the user {string} is not already assigned to the activity {string} in project {int}")
+    public void theUserIsNotAlreadyAssignedToTheActivityInProject(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+        app.logout();
+        app.login(userID);
+        assertFalse(app.getActivityByName(activityName, projectID).getAssignedUsers().contains(userID));
+
+
+    }
+
+    @And("the user assigns {string} to the activity {string} in project {int}")
+    public void theUserAssignsToTheActivityInProject(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+        try {
+            app.assignUserToActivity(userID,activityName, projectID);
+        }catch (IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
 }

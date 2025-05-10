@@ -53,6 +53,12 @@ Feature: Edit activity attributes
     When the user edits the name of activity "a" in project 25000 to ""
     Then an error message "Name cannot be blank" is shown
 
+  Scenario: Negative budget time
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    When the user edits the budgeted time of activity "a" in project 25000 to -40
+    Then an error message "Budget time cannot be negative" is shown
+
   Scenario: Edit name in non-existent project
     When the user edits the name of activity "a" in project 25001 to "b"
     Then an error message "Project does not exist" is shown
@@ -68,3 +74,17 @@ Feature: Edit activity attributes
   Scenario: Edit budgeted time in non-existent project
     When the user edits the budgeted time of activity "a" in project 25001 to 4
     Then an error message "Project does not exist" is shown
+
+  Scenario: User fails to assign a user to an activity twice
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    Given the following users are registered
+      | huba     |
+      | sore     |
+      | vict     |
+      | hamz     |
+      | zoha     |
+    And the user "huba" is not already assigned to the activity "a" in project 25000
+    When the user assigns "huba" to the activity "a" in project 25000
+    And the user assigns "huba" to the activity "a" in project 25000
+    Then an error message "User is already assigned to this activity" is shown
