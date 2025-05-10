@@ -3,9 +3,9 @@ Feature: Add project leader
   Actor: User
 
   Background:
+    Given the user is logged in
     Given the user "huba" exists
     Given the user "Hamz" exists
-    Given the user is logged in
 
   Scenario: User assigns a project leader successfully
     Given that a project with ID 25001 exists

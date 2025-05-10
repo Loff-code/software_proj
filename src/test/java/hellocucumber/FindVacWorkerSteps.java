@@ -29,7 +29,7 @@ public class FindVacWorkerSteps {
         for (String userID : userIDs) {
             try {
                 app.createUser(new User(userID));
-            } catch (OperationNotAllowedException e) {
+            } catch (OperationNotAllowedException | IllegalArgumentException e) {
                 errorMessageHolder.setErrorMessage(e.getMessage());
             }
         }

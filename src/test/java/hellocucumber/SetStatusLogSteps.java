@@ -20,7 +20,9 @@ public class SetStatusLogSteps {
 
     @Given("that the User is logged in")
     public void that_the_User_is_logged_in() throws OperationNotAllowedException {
+        app.login("huba");
         app.createUser(new User("emp"));
+        app.logout();
         app.login("emp");
     }
 
@@ -87,8 +89,11 @@ public class SetStatusLogSteps {
     // === PROJECT LEADER SCENARIO ===
 
     @Given("that the project leader is logged in")
-    public void that_the_project_leader_is_logged_in() throws OperationNotAllowedException {
+    public void that_the_project_leader_is_logged_in() throws OperationNotAllowedException
+        {
+            app.login("huba");
         app.createUser(new User("lead"));
+        app.logout();
         app.login("lead");
     }
 

@@ -41,7 +41,7 @@ public class AddProjectLeaderSteps {
         assignedUserID = name;
         try {
             app.getUserByID(name);
-        } catch ( OperationNotAllowedException e) {
+        } catch ( OperationNotAllowedException | IllegalArgumentException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
             app.createUser(new User(name));
         }

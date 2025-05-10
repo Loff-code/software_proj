@@ -1,4 +1,6 @@
 Feature: Find vacant Workers
+Background:
+  Given the user is logged in
 
   Scenario: Find available employees when some are free
     Given the following users are registered
