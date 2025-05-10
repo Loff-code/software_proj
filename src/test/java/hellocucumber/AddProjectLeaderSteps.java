@@ -25,11 +25,14 @@ public class AddProjectLeaderSteps {
     // scenario 1: User assigns a project leader successfully
 
     @Given("that a project with ID {int} exists")
-    public void that_a_project_with_id_exists(Integer id) throws OperationNotAllowedException {
-        project = new Project("Projectx", "DTU");
-        project.setProjectID(id);
-        app.createProject(project);
-
+    public void that_a_project_with_ID_exists(int projectID) {
+        try {
+            this.project = new Project("default", "client");
+            app.createProject(project);
+            project.setProjectID(projectID);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
     }
 
     // jeg har bare brugt viktors kode, men måske ændre jeg det til at
@@ -47,13 +50,20 @@ public class AddProjectLeaderSteps {
     @Given("the user {string} is not already a leader of the project")
     public void the_user_is_not_already_a_leader_of_the_project(String name) {
         assignedUserID = name;
-        assertNull(project.getProjectLeaderID());
+        if (project.getProjectLeaderID() != null) {
+            assertFalse(project.getProjectLeaderID().equals(assignedUserID));
+        }
+        assertTrue(project.getProjectLeaderID() == null);
     }
 
     @When("the user assigns {string} as the project leader to the project {int}")
-    public void the_user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException {
+    public void the_user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException, IllegalArgumentException {
         assignedUserID = name;
-        app.assignProjectLeader(project.getProjectID(), assignedUserID);
+        try {
+            app.assignProjectLeader(project.getProjectID(), assignedUserID);
+        } catch (OperationNotAllowedException | IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
 
     }
 

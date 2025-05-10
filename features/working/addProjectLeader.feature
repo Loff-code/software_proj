@@ -28,3 +28,15 @@ Feature: Add project leader
     Given the project with ID 25002 does not exist
     When the user assigns "huba" as project leader to project with ID 25002 that does not exist
     Then an error message happens about the project not existing
+
+    Scenario: User tries to assign a project leader with an empty ID
+      Given that a project with ID 25001 exists
+      Given the user "huba" is not already a leader of the project
+      When the user assigns "" as the project leader to the project 25001
+      Then an error message happens
+
+  Scenario: User is not the project leader and tries to assign a project leader when there already is one
+    Given the user "Hamz" is already a project leader to project 25001
+    When the user assigns "huba" as the project leader to the project 25001
+    Then an error message happens
+

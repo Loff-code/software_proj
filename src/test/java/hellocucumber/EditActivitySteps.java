@@ -2,103 +2,91 @@ package hellocucumber;
 
 import app.*;
 import io.cucumber.java.en.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EditActivitySteps {
 
-    private PM_App app;
-    private ErrorMessageHolder errorMessageHolder;
+    private final PM_App app;
+    private final ErrorMessageHolder errorMessageHolder;
 
-    public EditActivitySteps() {
-        this.app = new PM_App();
-        this.errorMessageHolder = new ErrorMessageHolder();
+    public EditActivitySteps(PM_App app, ErrorMessageHolder errorMessageHolder) {
+        this.app = app;
+        this.errorMessageHolder = errorMessageHolder;
     }
 
-    private Activity addedActivity;
-    private Project project;
 
-    @Given("that a project with ID {int} exists")
-    public void that_a_project_with_id_exists(Integer id) throws OperationNotAllowedException {
-        project = new Project("Projectx", "DTU");
-        project.setProjectID(id);
-        app.createProject(project);
-
-    }
 
     @Given("the user adds an activity named {string} with budget {int}, start week {int}, end week {int} to project {int}")
-    public void the_user_adds_an_activity_named_with_budget_start_week_end_week_to_project(
-            String activityName, Integer budgetTime, Integer startWeek, Integer endWeek, Integer projectID) {
+    public void the_user_adds_an_activity_named(String name, int budget, int start, int end, int projectID) {
         try {
-            addedActivity = new Activity(activityName, budgetTime, startWeek, endWeek);
-            app.addActivityToProject(projectID, addedActivity);
-        } catch (OperationNotAllowedException | IllegalArgumentException e) {
+            if (app.getLoggedInUserID() == null) {
+                throw new IllegalStateException("No user is logged in");
+            }
+            Activity activity = new Activity(name, budget, start, end);
+            app.addActivityToProject(projectID, activity);
+        } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
-
-
-
-
     @When("the user edits the name of activity {string} in project {int} to {string}")
-    public void user_edits_name(String activityName, int projectID, String newName) {
+    public void the_user_edits_the_name_of_activity(String oldName, int projectID, String newName) {
         try {
-            app.getActivityByName(activityName, projectID).setName(newName);
+            app.getActivityByName(oldName, projectID).setName(newName);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user edits the budgeted time of activity {string} in project {int} to {int}")
+    public void the_user_edits_budgeted_time(String name, int projectID, int newBudget) {
+        try {
+            app.getActivityByName(name, projectID).setBudgetTime(newBudget);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user edits the start week of activity {string} in project {int} to {int}")
+    public void the_user_edits_start_week(String name, int projectID, int newStartWeek) {
+        try {
+            app.getActivityByName(name, projectID).setStartWeek(newStartWeek);
+        } catch (Exception e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user edits the end week of activity {string} in project {int} to {int}")
+    public void the_user_edits_end_week(String name, int projectID, int newEndWeek) {
+        try {
+            app.getActivityByName(name, projectID).setEndWeek(newEndWeek);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
 
     @Then("the activity {string} exists in project with ID {int}")
-    public void activity_exists(String name, int projectID) throws Exception {
+    public void the_activity_exists_in_project(String name, int projectID) throws OperationNotAllowedException {
         assertEquals(name, app.getActivityByName(name, projectID).getName());
     }
 
-    @When("the user edits the budgeted time of activity {string} in project {int} to {int}")
-    public void user_edits_budgeted_time(String activityName, int projectID, int newBudget) {
-        try {
-            app.getActivityByName(activityName, projectID).setBudgetTime(newBudget);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
-    }
-
     @Then("the activity {string} in project {int} has budgeted time {int}")
-    public void activity_has_budgeted_time(String activityName, int projectID, int expected) throws Exception {
-        assertEquals(expected, app.getActivityByName(activityName, projectID).getBudgetTime());
-    }
-
-    @When("the user edits the start week of activity {string} in project {int} to {int}")
-    public void user_edits_start_week(String activityName, int projectID, int newStartWeek) {
-        try {
-            app.getActivityByName(activityName, projectID).setStartWeek(newStartWeek);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
+    public void the_activity_has_budgeted_time(String name, int projectID, int expectedBudget) throws OperationNotAllowedException {
+        assertEquals(expectedBudget, app.getActivityByName(name, projectID).getBudgetTime());
     }
 
     @Then("the activity {string} in project {int} has start week {int}")
-    public void activity_has_start_week(String activityName, int projectID, int expectedStartWeek) throws Exception {
-        assertEquals(expectedStartWeek, app.getActivityByName(activityName, projectID).getStartWeek());
-    }
-
-    @When("the user edits the end week of activity {string} in project {int} to {int}")
-    public void user_edits_end_week(String activityName, int projectID, int newEndWeek) {
-        try {
-            app.getActivityByName(activityName, projectID).setEndWeek(newEndWeek);
-        } catch (Exception e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-        }
+    public void the_activity_has_start_week(String name, int projectID, int expectedStartWeek) throws OperationNotAllowedException {
+        assertEquals(expectedStartWeek, app.getActivityByName(name, projectID).getStartWeek());
     }
 
     @Then("the activity {string} in project {int} has end week {int}")
-    public void activity_has_end_week(String activityName, int projectID, int expectedEndWeek) throws Exception {
-        assertEquals(expectedEndWeek, app.getActivityByName(activityName, projectID).getEndWeek());
+    public void the_activity_has_end_week(String name, int projectID, int expectedEndWeek) throws OperationNotAllowedException {
+        assertEquals(expectedEndWeek, app.getActivityByName(name, projectID).getEndWeek());
     }
 
     @Then("an error message {string} is shown")
-    public void error_message_shown(String expectedMessage) {
+    public void an_error_message_is_shown(String expectedMessage) {
         assertEquals(expectedMessage, errorMessageHolder.getErrorMessage());
     }
 }
