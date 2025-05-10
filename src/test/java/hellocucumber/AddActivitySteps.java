@@ -47,7 +47,10 @@ public class AddActivitySteps {
     }
 
 
-
+    @Then("the activity {string} is added to project with ID {int}")
+    public void theActivityIsAddedToProjectWithID(String activityName, int projectID) throws OperationNotAllowedException {
+        assertEquals(app.getActivityByName(activityName, projectID).getName(), activityName);
+    }
 }
 
 

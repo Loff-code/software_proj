@@ -16,7 +16,8 @@ public class Project {
         this.client = client;
     }
 
-    public void addActivity(Activity activity, String userID) {
+    public void addActivity(Activity activity, String userID) throws IllegalArgumentException, OperationNotAllowedException {
+        System.out.println("Adding activity: " + activity.getName());
         if (activity == null || activity.getName() == null || activity.getName().isEmpty()) {
             throw new IllegalArgumentException("Activity name cannot be null or empty");
         }
@@ -29,19 +30,28 @@ public class Project {
         if (projectLeaderID != null && !userID.equals(projectLeaderID)) {
             throw new IllegalArgumentException("Only the project leader can add activities");
         }
-        if (getActivityByName(activity.getName()) != null) {
-            throw new IllegalArgumentException("Activity with the same name already exists");
+        if (activity.getStartWeek() < 1 || activity.getEndWeek() > 52) {
+            throw new IllegalArgumentException("Weeks must be between 1 and 52");
+        }
+        if (activity.getBudgetTime() < 0) {
+            throw new IllegalArgumentException("Budget time cannot be negative");
+        }
+        try {
+            getActivityByName(activity.getName());
+            throw new OperationNotAllowedException("Activity already exists");
+        } catch (IllegalArgumentException e) {
+            // Activity does not exist, so it's safe to add
         }
         activities.add(activity);
     }
 
     public List<Activity> getActivities() { return activities; }
 
-    public Activity getActivityByName(String name) {
+    public Activity getActivityByName(String name) throws IllegalArgumentException {
         for (Activity a : activities) {
             if (a.getName().equals(name)) { return a; }
         }
-        return null;
+        throw new IllegalArgumentException("Activity does not exist");
     }
 
     public String getName()           { return name; }

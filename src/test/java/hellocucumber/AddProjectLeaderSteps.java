@@ -51,9 +51,13 @@ public class AddProjectLeaderSteps {
     }
 
     @When("the user assigns {string} as the project leader to the project {int}")
-    public void the_user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException {
+    public void the_user_assigns_as_the_project_leader_to_the_project(String name, int id) throws OperationNotAllowedException, IllegalArgumentException {
         assignedUserID = name;
-        app.assignProjectLeader(project.getProjectID(), assignedUserID);
+        try {
+            app.assignProjectLeader(project.getProjectID(), assignedUserID);
+        } catch (OperationNotAllowedException | IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
 
     }
 
