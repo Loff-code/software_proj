@@ -35,9 +35,15 @@ public class PM_App extends Observable {
     /* ── USER MANAGEMENT ─────────────────────────────────────────────── */
     public void createUser(User newUser) throws OperationNotAllowedException {
         String newUserID = newUser.getID();
+        if (loggedInUserID == null || newUserID.isEmpty()) {
+            throw new OperationNotAllowedException("User ID cannot be null or empty");
+        }
+        if (newUserID.length() < 1 || newUserID.length() > 4) {
+            throw new OperationNotAllowedException("User ID must be between 1 and 4 characters");
+        }
        try {
             getUserByID(newUserID);
-            throw new OperationNotAllowedException("User ID is already taken");
+            throw new IllegalArgumentException("User ID is already taken");
         } catch (OperationNotAllowedException e) {
            users.add(newUser);
         }

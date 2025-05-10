@@ -9,11 +9,11 @@ Feature: User Login
     Then the user with the ID "bob" is now logged in
 
 
-  Scenario: user has the wrong password
+  Scenario: User uses wrong ID
     Given the user is not logged in
     And the user with the ID "carl" does not exist
     When the user logs in with the ID "carl"
-    Then the user is not logged in
+    Then an error message "User does not exist" is shown
 
 
 

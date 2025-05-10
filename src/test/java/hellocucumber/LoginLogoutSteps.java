@@ -27,7 +27,9 @@ public class LoginLogoutSteps {
          app.getUserByID(id);
       } catch (OperationNotAllowedException e) {
          assertEquals("User does not exist", e.getMessage());
+         app.login("huba");
          app.createUser(new User(id));
+         app.logout();
       }
    }
 
@@ -35,7 +37,7 @@ public class LoginLogoutSteps {
    public void the_user_logs_in_with_the_id(String id) throws OperationNotAllowedException{
       try{app.login(id);}
       catch (OperationNotAllowedException e) {
-           assertEquals("User does not exist", e.getMessage());
+         errorMessageHolder.setErrorMessage(e.getMessage());
        }
    }
 
