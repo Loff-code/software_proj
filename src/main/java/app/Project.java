@@ -17,7 +17,6 @@ public class Project {
     }
 
     public void addActivity(Activity activity, String userID) throws IllegalArgumentException, OperationNotAllowedException {
-        System.out.println("Adding activity: " + activity.getName());
         if (activity == null || activity.getName() == null || activity.getName().isEmpty()) {
             throw new IllegalArgumentException("Activity name cannot be null or empty");
         }

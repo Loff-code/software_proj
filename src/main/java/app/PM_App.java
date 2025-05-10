@@ -168,12 +168,7 @@ public class PM_App extends Observable {
 
     /* ── ACTIVITY MANAGEMENT ─────────────────────────────────────────── */
     public Activity getActivityByName(String name, int projectID) throws OperationNotAllowedException {
-        for (Activity activity : getProject(projectID).getActivities()) {
-            if (activity.getName().equals(name)) {
-                return activity;
-            }
-        }
-        throw new OperationNotAllowedException("Activity does not exist");
+        return getProject(projectID).getActivityByName(name);
     }
 
     public void addActivityToProject(int projectID, Activity activity) throws OperationNotAllowedException {
