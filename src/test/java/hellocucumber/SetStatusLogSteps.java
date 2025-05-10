@@ -49,7 +49,7 @@ public class SetStatusLogSteps {
 
     @Then("a log entry is created with the new status")
     public void a_log_entry_is_created_with_the_new_status() throws OperationNotAllowedException {
-        String expected = "Status changed to: " + app.getActivityByName(activity.getName(), project.getProjectID()).getStatus() + " by " + app.getUserID();
+        String expected = "Status changed to: " + app.getActivityByName(activity.getName(), project.getProjectID()).getStatus() + " by " + app.getLoggedInUserID();
         assertTrue(app.getActivityByName(activity.getName(), project.getProjectID()).getLog().stream().anyMatch(log -> log.equals(expected)),
                 "Expected log not found: " + expected);
     }

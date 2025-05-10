@@ -15,7 +15,7 @@ public class PM_App extends Observable {
     private final List<User>    users    = new ArrayList<>();
 
     private DateServer dateServer = new RealDateServer();
-    private String     userID     = "";
+    private String loggedInUserID = null;
 
     /* ── CONSTRUCTOR & OBSERVERS ─────────────────────────────────────── */
     public PM_App() {users.add(new User("huba"));}
@@ -27,10 +27,10 @@ public class PM_App extends Observable {
     /* ── SIMPLE ACCESSORS ────────────────────────────────────────────── */
     public List<Project> getProjects() { return projects; }
     public List<User>    getUsers()    { return users;    }
-    public String        getUserID()   { return userID;   }
+    public String getLoggedInUserID()   { return loggedInUserID;   }
     public DateServer    getDateServer() { return dateServer; }
     public void setDateServer(DateServer dateServer) { this.dateServer = dateServer; }
-    public void logout() { userID = ""; }
+    public void logout() { loggedInUserID = null; }
 
     /* ── USER MANAGEMENT ─────────────────────────────────────────────── */
     public void createUser(User newUser) throws OperationNotAllowedException {
@@ -56,7 +56,7 @@ public class PM_App extends Observable {
     }
 
     public void login(String id) throws OperationNotAllowedException {
-        this.userID = getUserByID(id).getID();// makes error if user does not exist
+        this.loggedInUserID = getUserByID(id).getID();// makes error if user does not exist
     }
 
     /* ── AVAILABILITY ────────────────────────────────────────────────── */
@@ -163,11 +163,11 @@ public class PM_App extends Observable {
     }
 
     public void assignProjectLeader(String projectName, String assignedUserID) throws OperationNotAllowedException {
-        getProject(projectName).setProjectLeader(assignedUserID, userID);
+        getProject(projectName).setProjectLeader(assignedUserID, loggedInUserID);
     }
 
     public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException {
-        getProject(projectID).setProjectLeader(assignedUserID, userID);
+        getProject(projectID).setProjectLeader(assignedUserID, loggedInUserID);
     }
 
     /* ── ACTIVITY MANAGEMENT ─────────────────────────────────────────── */
@@ -181,7 +181,7 @@ public class PM_App extends Observable {
     }
 
     public void addActivityToProject(int projectID, Activity activity) throws OperationNotAllowedException {
-        getProject(projectID).addActivity(activity, userID);
+        getProject(projectID).addActivity(activity, loggedInUserID);
     }
 
     public void assignActivityToUser(String userID, String activityName, int projectID) throws OperationNotAllowedException {
@@ -214,8 +214,8 @@ public class PM_App extends Observable {
         }
 
         //HERTIL
-        boolean isAssigned      = activity.getAssignedUsers().contains(userID);
-        boolean isProjectLeader = userID.equals(containingProject.getProjectLeaderID());
+        boolean isAssigned      = activity.getAssignedUsers().contains(loggedInUserID);
+        boolean isProjectLeader = loggedInUserID.equals(containingProject.getProjectLeaderID());
 
 
         // Tænker umiddelbart at der ikke er behov for denne. Alle kan registrere timer til aktiviteten,
@@ -225,7 +225,7 @@ public class PM_App extends Observable {
         }
 
         activity.setStatus(status);
-        activity.addLog("Status changed to: " + status + " by " + userID);
+        activity.addLog("Status changed to: " + status + " by " + loggedInUserID);
     }
 
     /* ── REPORTS ─────────────────────────────────────────────────────── */

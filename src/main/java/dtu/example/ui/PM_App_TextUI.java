@@ -24,7 +24,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	private final PM_App app;
 	private int projectID = 0;
 	private String activityName;
-	private String userID;
+	private String loggedInUserID;
 	private String lastError = null;
 	private BufferedReader reader;
 	private List<String> lastVacantUsers = new ArrayList<>();
@@ -52,6 +52,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		this.app = app;
 		this.app.addObserver(this);
 		this.app.setDateServer(new RealDateServer());
+		this.loggedInUserID  = app.getLoggedInUserID();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -130,7 +131,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 
 	private void handleLogin(String input, PrintStream out) throws OperationNotAllowedException {
 		app.login(input);
-		this.userID = input;
+		loggedInUserID = app.getLoggedInUserID();
 		processStep = ProcessStep.MAIN_MENU;
 	}
 
@@ -203,7 +204,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.ACTIVITY_MENU;
 			return;
 		}
-		List<String> assignedUsers =app.getAssignedActivitiesByUser(userID);
+		List<String> assignedUsers =app.getAssignedActivitiesByUser(loggedInUserID);
 		String userId = selectFromList(assignedUsers, choice, id ->id);
 		if (userId != null) {
 			app.assignActivityToUser(userId, activityName, projectID);
@@ -399,7 +400,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.MAIN_MENU;
 			return;
 		}
-		List<String> list = app.getAssignedActivitiesByUser(userID);
+		List<String> list = app.getAssignedActivitiesByUser(loggedInUserID);
 		if (choice < 1 || choice > list.size()) {
 			setInvalidChoice();
 			return;
@@ -433,7 +434,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 1 -> {
 				String today = app.getDateServer().dateToString(LocalDate.now());
 				try {
-					app.registerTimeForActivity(userID, projectID, activityName, tempLogHours, today);
+					app.registerTimeForActivity(loggedInUserID, projectID, activityName, tempLogHours, today);
 				} catch (Exception e) {
 					lastError = "Failed to log time: " + e.getMessage();
 				}
@@ -452,7 +453,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			return;
 		}
 		try {
-			app.registerTimeForActivity(userID, projectID, activityName, tempLogHours, input);
+			app.registerTimeForActivity(loggedInUserID, projectID, activityName, tempLogHours, input);
 		} catch (Exception e) {
 			lastError = "Failed to log time: " + e.getMessage();
 		}
@@ -460,10 +461,10 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	}
 
 	private void logout() {
-		userID = null;
 		projectID = 0;
 		activityName = null;
 		app.logout();
+		loggedInUserID = app.getLoggedInUserID();
 		processStep = ProcessStep.LOGIN;
 	}
 
@@ -499,7 +500,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			out.println("ERROR: " + lastError + "\n");
 		}
 
-		out.println("UserID: " + (userID != null ? userID : "Not logged in"));
+		out.println("UserID: " + (loggedInUserID != null ? loggedInUserID : "Not logged in"));
 		printHeader(out);
 
 		switch (processStep) {
@@ -524,7 +525,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case ENTER_LOG_TIME_HOURS -> out.println("Enter time to log (hours) or 0 to go back:");
 			case CHOOSE_LOG_DATE_METHOD -> printOptions(out, "Back", "Log for Today", "Enter Date Manually");
 			case ENTER_LOG_TIME_DATE -> out.println("Enter date (YYYY-MM-DD) or 0 to go back:");
-			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUser(userID), s -> s, "Select an Assigned Activity:");
+			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUser(loggedInUserID), s -> s, "Select an Assigned Activity:");
 			case STATUS_REPORT -> {}
 		}
 	}
@@ -574,9 +575,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	}
 
 	private void clearScreen(PrintStream out) {
-		for (int i = 0; i < 20; i++) {
-			out.println();
-		}
+		for (int i = 0; i < 20; i++) {out.println();}
 		}
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

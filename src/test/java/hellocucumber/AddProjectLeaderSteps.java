@@ -140,7 +140,7 @@ public class AddProjectLeaderSteps {
     }
     @When("the user {string} tries to assign themselves as project leader to project {int}")
     public void the_user_tries_to_assign_themselves_as_project_leader_to_project(String user1, Integer projectID) throws OperationNotAllowedException {
-        assertTrue(app.getUserID().equals(user1));
+        assertTrue(app.getLoggedInUserID().equals(user1));
         app.assignProjectLeader(projectID, user1);
     }
 

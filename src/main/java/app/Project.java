@@ -48,7 +48,6 @@ public class Project {
     public String getClient()         { return client; }
     public String getProjectLeaderID(){ return projectLeaderID; }
     public int    getProjectID()      { return projectID; }
-
     public void setProjectID(int id)   { this.projectID = id; }
     public void setProjectLeader(String projectLeaderID, String userID) {
         if (projectLeaderID == null || projectLeaderID.isEmpty()) {
