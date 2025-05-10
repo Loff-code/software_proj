@@ -41,7 +41,7 @@ public class FindVacWorkerSteps {
         Activity activity = new Activity("TestActivity", 10, startWeek, endWeek);
         project.getActivities().add(activity);
         app.getProjects().add(project);
-        app.assignActivityToUser(userID, activity.getName(), project.getProjectID());
+        app.assignUserToActivity(userID, activity.getName(), project.getProjectID());
     }
 
     @When("the user searches for available employees between week {int} and week {int}")

@@ -17,7 +17,7 @@ public class CreateProjectSteps {
 
     private ErrorMessageHolder errorMessageHolder;
     private PM_App app;
-
+    private Project project;
     public CreateProjectSteps(PM_App app, ErrorMessageHolder errorMessageHolder){
         this.errorMessageHolder = errorMessageHolder;
         this.app = app;
@@ -32,16 +32,24 @@ public class CreateProjectSteps {
     }
     @Then("the project is created with the name {string}")
     public void the_project_is_created_with_the_name(String projectName) throws OperationNotAllowedException {
-        app.getProject(projectName);
+       boolean exists = false;
+       for (Project project : app.getProjects()){
+           if (project.getName().equals(projectName)){
+               exists = true;
+           }
+       }
+       assertTrue(exists);
     }
 
     @Then("the project {string} is not created")
     public void the_project_is_not_created(String projectName) throws OperationNotAllowedException {
-        try{app.getProject(projectName);}
-        catch (OperationNotAllowedException e) {
-            errorMessageHolder.setErrorMessage(e.getMessage());
-            assertTrue(errorMessageHolder.getErrorMessage().equals("Project does not exist"));
+        boolean exists = false;
+        for (Project project : app.getProjects()) {
+            if (project.getName().equals(projectName)) {
+                exists = true;
+            }
         }
+        assertFalse(exists);
     }
 
     @Given("project with name {string} exists")

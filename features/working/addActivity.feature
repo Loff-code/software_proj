@@ -8,7 +8,6 @@ Feature: Create activity
     And project with name "P" exists
 
   Scenario: User adds an activity
-    Given project with name "P" exists
     When the user adds an activity with name "A", budgeted time 1 hours, start week 1, end week 4 to project "P"
     Then the activity "A" is added to project "P"
 

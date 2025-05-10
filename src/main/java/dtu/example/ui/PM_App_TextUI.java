@@ -204,10 +204,10 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.ACTIVITY_MENU;
 			return;
 		}
-		List<String> assignedUsers =app.getAssignedActivitiesByUser(loggedInUserID);
+		List<String> assignedUsers =app.getAssignedActivitiesByUserID(loggedInUserID);
 		String userId = selectFromList(assignedUsers, choice, id ->id);
 		if (userId != null) {
-			app.assignActivityToUser(userId, activityName, projectID);
+			app.assignUserToActivity(userId, activityName, projectID);
 		}
 		processStep = ProcessStep.ACTIVITY_MENU;
 	}
@@ -400,7 +400,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.MAIN_MENU;
 			return;
 		}
-		List<String> list = app.getAssignedActivitiesByUser(loggedInUserID);
+		List<String> list = app.getAssignedActivitiesByUserID(loggedInUserID);
 		if (choice < 1 || choice > list.size()) {
 			setInvalidChoice();
 			return;
@@ -525,7 +525,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case ENTER_LOG_TIME_HOURS -> out.println("Enter time to log (hours) or 0 to go back:");
 			case CHOOSE_LOG_DATE_METHOD -> printOptions(out, "Back", "Log for Today", "Enter Date Manually");
 			case ENTER_LOG_TIME_DATE -> out.println("Enter date (YYYY-MM-DD) or 0 to go back:");
-			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUser(loggedInUserID), s -> s, "Select an Assigned Activity:");
+			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUserID(loggedInUserID), s -> s, "Select an Assigned Activity:");
 			case STATUS_REPORT -> {}
 		}
 	}

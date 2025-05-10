@@ -162,10 +162,6 @@ public class PM_App extends Observable {
         return getProject(projectID).getProjectLeaderID();
     }
 
-    public void assignProjectLeader(String projectName, String assignedUserID) throws OperationNotAllowedException {
-        getProject(projectName).setProjectLeader(assignedUserID, loggedInUserID);
-    }
-
     public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException {
         getProject(projectID).setProjectLeader(assignedUserID, loggedInUserID);
     }
@@ -184,7 +180,7 @@ public class PM_App extends Observable {
         getProject(projectID).addActivity(activity, loggedInUserID);
     }
 
-    public void assignActivityToUser(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+    public void assignUserToActivity(String userID, String activityName, int projectID) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
         if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
             throw new OperationNotAllowedException("User has already 20 Activities in this week");
@@ -229,7 +225,7 @@ public class PM_App extends Observable {
     }
 
     /* ── REPORTS ─────────────────────────────────────────────────────── */
-    public List<String> getAssignedActivitiesByUser(String userID) {
+    public List<String> getAssignedActivitiesByUserID(String userID) {
         List<String> list = new ArrayList<>();
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {

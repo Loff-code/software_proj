@@ -96,10 +96,9 @@ public class SetStatusLogSteps {
     public void there_is_an_activity_named_in_their_project(String activityName, int projectID) throws OperationNotAllowedException {
         app.createUser(new User("adm"));
         app.login("adm");
-        app.createProject(new Project("LeaderProject", "Client"));
-        app.assignProjectLeader("LeaderProject", "lead");
-
-        project = app.getProject("LeaderProject");
+        project = new Project("LeaderProject", "Client");
+        app.createProject(project);
+        app.assignProjectLeader(project.getProjectID(), "lead");
         activity = new Activity(activityName, 10, 1, 10);
         app.login("lead");
         app.addActivityToProject(projectID, activity);

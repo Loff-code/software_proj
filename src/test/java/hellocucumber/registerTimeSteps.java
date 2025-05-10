@@ -41,7 +41,7 @@ public class registerTimeSteps {
 
     @And("the user {string} is assigned to the activity {string} in project {string} with ID {int}")
     public void theUserIsAssignedToTheActivityInProject(String userID, String activityName,String projectName, int projectID) throws OperationNotAllowedException {
-        app.assignActivityToUser(userID, activityName, projectID);
+        app.assignUserToActivity(userID, activityName, projectID);
     }
 
 
