@@ -130,6 +130,9 @@ public class PM_App extends Observable {
     }
 
     public void createProject(Project project) throws OperationNotAllowedException {
+        if (loggedInUserID == null) {
+            throw new OperationNotAllowedException("User is not logged in");
+        }
         if (project.getName().length() < 1 || project.getName().length() > 20) {
             throw new OperationNotAllowedException("Project name must be between 1 and 20 characters");
         }

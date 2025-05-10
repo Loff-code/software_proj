@@ -50,5 +50,3 @@ Feature: Create activity
     Then an error message happens
 
 
-
-
