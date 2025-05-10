@@ -54,17 +54,17 @@ Feature: Edit activity attributes
     Then an error message "Name cannot be blank" is shown
 
   Scenario: Edit name in non-existent project
-    When the user edits the name of activity "a" in project 9999 to "b"
+    When the user edits the name of activity "a" in project 25001 to "b"
     Then an error message "Project does not exist" is shown
 
   Scenario: Edit start week in non-existent project
-    When the user edits the start week of activity "a" in project 9999 to 4
+    When the user edits the start week of activity "a" in project 25001 to 4
     Then an error message "Project does not exist" is shown
 
   Scenario: Edit end week in non-existent project
-    When the user edits the end week of activity "a" in project 9999 to 4
+    When the user edits the end week of activity "a" in project 25001 to 4
     Then an error message "Project does not exist" is shown
 
   Scenario: Edit budgeted time in non-existent project
-    When the user edits the budgeted time of activity "a" in project 9999 to 4
+    When the user edits the budgeted time of activity "a" in project 25001 to 4
     Then an error message "Project does not exist" is shown
