@@ -318,35 +318,47 @@ public class PM_App extends Observable  {
         Activity activity = project.getActivityByName(oldName);
 
         if (activity == null) {
-            System.out.println("❌ Activity '" + oldName + "' not found in project '" + projectName + "'");
             throw new OperationNotAllowedException("Not allowed: Activity not found");
         }
 
         if (!oldName.equals(newName) && project.getActivityByName(newName) != null) {
-            System.out.println("❌ New name '" + newName + "' already exists in project '" + projectName + "'");
             throw new OperationNotAllowedException("Not allowed: Activity with the new name already exists");
         }
 
-        // Fjern aktiviteten med det gamle navn fra projektet
-        project.removeActivityByName(oldName);
+        if (!oldName.equals(newName)) {
+            // Skab ny aktivitet med nye værdier
+            Activity newActivity = new Activity(newName, budgetHours, startWeek, endWeek);
 
-        // Opdater attributterne
-        activity.setName(newName);
-        activity.setBudgetTime(budgetHours);
-        activity.setStartWeek(startWeek);
-        activity.setEndWeek(endWeek);
+            // Kopier tilknyttede brugere
+            for (String user : activity.getAssignedUsers()) {
+                newActivity.getAssignedUsers().add(user);
+            }
 
-        // Tilføj tilbage til projektet under nyt navn
-        project.getActivities().add(activity);
+            // Kopier status og log
+            newActivity.setStatus(activity.getStatus());
+            for (String logEntry : activity.getLog()) {
+                newActivity.addLog(logEntry);
+            }
 
-        // Debug: Vis alle aktiviteter i projektet efter opdatering
+            // Kopier time-registreringer
+            newActivity.getTimeMap().putAll(activity.getTimeMap());
+
+            // Fjern gammel og tilføj ny
+            project.removeActivityByName(oldName);
+            project.getActivities().add(newActivity);
+        } else {
+            // Samme navn – opdater direkte
+            activity.setBudgetTime(budgetHours);
+            activity.setStartWeek(startWeek);
+            activity.setEndWeek(endWeek);
+        }
+
+        // Debug
         System.out.println("✅ Aktiviteter i projekt '" + projectName + "' efter ændring:");
         for (Activity a : project.getActivities()) {
             System.out.println("• " + a.getName() + " | " + a.getBudgetTime() + "h | uge " + a.getStartWeek() + "–" + a.getEndWeek());
         }
     }
-
-
 
 }
 
