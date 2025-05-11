@@ -23,8 +23,8 @@ Feature: View status report for projects
     When the user "vict" registers 5.0 hours spent on activity "Demo" on date "2025-02-06" in project with ID 25000
     When the user "zoha" registers 5.0 hours spent on activity "Demo" on date "2025-02-07" in project with ID 25000
     When the user "vict" registers 6.0 hours spent on activity "Design" on date "2025-02-07" in project with ID 25000
-    And the user sets the status of "Demo" to "Completed" in project with ID 25000 # bliver fikset så snart du fikser setStatusLog.feature til user
-    And the user sets the status of "Design" to "In progress" in project with ID 25000 # det samme med den her
+    And the user sets the status of "Demo" to "Completed" in project with ID 25000
+    And the user sets the status of "Design" to "In progress" in project with ID 25000
     Given the user "sore" is not already a leader of the project
     When the user assigns "sore" as the project leader to the project 25000
     Then the user "sore" is set as the leader of project 25000

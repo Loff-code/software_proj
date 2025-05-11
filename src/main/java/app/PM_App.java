@@ -240,4 +240,25 @@ public class PM_App extends Observable {
         }
         return list;
     }
+    public String generateReport(String projectID) throws OperationNotAllowedException {
+        // Find the project by ID
+        Project project = getProject(Integer.parseInt(projectID));
+        if (project == null) {
+            throw new OperationNotAllowedException("Project not found");
+        }
+
+        // Start building the report
+        StringBuilder report = new StringBuilder();
+        report.append("Report for project: ").append(project.getName()).append("\n");
+
+        // Add activity data to the report
+        for (Activity activity : project.getActivities()) {
+            // Sum up the total used hours for each activity
+            double totalUsedHours = activity.getBudgetTime();  // Assuming Activity has a method to sum up registered hours.
+            report.append("Activity: ").append(activity.getName())
+                    .append(" | Used Hours: ").append(totalUsedHours).append("\n");
+        }
+
+        return report.toString(); // Return the complete report as a string
+    }
 }
