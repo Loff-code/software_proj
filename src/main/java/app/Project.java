@@ -10,6 +10,7 @@ public class Project {
     private List<Activity> activities = new ArrayList<>();
     private String projectLeaderID;
     private int projectID;
+    private int totalBudget;
 
     public Project(String name, String client) {
         this.name = name;
@@ -69,6 +70,13 @@ public class Project {
         }
         this.projectLeaderID = projectLeaderID;
     }
+    public void setTotalBudget(int totalBudget) {
+        if (totalBudget < 0) {
+            throw new IllegalArgumentException("Total budget cannot be negative");
+        }
+        this.totalBudget = totalBudget;
+    }
+
 
 
 }

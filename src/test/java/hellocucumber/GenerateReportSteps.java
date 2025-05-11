@@ -37,6 +37,14 @@ public class GenerateReportSteps {
         assertNotNull(project); // Tjekker om projektet er blevet oprettet korrekt
     }
 
+    @And("the project {string} has a total budget of {int} hours")
+    public void theProjectHasATotalBudgetOfHours(String projectName, int budgetHours) throws OperationNotAllowedException {
+        // Get the project by name
+        Project project = pmApp.getProject(projectName);
+
+        // Set the total budget for the project
+        project.setTotalBudget(budgetHours);
+    }
 
 
     // To see when the user has registered time for an activity
@@ -108,13 +116,6 @@ public class GenerateReportSteps {
         report = pmApp.getStatusReport(1, 52);
 
     }
-    @Then("an error message \"Project not found\" should be shown")
-    public void anErrorMessageProjectNotFoundShouldBeShown() {
-        assertEquals("Project not found", errorMessageHolder.getErrorMessage(),
-                "Expected error message: Project not found, but got: " + errorMessageHolder.getErrorMessage());
-    }
-
-
 
 
 

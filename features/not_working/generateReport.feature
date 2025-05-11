@@ -7,13 +7,7 @@ Feature: View status report for projects
   Background:
     Given the user is logged in
     Given that a project with ID 25000 and project name "P1" exists
-    #And the project "P1" has a total budget of 100 hours
-    # synes det er en god ide at når
-    #man laver en project at man også siger hvor mange timer man forventer at bruge
-    #på den. men de har ikke gjort det i createProject.feature.
-    #så spørg søren om du skal gøre det
-
-
+    And the project "P1" has a total budget of 100 hours
     When the user adds an activity with name "Demo", budgeted time 10 hours, start week 1, end week 4 to project "P1"
     When the user adds an activity with name "Design", budgeted time 30 hours, start week 4, end week 10 to project "P1"
     And the user "vict" is assigned to the activity "Demo" in project "P1" with ID 25000
