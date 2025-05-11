@@ -110,7 +110,14 @@ public class PM_App extends Observable {
         return availables;
     }
 
-    public List<String> getVacantUserIDs(int startWeek, int endWeek) {
+    public List<String> getVacantUserIDs(int startWeek, int endWeek) throws OperationNotAllowedException {
+
+        if (startWeek < 1 || endWeek > 52) {
+            throw new OperationNotAllowedException("Weeks must be between 1 and 52");
+        }
+        if (endWeek < startWeek) {
+            throw new OperationNotAllowedException("End week cannot be before start week");
+        }
         List<String> vacant = new ArrayList<>();
         for (User user : users) {
             if (isVacant(user.getID(), startWeek, endWeek)) {
