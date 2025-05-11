@@ -6,6 +6,7 @@ Feature: Create User
     Given the user is logged in
     When the user creates a user with the ID "sore"
     Then the user is created with the ID "sore"
+    And no error message is shown
 
   Scenario: User fails to create user with empty ID
     Given the user is logged in

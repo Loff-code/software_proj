@@ -8,24 +8,28 @@ Feature: Edit activity attributes
     And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
     When the user edits the name of activity "a" in project 25000 to "b"
     Then the activity "b" exists in project with ID 25000
+    And no error message is shown
 
   Scenario: User changes budgeted time
     Given that a project with ID 25000 exists
     And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
     When the user edits the budgeted time of activity "a" in project 25000 to 40
     Then the activity "a" in project 25000 has budgeted time 40
+    And no error message is shown
 
   Scenario: User changes start week
     Given that a project with ID 25000 exists
     And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
     When the user edits the start week of activity "a" in project 25000 to 7
     Then the activity "a" in project 25000 has start week 7
+    And no error message is shown
 
   Scenario: User changes end week
     Given that a project with ID 25000 exists
     And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
     When the user edits the end week of activity "a" in project 25000 to 10
     Then the activity "a" in project 25000 has end week 10
+    And no error message is shown
 
   # FEJLTESTS
 

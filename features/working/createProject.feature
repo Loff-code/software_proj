@@ -12,6 +12,7 @@ Feature: Create Project
     And project with name "P" exists
     When the user creates a project with the name "P", client "a"
     Then the projects have different IDs
+    And no error message is shown
 
   Scenario: User fails to create project with no name
     Given the user is logged in

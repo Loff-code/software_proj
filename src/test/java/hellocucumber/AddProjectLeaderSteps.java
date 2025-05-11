@@ -41,8 +41,9 @@ public class AddProjectLeaderSteps {
         assignedUserID = name;
         try {
             app.getUserByID(name);
-        } catch ( OperationNotAllowedException | IllegalArgumentException e) {
+        } catch ( IllegalArgumentException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
+        }catch (OperationNotAllowedException  e){
             app.createUser(new User(name));
         }
     }
@@ -152,6 +153,18 @@ public class AddProjectLeaderSteps {
     public void the_user_tries_to_assign_themselves_as_project_leader_to_project(String user1, Integer projectID) throws OperationNotAllowedException {
         assertTrue(app.getLoggedInUserID().equals(user1));
         app.assignProjectLeader(projectID, user1);
+    }
+
+    @Then("no error message is shown")
+    public void noErrorMessageIsShown() {
+        System.out.println(errorMessageHolder.getErrorMessage());
+        assertTrue(errorMessageHolder.getErrorMessage() == "");
+    }
+
+    @Then("the user {string} is assigned to the activity {string} in the project with ID {int}")
+    public void theUserIsAssignedToTheActivityInTheProjectWithID(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+       assertTrue(app.getActivityByName(activityName, projectID).getAssignedUsers().contains(userID));
+       //assertTrue(app.getAssignedActivitiesByUserID(userID).contains(app.getActivityByName(activityName, projectID)));
     }
 
     // scenario 5: User tries to assign themselves as project leader

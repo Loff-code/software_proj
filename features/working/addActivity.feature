@@ -11,6 +11,7 @@ Feature: Create activity
   Scenario: User adds an activity
     When the user adds an activity with name "a", budgeted time 10 hours, start week 5, end week 6 to project with ID 25000
     Then the activity "a" is added to project with ID 25000
+    And no error message is shown
 
   Scenario: Employee adds an activity with an empty name and fails
     When the user adds an activity with name "", budgeted time 1 hours, start week 1, end week 4 to project with ID 25000

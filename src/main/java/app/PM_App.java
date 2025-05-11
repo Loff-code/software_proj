@@ -68,8 +68,8 @@ public class PM_App extends Observable {
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {
                 if (activity.getAssignedUsers().contains(userID)
-                        && activity.getStartWeek() < startWeek
-                        && activity.getEndWeek()   > endWeek) {
+                        && activity.getStartWeek() <= startWeek
+                        && activity.getEndWeek()   >= endWeek) {
                     count++;
                 }
             }
@@ -169,6 +169,7 @@ public class PM_App extends Observable {
     }
 
     public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException {
+        getUserByID(assignedUserID); // for errors
         getProject(projectID).setProjectLeader(assignedUserID, loggedInUserID);
     }
 

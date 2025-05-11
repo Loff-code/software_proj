@@ -103,7 +103,7 @@ public class EditActivitySteps {
     public void theUserAssignsToTheActivityInProject(String userID, String activityName, int projectID) throws OperationNotAllowedException {
         try {
             app.assignUserToActivity(userID,activityName, projectID);
-        }catch (IllegalArgumentException e) {
+        }catch (IllegalArgumentException | OperationNotAllowedException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }

@@ -10,6 +10,7 @@ Background:
     When the user searches for available employees between week 15 and week 20
     Then the available employees list should contain "alic"
     Then the available employees list should contain "bob"
+    And no error message is shown
 
   Scenario: No available employees when all are busy
     Given the following users are registered
@@ -20,3 +21,4 @@ Background:
     When the user searches for available employees between week 15 and week 18
     Then the available employees list should not contain "char"
     Then the available employees list should not contain "dave"
+    And no error message is shown

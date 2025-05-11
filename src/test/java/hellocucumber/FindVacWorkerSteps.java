@@ -31,6 +31,9 @@ public class FindVacWorkerSteps {
                 app.createUser(new User(userID));
             } catch (OperationNotAllowedException | IllegalArgumentException e) {
                 errorMessageHolder.setErrorMessage(e.getMessage());
+                if (errorMessageHolder.getErrorMessage().equals("User ID is already taken")){
+                    errorMessageHolder.setErrorMessage("");
+                }
             }
         }
     }

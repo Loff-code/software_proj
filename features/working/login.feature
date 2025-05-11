@@ -7,6 +7,7 @@ Feature: User Login
     And the user with the ID "bob" exists
     When the user logs in with the ID "bob"
     Then the user with the ID "bob" is now logged in
+    And no error message is shown
 
 
   Scenario: User uses wrong ID

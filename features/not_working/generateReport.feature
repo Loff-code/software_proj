@@ -30,7 +30,7 @@ Feature: View status report for projects
       | ProjectName | ProjectID | ProjectLeader | Activity | Assigned users | Used hours | Budgeted hours | Status      | Start week | End week |
       | P1          | 25000     | sore          | Demo     | vict, zoha     | 10.0       | 10             | Completed   | 1          | 4        |
       | P1          | 25000     | sore          | Design   | vict           | 6.0        | 30             | In progress | 4          | 10       |
-
+    And no error message is shown
 
   Scenario: Report for project with no activities
     Given that a project with ID 30000 and project name "EmptyProject" exists
@@ -38,7 +38,7 @@ Feature: View status report for projects
     When the user requests a status report from week 1 to week 10
     Then the report should not include:
       | EmptyProject | 30000  |
-
+    And no error message is shown
   #Scenario: User sees previously registered times
    # Given the system date is mocked
     #When the user "vict" registers 4.0 hours spent on activity "Design" on date "2025-02-06" in project with ID 25000
