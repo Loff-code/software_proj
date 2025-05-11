@@ -38,7 +38,9 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		ADD_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
 		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
 		SELECT_ASSIGNED_ACTIVITY, ENTER_LOG_TIME_HOURS, VIEW_USER_ENTRIES_FOR_TODAY,
-		 CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE
+		 CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE,CREATE_LEAVE_REQUEST_INPUT,
+		GENERATE_LEAVE_STATUS_REPORT_INPUT
+
 
 	}
 
@@ -148,6 +150,9 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case ENTER_LOG_TIME_DATE -> handleLogTimeDate(input);
 			case VIEW_USER_ENTRIES_FOR_TODAY -> processStep = ProcessStep.MAIN_MENU;
 			case EDIT_ACTIVITY_STATUS -> handleEditActivityStatus(input);
+			case CREATE_LEAVE_REQUEST_INPUT -> handleCreateLeaveRequestInput(input);
+			case GENERATE_LEAVE_STATUS_REPORT_INPUT -> handleGenerateLeaveStatusReportInput(input);
+
 
 
 
@@ -159,8 +164,12 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			ProcessStep.CREATE_USER, ProcessStep.EDIT_ACTIVITY_NAME, ProcessStep.EDIT_ACTIVITY_START,
 			ProcessStep.EDIT_ACTIVITY_END, ProcessStep.EDIT_ACTIVITY_BUDGET_TIME,
 			ProcessStep.LIST_VACANT_USERS_INPUT, ProcessStep.ENTER_LOG_TIME_HOURS,
-			ProcessStep.ENTER_LOG_TIME_DATE, ProcessStep.GENERATE_STATUS_REPORT_INPUT,ProcessStep.EDIT_ACTIVITY_STATUS
+			ProcessStep.ENTER_LOG_TIME_DATE, ProcessStep.GENERATE_STATUS_REPORT_INPUT,
+			ProcessStep.EDIT_ACTIVITY_STATUS,
+			ProcessStep.CREATE_LEAVE_REQUEST_INPUT,                  // <-- Add this
+			ProcessStep.GENERATE_LEAVE_STATUS_REPORT_INPUT           // <-- Add this too
 	);
+
 
 	private boolean needsNumericInput(ProcessStep step) {
 		return !TEXT_STEPS.contains(step);
@@ -181,10 +190,59 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 4 -> processStep = ProcessStep.SELECT_ASSIGNED_ACTIVITY;
 			case 5 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT;
 			case 6 -> processStep = ProcessStep.VIEW_USER_ENTRIES_FOR_TODAY;
+			case 7 -> processStep = ProcessStep.CREATE_LEAVE_REQUEST_INPUT;      // <-- New
+			case 8 -> processStep = ProcessStep.GENERATE_LEAVE_STATUS_REPORT_INPUT; // <-- New
 			default -> setInvalidChoice();
 		}
 	}
 
+
+	private void handleCreateLeaveRequestInput(String input) throws OperationNotAllowedException {
+		if (input.equals("0")) {
+			processStep = ProcessStep.MAIN_MENU;
+			return;
+		}
+
+		String[] parts = input.trim().split(" ");
+		if (parts.length == 4) {
+			try {
+				double hours = Double.parseDouble(parts[0]);
+				String startDate = parts[1];
+				String endDate = parts[2];
+				String activityName = parts[3];
+				app.createLeaveRequest(loggedInUserID, activityName, 1, hours, startDate, endDate);
+				System.out.println("Leave request created successfully.");
+			} catch (Exception e) {
+				lastError = "Error creating leave request: " + e.getMessage();
+			}
+		} else {
+			lastError = "Invalid input. Format: hours startDate endDate activityName";
+		}
+		processStep = ProcessStep.MAIN_MENU;
+	}
+
+	private void handleGenerateLeaveStatusReportInput(String input) throws IOException {
+		if (input.equals("0")) {
+			processStep = ProcessStep.MAIN_MENU;
+			return;
+		}
+		String[] parts = input.trim().split(" ");
+		if (parts.length == 2) {
+			try {
+				int start = Integer.parseInt(parts[0]);
+				int end = Integer.parseInt(parts[1]);
+				String report = app.getLeaveStatusReport(start, end);
+				System.out.println("\n" + report);
+				System.out.println("Press Enter to continue...");
+				reader.readLine();
+			} catch (NumberFormatException e) {
+				lastError = "Invalid input. Please enter two valid week numbers.";
+			}
+		} else {
+			lastError = "Invalid input. Format: startWeek endWeek";
+		}
+		processStep = ProcessStep.MAIN_MENU;
+	}
 
 
 	private void handleSelectProject(int choice) {
@@ -561,8 +619,11 @@ public class PM_App_TextUI implements PropertyChangeListener {
 					"Users Menu",
 					"My Assigned Activities",
 					"Generate Status Report",
-					"View Today's Time Entries" // <-- NEW
+					"View Today's Time Entries",
+					"Create Leave Request",
+					"Generate Leave Status Report"
 			);
+
 
 			case GENERATE_STATUS_REPORT_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
 
@@ -597,6 +658,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUserID(loggedInUserID), s -> s, "Select an Assigned Activity:");
 			case STATUS_REPORT -> {}
 			case VIEW_USER_ENTRIES_FOR_TODAY -> printListReadOnly(out, app.getUsersEntriesForToday(loggedInUserID), string -> string, "Time Entries for Today:");
+			case CREATE_LEAVE_REQUEST_INPUT -> out.println("Enter: hours startDate(YYYY-MM-DD) endDate(YYYY-MM-DD) activityName (or 0 to cancel)");
+			case GENERATE_LEAVE_STATUS_REPORT_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
 
 		}
 	}

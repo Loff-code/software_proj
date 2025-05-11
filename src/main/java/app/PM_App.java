@@ -18,7 +18,7 @@ public class PM_App extends Observable {
     private String loggedInUserID = null;
 
     /* ── CONSTRUCTOR & OBSERVERS ─────────────────────────────────────── */
-    public PM_App() {users.add(new User("huba"));}
+    public PM_App() {users.add(new User("huba")); projects.add(new Project("Fravær", "InHouse")); projects.get(0).setProjectID(1);}
 
     public void addObserver(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
@@ -257,6 +257,9 @@ public class PM_App extends Observable {
         report.append("---------------------------------------------------------------\n");
 
         for (Project project : projects) {
+            if(project.getProjectID() == 1) {
+                continue; // Skip projects without a valid ID
+            }
             StringBuilder projectReport = new StringBuilder();
             boolean hasRelevantActivities = false;
 
@@ -297,6 +300,76 @@ public class PM_App extends Observable {
                 report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
                 report.append(projectReport);
                 report.append("\n");
+            }
+        }
+
+        return report.toString();
+    }
+
+
+    public void createLeaveRequest(String userID, String activityName, int projectID, double hours, String dateStrStart, String dateStrEnd) throws OperationNotAllowedException {
+        LocalDate dateStart = dateServer.parseDate(dateStrStart);
+        LocalDate dateEnd = dateServer.parseDate(dateStrEnd);
+
+        int startWeek = dateStart.getDayOfYear() / 7 + 1;
+        int endWeek = dateEnd.getDayOfYear() / 7 + 1;
+        String newActivityName = "[" + activityName + "] " + userID + " " + dateStrStart + " - " + dateStrEnd;
+        Activity activity = new Activity(newActivityName, (int) hours, startWeek, endWeek);
+        addActivityToProject(projectID, activity);
+        activity.registerTime(userID, hours, dateStart, dateServer);
+    }
+
+
+
+    public String getLeaveStatusReport(int startWeek, int endWeek) {
+        StringBuilder report = new StringBuilder();
+        report.append("Current Leave Status Report (Weeks ").append(startWeek).append(" - ").append(endWeek).append(")\n");
+        report.append("---------------------------------------------------------------\n");
+
+        for (Project project : projects) {
+            if (project.getProjectID() == 1) {
+
+                StringBuilder projectReport = new StringBuilder();
+                boolean hasRelevantActivities = false;
+
+                for (Activity activity : project.getActivities()) {
+                    if (activity.getStartWeek() <= endWeek && activity.getEndWeek() >= startWeek) {
+                        hasRelevantActivities = true;
+
+                        projectReport.append("  Activity: ").append(activity.getName()).append("\n");
+                        projectReport.append("    Status: ").append(activity.getStatus()).append("\n");
+                        projectReport.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
+
+                        double totalUsedHours = activity.getTotalUsedHours();
+                        projectReport.append("    Used Hours: ").append(totalUsedHours).append("\n");
+
+                        projectReport.append("    Assigned Users: ");
+                        if (activity.getAssignedUsers().isEmpty()) {
+                            projectReport.append("None\n");
+                        } else {
+                            for (String userID : activity.getAssignedUsers()) {
+                                projectReport.append(userID).append(" ");
+                            }
+                            projectReport.append("\n");
+                        }
+
+                        projectReport.append("    Users who have logged time: ");
+                        if (activity.getUsersWithLoggedTime().isEmpty()) {
+                            projectReport.append("None\n");
+                        } else {
+                            for (String userID : activity.getUsersWithLoggedTime()) {
+                                projectReport.append(userID).append(" ");
+                            }
+                            projectReport.append("\n");
+                        }
+                    }
+                }
+
+                if (hasRelevantActivities) {
+                    report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
+                    report.append(projectReport);
+                    report.append("\n");
+                }
             }
         }
 

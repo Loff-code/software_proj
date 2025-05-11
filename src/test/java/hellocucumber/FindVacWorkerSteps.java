@@ -48,7 +48,7 @@ public class FindVacWorkerSteps {
     }
 
     @When("the user searches for available employees between week {int} and week {int}")
-    public void the_user_searches_for_available_employees_between_week_and_week(Integer startWeek, Integer endWeek) {
+    public void the_user_searches_for_available_employees_between_week_and_week(Integer startWeek, Integer endWeek) throws OperationNotAllowedException {
         foundEmployees = app.getVacantUserIDs(startWeek, endWeek);
     }
 
