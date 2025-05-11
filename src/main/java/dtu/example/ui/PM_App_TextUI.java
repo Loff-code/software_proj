@@ -33,7 +33,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	private enum ProcessStep {
 		LOGIN, MAIN_MENU, SELECT_PROJECT, PROJECT_MENU, SELECT_ACTIVITY, ACTIVITY_MENU,
 		EDIT_ACTIVITY, STATUS_REPORT, EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START,
-		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME,
+		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME,EDIT_ACTIVITY_STATUS,
 		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER,GENERATE_STATUS_REPORT_INPUT, GENERATE_STATUS_REPORT_OUTPUT,
 		ADD_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
 		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
@@ -146,20 +146,10 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case ENTER_LOG_TIME_HOURS -> handleLogTimeHours(input);
 			case CHOOSE_LOG_DATE_METHOD -> handleChooseLogDateMethod(number);
 			case ENTER_LOG_TIME_DATE -> handleLogTimeDate(input);
-			case VIEW_USER_ENTRIES_FOR_TODAY -> {
-				System.out.println("Time Entries for Today:");
-				List<String> entries = app.getUsersEntriesForToday(loggedInUserID);
-				if (entries.isEmpty()) {
-					System.out.println("   No entries found for today.");
-				} else {
-					for (int i = 0; i < entries.size(); i++) {
-						System.out.println("   " + (i + 1) + ". " + entries.get(i));
-					}
-				}
-				System.out.println("\nPress Enter to return to the Main Menu...");
-				reader.readLine(); // wait for user to press enter
-				processStep = ProcessStep.MAIN_MENU;
-			}
+			case VIEW_USER_ENTRIES_FOR_TODAY -> processStep = ProcessStep.MAIN_MENU;
+			case EDIT_ACTIVITY_STATUS -> handleEditActivityStatus(input);
+
+
 
 		}
 	}
@@ -169,7 +159,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			ProcessStep.CREATE_USER, ProcessStep.EDIT_ACTIVITY_NAME, ProcessStep.EDIT_ACTIVITY_START,
 			ProcessStep.EDIT_ACTIVITY_END, ProcessStep.EDIT_ACTIVITY_BUDGET_TIME,
 			ProcessStep.LIST_VACANT_USERS_INPUT, ProcessStep.ENTER_LOG_TIME_HOURS,
-			ProcessStep.ENTER_LOG_TIME_DATE, ProcessStep.GENERATE_STATUS_REPORT_INPUT
+			ProcessStep.ENTER_LOG_TIME_DATE, ProcessStep.GENERATE_STATUS_REPORT_INPUT,ProcessStep.EDIT_ACTIVITY_STATUS
 	);
 
 	private boolean needsNumericInput(ProcessStep step) {
@@ -190,10 +180,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 3 -> processStep = ProcessStep.USERS_MENU;
 			case 4 -> processStep = ProcessStep.SELECT_ASSIGNED_ACTIVITY;
 			case 5 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT;
-			case 6 -> {
-				processStep = ProcessStep.VIEW_USER_ENTRIES_FOR_TODAY;
-				handleChoice("1", System.out); // force immediate processing
-			}
+			case 6 -> processStep = ProcessStep.VIEW_USER_ENTRIES_FOR_TODAY;
 			default -> setInvalidChoice();
 		}
 	}
@@ -243,8 +230,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 2 -> processStep = ProcessStep.VIEW_ASSIGNED_USERS;
 			case 3 -> processStep = ProcessStep.EDIT_ACTIVITY;
 			case 4 -> processStep = ProcessStep.ENTER_LOG_TIME_HOURS;
-			case 5 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT;
-			case 6 -> {
+			case 5 -> {
 				projectID = 0;
 				activityName = null;
 				processStep = ProcessStep.MAIN_MENU;
@@ -351,9 +337,19 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 2 -> processStep = ProcessStep.EDIT_ACTIVITY_START;
 			case 3 -> processStep = ProcessStep.EDIT_ACTIVITY_END;
 			case 4 -> processStep = ProcessStep.EDIT_ACTIVITY_BUDGET_TIME;
+			case 5 -> processStep = ProcessStep.EDIT_ACTIVITY_STATUS; // NEW
 			default -> setInvalidChoice();
 		}
 	}
+	private void handleEditActivityStatus(String input) throws OperationNotAllowedException {
+		if (input.equals("0")) {
+			processStep = ProcessStep.EDIT_ACTIVITY;
+			return;
+		}
+		app.setStatusOfActivity(activityName, projectID, input);
+		processStep = ProcessStep.EDIT_ACTIVITY;
+	}
+
 
 
 	private void handleEditActivityName(String input) throws OperationNotAllowedException {
@@ -573,7 +569,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Add Activity", "Assign Project Leader");
 			case SELECT_ACTIVITY -> printList(out, app.getProject(projectID).getActivities(), Activity::getName, "Select an Activity:");
-			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Status Report", "Back to Main Menu");
+			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Back to Main Menu");
 			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectID, activityName), id -> id, "Select a User:");
 			case ASSIGN_PROJECT_LEADER -> printList(out, app.getUsers(), User::getID, "Select a Project Leader:");
 			case ADD_ACTIVITY -> out.println("Enter: activityName expectedTime startWeek endWeek (or 0 to cancel)");
@@ -584,14 +580,23 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case LIST_VACANT_USERS -> printListReadOnly(out, lastVacantUsers, id -> id, "Vacant Users:");
 			case VIEW_ASSIGNED_USERS -> printListReadOnly(out, app.getActivityByName(activityName,projectID).getAssignedUsers(), id -> id, "Assigned Users:");
 			case CREATE_USER -> out.println("Enter UserID (max 4 chars) or 0 to cancel:");
-			case EDIT_ACTIVITY -> printOptions(out, "Back", "Edit Name", "Edit Start Week", "Edit End Week", "Edit Budget Time");
+			case EDIT_ACTIVITY -> printOptions(out,
+					"Back",
+					"Edit Name",
+					"Edit Start Week",
+					"Edit End Week",
+					"Edit Budget Time",
+					"Edit Status" // NEW
+			);
+			case EDIT_ACTIVITY_STATUS -> out.println("Enter new status or 0 to cancel:");
+
 			case EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START, EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME -> out.println("Enter new value:");
 			case ENTER_LOG_TIME_HOURS -> out.println("Enter time to log (hours) or 0 to go back:");
 			case CHOOSE_LOG_DATE_METHOD -> printOptions(out, "Back", "Log for Today", "Enter Date Manually");
 			case ENTER_LOG_TIME_DATE -> out.println("Enter date (YYYY-MM-DD) or 0 to go back:");
 			case SELECT_ASSIGNED_ACTIVITY -> printList(out, app.getAssignedActivitiesByUserID(loggedInUserID), s -> s, "Select an Assigned Activity:");
 			case STATUS_REPORT -> {}
-			case VIEW_USER_ENTRIES_FOR_TODAY -> {} // Do nothing here — handled in handleChoice
+			case VIEW_USER_ENTRIES_FOR_TODAY -> printListReadOnly(out, app.getUsersEntriesForToday(loggedInUserID), string -> string, "Time Entries for Today:");
 
 		}
 	}

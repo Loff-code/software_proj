@@ -208,7 +208,7 @@ public class PM_App extends Observable {
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {
                 if (activity.getUsersWithLoggedTime().contains(userID)) {
-                    entries.add(project.getProjectID() +" "+ project.getName() + " " + activity.getName() + " Hours " + activity.getUsersHoursForToday(userID, today));
+                    entries.add(project.getProjectID() +" "+ project.getName() + " " + activity.getName() + "\n Hours: " + activity.getUsersHoursForToday(userID, today));
                 }
             }
         }
