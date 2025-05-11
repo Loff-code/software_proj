@@ -54,3 +54,11 @@ Feature: View status report for projects
     When the user requests a status report for project "P99999"
     Then an error message "Project not found" should be shown
 
+  Scenario: User sees previously registered times
+    Given the system date is mocked
+    When the user "vict" registers 4.0 hours spent on activity "Design" on date "2025-02-06" in project with ID 25000
+    Then the user "vict" should see the registered times for activity "Design" in project with ID 25000
+    Then the user "vict" should see the following registered time entries for activity "Design" in project with ID 25000:
+      | [vict]|Design|2025-02-06 | 4.0 hours |
+      | [vict]|Design|2025-02-07 | 6.0 hours |
+

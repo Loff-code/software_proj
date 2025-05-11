@@ -33,11 +33,6 @@ Feature: Register used time
     And an error message "Not allowed: Hours have to be positive" should be shown
 
 
-  #Scenario: User registers time with missing hours
-   # When the user "vict" registers "" hours spent on "Demo" on date "2025-02-06"
-    #Then an error message "Hours missing" should be shown
-
-
   Scenario: User registers time with missing date
     When the user "vict" registers 4.0 hours spent on activity "Demo" on date "" in project with ID 25000
     Then an error message "Not allowed: Date cannot be null" should be shown
@@ -58,5 +53,7 @@ Feature: Register used time
     Given the system date is mocked
     When the user "vict" registers 5.2 hours spent on activity "Demo" on date "2025-02-06" in project with ID 25000
     Then the system records 5.0 hours for "Demo" on "2025-02-06" for the user "vict" in project with ID 25000
+
+
 
 

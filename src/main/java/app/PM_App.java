@@ -228,6 +228,15 @@ public class PM_App extends Observable {
         activity.addLog("Status changed to: " + status + " by " + loggedInUserID);
     }
 
+    public List<String> getTimeEntriesForUser(String userID, String activityName, int projectID) throws OperationNotAllowedException {
+        Project project = getProject(projectID);
+        Activity activity = project.getActivityByName(activityName);
+        return activity.getRegisteredTimesForUser(userID);
+    }
+
+
+
+
     /* ── REPORTS ─────────────────────────────────────────────────────── */
     public List<String> getAssignedActivitiesByUserID(String userID) {
         List<String> list = new ArrayList<>();

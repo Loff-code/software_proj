@@ -116,27 +116,11 @@ public class registerTimeSteps {
     }
 
 
-
-
-
     @Given("the system date is mocked")
     public void the_system_date_is_mocked() {
         mockDateServer.setDate(LocalDate.of(2025, 2, 6));
         app.setDateServer(mockDateServer);
     }
-
-
-
-
-    // only for testing purposes
-
-
-    @Then("the system date should be {string}")
-    public void the_system_date_should_be(String expectedDate) {
-        String actualDate = app.getDateServer().dateToString(app.getDateServer().getDate());
-        assertEquals(expectedDate, actualDate);
-    }
-
 
 
 }

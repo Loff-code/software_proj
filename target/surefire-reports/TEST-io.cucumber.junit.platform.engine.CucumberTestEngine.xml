@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="io.cucumber.junit.platform.engine.CucumberTestEngine" time="0.188" tests="28" errors="3" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="io.cucumber.junit.platform.engine.CucumberTestEngine" time="0.291" tests="57" errors="4" skipped="0" failures="1">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="DK"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/surefire/surefirebooter-20250508060949509_3.jar /Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/surefire 2025-05-08T06-09-49_463-jvmRun1 surefire-20250508060949509_1tmp surefire_0-20250508060949509_2tmp"/>
+    <property name="sun.java.command" value="/Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/surefire/surefirebooter-20250511060403296_3.jar /Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/surefire 2025-05-11T06-04-03_250-jvmRun1 surefire-20250511060403296_1tmp surefire_0-20250511060403296_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/test-classes:/Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/classes:/Users/alizeb/.m2/repository/io/cucumber/cucumber-java/7.20.1/cucumber-java-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-core/7.20.1/cucumber-core-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-gherkin/7.20.1/cucumber-gherkin-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-gherkin-messages/7.20.1/cucumber-gherkin-messages-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/gherkin/28.0.0/gherkin-28.0.0.jar:/Users/alizeb/.m2/repository/io/cucumber/messages/24.1.0/messages-24.1.0.jar:/Users/alizeb/.m2/repository/io/cucumber/testng-xml-formatter/0.2.0/testng-xml-formatter-0.2.0.jar:/Users/alizeb/.m2/repository/io/cucumber/query/12.2.0/query-12.2.0.jar:/Users/alizeb/.m2/repository/io/cucumber/tag-expressions/6.1.0/tag-expressions-6.1.0.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-expressions/17.1.0/cucumber-expressions-17.1.0.jar:/Users/alizeb/.m2/repository/io/cucumber/datatable/7.20.1/datatable-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-plugin/7.20.1/cucumber-plugin-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/docstring/7.20.1/docstring-7.20.1.jar:/Users/alizeb/.m2/repository/io/cucumber/html-formatter/21.7.0/html-formatter-21.7.0.jar:/Users/alizeb/.m2/repository/io/cucumber/junit-xml-formatter/0.5.0/junit-xml-formatter-0.5.0.jar:/Users/alizeb/.m2/repository/io/cucumber/ci-environment/10.0.1/ci-environment-10.0.1.jar:/Users/alizeb/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-junit-platform-engine/7.20.1/cucumber-junit-platform-engine-7.20.1.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-engine/1.11.2/junit-platform-engine-1.11.2.jar:/Users/alizeb/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-commons/1.11.2/junit-platform-commons-1.11.2.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-suite/1.11.2/junit-platform-suite-1.11.2.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-suite-api/1.11.2/junit-platform-suite-api-1.11.2.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-suite-engine/1.11.2/junit-platform-suite-engine-1.11.2.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-suite-commons/1.11.2/junit-platform-suite-commons-1.11.2.jar:/Users/alizeb/.m2/repository/org/junit/platform/junit-platform-launcher/1.11.2/junit-platform-launcher-1.11.2.jar:/Users/alizeb/.m2/repository/io/cucumber/cucumber-picocontainer/7.20.1/cucumber-picocontainer-7.20.1.jar:/Users/alizeb/.m2/repository/org/picocontainer/picocontainer/2.15/picocontainer-2.15.jar:/Users/alizeb/.m2/repository/org/junit/jupiter/junit-jupiter/5.11.2/junit-jupiter-5.11.2.jar:/Users/alizeb/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.11.2/junit-jupiter-api-5.11.2.jar:/Users/alizeb/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.11.2/junit-jupiter-params-5.11.2.jar:/Users/alizeb/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.11.2/junit-jupiter-engine-5.11.2.jar:/Users/alizeb/.m2/repository/org/mockito/mockito-core/5.15.2/mockito-core-5.15.2.jar:/Users/alizeb/.m2/repository/net/bytebuddy/byte-buddy/1.15.11/byte-buddy-1.15.11.jar:/Users/alizeb/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar:/Users/alizeb/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-controls/23-ea+3/javafx-controls-23-ea+3.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-controls/23-ea+3/javafx-controls-23-ea+3-mac-aarch64.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-graphics/23-ea+3/javafx-graphics-23-ea+3.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-graphics/23-ea+3/javafx-graphics-23-ea+3-mac-aarch64.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-base/23-ea+3/javafx-base-23-ea+3.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-base/23-ea+3/javafx-base-23-ea+3-mac-aarch64.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-fxml/23-ea+3/javafx-fxml-23-ea+3.jar:/Users/alizeb/.m2/repository/org/openjfx/javafx-fxml/23-ea+3/javafx-fxml-23-ea+3-mac-aarch64.jar:"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/surefire/surefirebooter-20250508060949509_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/alizeb/Desktop/Semester 4/Software engineering/software_proj/target/surefire/surefirebooter-20250511060403296_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="23.0.2"/>
@@ -59,23 +59,23 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="Edit data - User edits registered hours" classname="Edit data" time="0.066">
-    <error message="The step &apos;the user has registered 3 hours on an activity called &quot;Test&quot; in project 25002&apos; and 2 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@Given(&quot;the user has registered {int} hours on an activity called {string} in project {int}&quot;)&#10;public void theUserHasRegisteredHoursOnAnActivityCalledInProject(Integer int1, String string, Integer int2) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user changes the registered from {int} hours to {int} hours on the {string} activity&quot;)&#10;public void theUserChangesTheRegisteredFromHoursToHoursOnTheActivity(Integer int1, Integer int2, String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@Then(&quot;the system updates the registered hours to {int} hours on the {string} activity&quot;)&#10;public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1, String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user has registered 3 hours on an activity called "Test" in project 25002' and 2 other step(s) are undefined.
+  <testcase name="View status report for projects - Multiple users register time on the same activity" classname="View status report for projects" time="0.084">
+    <error message="The step &apos;the user sets the status of &quot;Demo&quot; to &quot;Completed&quot; in project with ID 25000&apos; and 3 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@When(&quot;the user sets the status of {string} to {string} in project with ID {int}&quot;)&#10;public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user requests a status report for project {string}&quot;)&#10;public void theUserRequestsAStatusReportForProject(String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@Then(&quot;the activity {string} should show {double} used hours&quot;)&#10;public void theActivityShouldShowUsedHours(String string, Double double1) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user sets the status of "Demo" to "Completed" in project with ID 25000' and 3 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
 
-@Given("the user has registered {int} hours on an activity called {string} in project {int}")
-public void theUserHasRegisteredHoursOnAnActivityCalledInProject(Integer int1, String string, Integer int2) {
+@When("the user sets the status of {string} to {string} in project with ID {int}")
+public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
-@When("the user changes the registered from {int} hours to {int} hours on the {string} activity")
-public void theUserChangesTheRegisteredFromHoursToHoursOnTheActivity(Integer int1, Integer int2, String string) {
+@When("the user requests a status report for project {string}")
+public void theUserRequestsAStatusReportForProject(String string) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
-@Then("the system updates the registered hours to {int} hours on the {string} activity")
-public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1, String string) {
+@Then("the activity {string} should show {double} used hours")
+public void theActivityShouldShowUsedHours(String string, Double double1) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
@@ -92,7 +92,7 @@ public void theSystemUpdatesTheRegisteredHoursToHoursOnTheActivity(Integer int1,
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 ]]></error>
-    <system-err><![CDATA[May 08, 2025 6:09:49 AM io.cucumber.junit.platform.engine.DiscoverySelectorResolver warnWhenCucumberFeaturesPropertyIsUsed
+    <system-err><![CDATA[May 11, 2025 6:04:03 AM io.cucumber.junit.platform.engine.DiscoverySelectorResolver warnWhenCucumberFeaturesPropertyIsUsed
 WARNING: Discovering tests using the cucumber.features property. Other discovery selectors are ignored!
 
 This is a work around for the limited JUnit 5 support in Maven and Gradle. Please request/upvote/sponsor/ect better support for JUnit 5 discovery selectors. For details see: https://github.com/cucumber/cucumber-jvm/pull/2498
@@ -100,18 +100,63 @@ This is a work around for the limited JUnit 5 support in Maven and Gradle. Pleas
 If you are using the JUnit 5 Suite Engine, Platform Launcher API or Console Launcher you should not use this property. Please consult the JUnit 5 documentation on test selection.
 ]]></system-err>
   </testcase>
-  <testcase name="Edit data - User try to edit a non existing activity" classname="Edit data" time="0.007">
-    <error message="The step &apos;the activity &quot;Test 1&quot; does not exist in the project 25003&apos; and 1 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@Given(&quot;the activity {string} does not exist in the project {int}&quot;)&#10;public void theActivityDoesNotExistInTheProject(String string, Integer int1) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user tries to edit hours for the {string} activity&quot;)&#10;public void theUserTriesToEditHoursForTheActivity(String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the activity "Test 1" does not exist in the project 25003' and 1 other step(s) are undefined.
+  <testcase name="View status report for projects - User views report of ongoing activities and their hours" classname="View status report for projects" time="0.011">
+    <error message="The step &apos;the user sets the status of &quot;Demo&quot; to &quot;Completed&quot; in project with ID 25000&apos; and 3 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@When(&quot;the user sets the status of {string} to {string} in project with ID {int}&quot;)&#10;public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user requests a status report for project {string}&quot;)&#10;public void theUserRequestsAStatusReportForProject(String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@Then(&quot;the report should include:&quot;)&#10;public void theReportShouldInclude(io.cucumber.datatable.DataTable dataTable) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    // For automatic transformation, change DataTable to one of&#10;    // E, List&lt;E&gt;, List&lt;List&lt;E&gt;&gt;, List&lt;Map&lt;K,V&gt;&gt;, Map&lt;K,V&gt; or&#10;    // Map&lt;K, List&lt;V&gt;&gt;. E,K,V must be a String, Integer, Float,&#10;    // Double, Byte, Short, Long, BigInteger or BigDecimal.&#10;    //&#10;    // For other transformations you can register a DataTableType.&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user sets the status of "Demo" to "Completed" in project with ID 25000' and 3 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
 
-@Given("the activity {string} does not exist in the project {int}")
-public void theActivityDoesNotExistInTheProject(String string, Integer int1) {
+@When("the user sets the status of {string} to {string} in project with ID {int}")
+public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
-@When("the user tries to edit hours for the {string} activity")
-public void theUserTriesToEditHoursForTheActivity(String string) {
+@When("the user requests a status report for project {string}")
+public void theUserRequestsAStatusReportForProject(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the report should include:")
+public void theReportShouldInclude(io.cucumber.datatable.DataTable dataTable) {
+    // Write code here that turns the phrase above into concrete actions
+    // For automatic transformation, change DataTable to one of
+    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+    //
+    // For other transformations you can register a DataTableType.
+    throw new io.cucumber.java.PendingException();
+}
+
+	at io.cucumber.core.runtime.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:69)
+	at io.cucumber.junit.platform.engine.TestCaseResultObserver.assertTestCasePassed(TestCaseResultObserver.java:22)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.lambda$runTestCase$4(CucumberEngineExecutionContext.java:116)
+	at io.cucumber.core.runtime.CucumberExecutionContext.lambda$runTestCase$5(CucumberExecutionContext.java:136)
+	at io.cucumber.core.runtime.RethrowingThrowableCollector.executeAndThrow(RethrowingThrowableCollector.java:23)
+	at io.cucumber.core.runtime.CucumberExecutionContext.runTestCase(CucumberExecutionContext.java:136)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.runTestCase(CucumberEngineExecutionContext.java:111)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:168)
+	at io.cucumber.junit.platform.engine.NodeDescriptor$PickleDescriptor.execute(NodeDescriptor.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></error>
+  </testcase>
+  <testcase name="View status report for projects - Report for project with no activities" classname="View status report for projects" time="0.007">
+    <error message="The step &apos;the user sets the status of &quot;Demo&quot; to &quot;Completed&quot; in project with ID 25000&apos; and 3 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@When(&quot;the user sets the status of {string} to {string} in project with ID {int}&quot;)&#10;public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user requests a status report for project {string}&quot;)&#10;public void theUserRequestsAStatusReportForProject(String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@Then(&quot;the report should be empty&quot;)&#10;public void theReportShouldBeEmpty() {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user sets the status of "Demo" to "Completed" in project with ID 25000' and 3 other step(s) are undefined.
+You can implement these steps using the snippet(s) below:
+
+@When("the user sets the status of {string} to {string} in project with ID {int}")
+public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@When("the user requests a status report for project {string}")
+public void theUserRequestsAStatusReportForProject(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+@Then("the report should be empty")
+public void theReportShouldBeEmpty() {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
@@ -129,18 +174,18 @@ public void theUserTriesToEditHoursForTheActivity(String string) {
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 ]]></error>
   </testcase>
-  <testcase name="Edit data - User try to edit registered time with an invalid input" classname="Edit data" time="0.007">
-    <error message="The step &apos;the user has registered 3 hours on an activity called &quot;Test 2&quot;&apos; and 1 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@Given(&quot;the user has registered {int} hours on an activity called {string}&quot;)&#10;public void theUserHasRegisteredHoursOnAnActivityCalled(Integer int1, String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user tries to change the registered hours to {int} on the activity {string}&quot;)&#10;public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
-The step 'the user has registered 3 hours on an activity called "Test 2"' and 1 other step(s) are undefined.
+  <testcase name="View status report for projects - Report request for a non-existing project" classname="View status report for projects" time="0.006">
+    <error message="The step &apos;the user sets the status of &quot;Demo&quot; to &quot;Completed&quot; in project with ID 25000&apos; and 2 other step(s) are undefined.&#10;You can implement these steps using the snippet(s) below:&#10;&#10;@When(&quot;the user sets the status of {string} to {string} in project with ID {int}&quot;)&#10;public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;@When(&quot;the user requests a status report for project {string}&quot;)&#10;public void theUserRequestsAStatusReportForProject(String string) {&#10;    // Write code here that turns the phrase above into concrete actions&#10;    throw new io.cucumber.java.PendingException();&#10;}&#10;" type="io.cucumber.junit.platform.engine.UndefinedStepException"><![CDATA[io.cucumber.junit.platform.engine.UndefinedStepException: 
+The step 'the user sets the status of "Demo" to "Completed" in project with ID 25000' and 2 other step(s) are undefined.
 You can implement these steps using the snippet(s) below:
 
-@Given("the user has registered {int} hours on an activity called {string}")
-public void theUserHasRegisteredHoursOnAnActivityCalled(Integer int1, String string) {
+@When("the user sets the status of {string} to {string} in project with ID {int}")
+public void theUserSetsTheStatusOfToInProjectWithID(String string, String string2, Integer int1) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
-@When("the user tries to change the registered hours to {int} on the activity {string}")
-public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, String string) {
+@When("the user requests a status report for project {string}")
+public void theUserRequestsAStatusReportForProject(String string) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
@@ -158,29 +203,62 @@ public void theUserTriesToChangeTheRegisteredHoursToOnTheActivity(Integer int1, 
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 ]]></error>
   </testcase>
-  <testcase name="Find vacant Workers - Find available employees when some are free" classname="Find vacant Workers" time="0.009"/>
-  <testcase name="Find vacant Workers - No available employees when all are busy" classname="Find vacant Workers" time="0.003"/>
-  <testcase name="Set status log - Employee sets the status of their assigned activity" classname="Set status log" time="0.003"/>
-  <testcase name="Set status log - Employee tries to set the status of an activity they are not assigned to" classname="Set status log" time="0.003"/>
+  <testcase name="Find vacant Workers - Find available employees when some are free" classname="Find vacant Workers" time="0.007"/>
+  <testcase name="Find vacant Workers - No available employees when all are busy" classname="Find vacant Workers" time="0.004"/>
+  <testcase name="Set status log - User sets the status of their assigned activity" classname="Set status log" time="0.005"/>
+  <testcase name="Set status log - User tries to set the status of an activity they are not assigned to" classname="Set status log" time="0.004"/>
   <testcase name="Set status log - Project leader sets the status of any activity in their project" classname="Set status log" time="0.003"/>
   <testcase name="Create activity - User adds an activity" classname="Create activity" time="0.004"/>
-  <testcase name="Create activity - Employee adds an activity with an empty name" classname="Create activity" time="0.003"/>
-  <testcase name="Create activity - Employee adds an activity which is already created" classname="Create activity" time="0.002"/>
-  <testcase name="Add project leader - User assigns a project leader successfully" classname="Add project leader" time="0.005"/>
+  <testcase name="Create activity - Employee adds an activity with an empty name and fails" classname="Create activity" time="0.003"/>
+  <testcase name="Create activity - Employee adds an activity with the same name and fails" classname="Create activity" time="0.003"/>
+  <testcase name="Create activity - Employee adds an activity with negative start week and fails" classname="Create activity" time="0.003"/>
+  <testcase name="Create activity - Employee adds an activity with end week before start week and fails" classname="Create activity" time="0.003"/>
+  <testcase name="Create activity - Employee adds an activity with negative budgeted time and fails" classname="Create activity" time="0.002"/>
+  <testcase name="Create activity - Employee tries to add an activity while there is a different project leader and fails" classname="Create activity" time="0.003"/>
+  <testcase name="Create activity - Employee tries to add an activity while not being logged in" classname="Create activity" time="0.003"/>
+  <testcase name="Add project leader - User assigns a project leader successfully" classname="Add project leader" time="0.003"/>
   <testcase name="Add project leader - User assigns a project leader who is already assigned" classname="Add project leader" time="0.003"/>
-  <testcase name="Add project leader - User assigns a non existing user as project leader" classname="Add project leader" time="0.002"/>
+  <testcase name="Add project leader - User assigns a non existing user as project leader" classname="Add project leader" time="0.003"/>
   <testcase name="Add project leader - User assigns a project leader to a non existing project" classname="Add project leader" time="0.003"/>
-  <testcase name="Create Project - User creates a project successfully" classname="Create Project" time="0.002"/>
-  <testcase name="Create Project - User fails to create project with no name" classname="Create Project" time="0.002"/>
-  <testcase name="Create Project - User fails to create project without client" classname="Create Project" time="0.002"/>
-  <testcase name="Create Project - User fails to create project with identical name" classname="Create Project" time="0.002"/>
-  <testcase name="User Login - User can login" classname="User Login" time="0.003"/>
-  <testcase name="User Login - user has the wrong password" classname="User Login" time="0.002"/>
+  <testcase name="Add project leader - User tries to assign a project leader with an empty ID" classname="Add project leader" time="0.002"/>
+  <testcase name="Add project leader - User is not the project leader and tries to assign a project leader when there already is one" classname="Add project leader" time="0.002"/>
+  <testcase name="Create Project - User creates a project successfully" classname="Create Project" time="0.003"/>
+  <testcase name="Create Project - User creates project with identical name, but gets different IDs" classname="Create Project" time="0.002"/>
+  <testcase name="Create Project - User fails to create project with no name" classname="Create Project" time="0.003"/>
+  <testcase name="Create Project - User fails to create project without client" classname="Create Project" time="0.004"/>
+  <testcase name="Create Project - User fails to create project when not logged in" classname="Create Project" time="0.002"/>
+  <testcase name="Create User - User creates a user successfully" classname="Create User" time="0.002"/>
+  <testcase name="Create User - User fails to create user with empty ID" classname="Create User" time="0.003"/>
+  <testcase name="Create User - User fails to create user when not logged in" classname="Create User" time="0.002"/>
+  <testcase name="Create User - User fails to create the same user twice" classname="Create User" time="0.003"/>
+  <testcase name="Edit activity attributes - User changes activity name" classname="Edit activity attributes" time="0.003"/>
+  <testcase name="Edit activity attributes - User changes budgeted time" classname="Edit activity attributes" time="0.003"/>
+  <testcase name="Edit activity attributes - User changes start week" classname="Edit activity attributes" time="0.003"/>
+  <testcase name="Edit activity attributes - User changes end week" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - End week before start week" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - Negative start week" classname="Edit activity attributes" time="0.003"/>
+  <testcase name="Edit activity attributes - Negative end week" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - Empty name" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - Negative budget time" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - Edit name in non-existent project" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - Edit start week in non-existent project" classname="Edit activity attributes" time="0.003"/>
+  <testcase name="Edit activity attributes - Edit end week in non-existent project" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - Edit budgeted time in non-existent project" classname="Edit activity attributes" time="0.002"/>
+  <testcase name="Edit activity attributes - User fails to assign a user to an activity twice" classname="Edit activity attributes" time="0.003"/>
+  <testcase name="User Login - User can login" classname="User Login" time="0.002"/>
+  <testcase name="User Login - User uses wrong ID" classname="User Login" time="0.003"/>
   <testcase name="User logout - User logs out" classname="User logout" time="0.002"/>
-  <testcase name="Register used time - User registers time spent on an activity successfully" classname="Register used time" time="0.009"/>
-  <testcase name="Register used time - User tries to register time for an activity they are not assigned to" classname="Register used time" time="0.003"/>
-  <testcase name="Register used time - User registers time with invalid hours" classname="Register used time" time="0.002"/>
+  <testcase name="Register used time - User registers time spent on an activity successfully" classname="Register used time" time="0.004"/>
+  <testcase name="Register used time - User tries to register time for an activity they are not assigned to" classname="Register used time" time="0.002"/>
+  <testcase name="Register used time - User registers time with invalid hours" classname="Register used time" time="0.003"/>
   <testcase name="Register used time - User registers time with missing date" classname="Register used time" time="0.002"/>
   <testcase name="Register used time - User registers time with missing user" classname="Register used time" time="0.003"/>
   <testcase name="Register used time - User registers time with non-0.5 hour value" classname="Register used time" time="0.002"/>
+  <testcase name="Register used time - User registers time with non-0.5 hour value" classname="Register used time" time="0.003"/>
+  <testcase name="Register used time - User sees previously registered times" classname="Register used time" time="0.006">
+    <failure message="No time entries found for user vict ==&gt; expected: &lt;false&gt; but was: &lt;true&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: No time entries found for user vict ==> expected: <false> but was: <true>
+	at hellocucumber.registerTimeSteps.the_user_should_see_the_registered_times_for_activity_in_project_with_id(registerTimeSteps.java:140)
+	at ✽.the user "vict" should see the registered times for activity "Demo" in project with ID 25000(file:///Users/alizeb/Desktop/Semester%204/Software%20engineering/software_proj/features/working/register_Time.feature:61)
+]]></failure>
+  </testcase>
 </testsuite>

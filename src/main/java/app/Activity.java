@@ -85,5 +85,22 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         String formattedDate = dateServer.dateToString(date);
         timeMap.put("[" + userID + "]|" + getName() +"|"+ formattedDate, roundedHours);
     }
+
+
+    public List<String> getRegisteredTimesForUser(String userID) {
+        List<String> result = new ArrayList<>();
+
+        for (Map.Entry<String, Double> entry : timeMap.entrySet()) {
+            String key = entry.getKey();
+            if (key.startsWith("[" + userID + "]|")) {
+                result.add(key + " = " + entry.getValue() + " hours");
+            }
+        }
+
+        return result;
+    }
+
+
+
 }
 
