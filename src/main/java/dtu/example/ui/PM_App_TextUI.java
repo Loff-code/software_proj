@@ -35,7 +35,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		EDIT_ACTIVITY, STATUS_REPORT, EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START,
 		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME,
 		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER,
-		CREATE_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
+		ADD_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
 		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
 		SELECT_ASSIGNED_ACTIVITY, ENTER_LOG_TIME_HOURS, CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE
 
@@ -97,7 +97,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case ASSIGN_USER -> handleAssignUser(number);
 			case VIEW_ASSIGNED_USERS -> processStep = ProcessStep.ACTIVITY_MENU;
 			case ASSIGN_PROJECT_LEADER -> handleAssignProjectLeader(number);
-			case CREATE_ACTIVITY -> handleCreateActivity(input, out);
+			case ADD_ACTIVITY -> handleAddActivity(input, out);
 			case CREATE_PROJECT -> handleCreateProject(input, out);
 			case USERS_MENU -> handleUsersMenu(number);
 			case LIST_ALL_USERS -> processStep = ProcessStep.USERS_MENU;
@@ -119,7 +119,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	}
 
 	private static final EnumSet<ProcessStep> TEXT_STEPS = EnumSet.of(
-			ProcessStep.LOGIN, ProcessStep.CREATE_ACTIVITY, ProcessStep.CREATE_PROJECT,
+			ProcessStep.LOGIN, ProcessStep.ADD_ACTIVITY, ProcessStep.CREATE_PROJECT,
 			ProcessStep.CREATE_USER, ProcessStep.EDIT_ACTIVITY_NAME, ProcessStep.EDIT_ACTIVITY_START,
 			ProcessStep.EDIT_ACTIVITY_END, ProcessStep.EDIT_ACTIVITY_BUDGET_TIME,
 			ProcessStep.LIST_VACANT_USERS_INPUT, ProcessStep.ENTER_LOG_TIME_HOURS,
@@ -163,7 +163,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 				processStep = ProcessStep.SELECT_PROJECT;
 			}
 			case 1 -> processStep = ProcessStep.SELECT_ACTIVITY;
-			case 2 -> processStep = ProcessStep.CREATE_ACTIVITY;
+			case 2 -> processStep = ProcessStep.ADD_ACTIVITY;
 			case 3 -> processStep = ProcessStep.ASSIGN_PROJECT_LEADER;
 			default -> setInvalidChoice();
 		}
@@ -224,7 +224,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		processStep = ProcessStep.PROJECT_MENU;
 	}
 
-	private void handleCreateActivity(String input, PrintStream out) throws OperationNotAllowedException {
+	private void handleAddActivity(String input, PrintStream out) throws OperationNotAllowedException {
 		if (input.equals("0")) {
 			processStep = ProcessStep.PROJECT_MENU;
 			return;
@@ -234,7 +234,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			try {
 				app.addActivityToProject(projectID, new Activity(
 						parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
-				out.println("Activity created successfully.");
+				out.println("Activity add successfully.");
 			} catch (NumberFormatException e) {
 				lastError = "Invalid week or time format.";
 			}
@@ -507,12 +507,12 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case LOGIN -> out.println("Enter UserID:");
 			case MAIN_MENU -> printOptions(out, "Logout", "Select Project", "Create Project", "Users Menu", "My Assigned Activities");
 			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
-			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Create Activity", "Assign Project Leader");
+			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Add Activity", "Assign Project Leader");
 			case SELECT_ACTIVITY -> printList(out, app.getProject(projectID).getActivities(), Activity::getName, "Select an Activity:");
 			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Status Report", "Back to Main Menu");
 			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectID, activityName), id -> id, "Select a User:");
 			case ASSIGN_PROJECT_LEADER -> printList(out, app.getUsers(), User::getID, "Select a Project Leader:");
-			case CREATE_ACTIVITY -> out.println("Enter: activityName expectedTime startWeek endWeek (or 0 to cancel)");
+			case ADD_ACTIVITY -> out.println("Enter: activityName expectedTime startWeek endWeek (or 0 to cancel)");
 			case CREATE_PROJECT -> out.println("Enter: projectName clientName (or 0 to cancel)");
 			case USERS_MENU -> printOptions(out, "Back", "List All Users", "List Vacant Users", "Create User", "Main Menu");
 			case LIST_ALL_USERS -> printListReadOnly(out, app.getUsers(), User::getID, "All Users:");

@@ -1,10 +1,15 @@
 Feature: Create User
-  Description: The User creates a User
+  Description: The User assigns a user to an activity
   Actor: User
 
-  Scenario: User creates a user successfully
+  Background:
+    Given the user "sore" exists
+    And that a project with ID 25000 exists
+    And
+
+  Scenario: User assigns a user to an activity successfully
     Given the user is logged in
-    When the user creates a user with the ID "sore"
+    When the user assigns "sore" to the activity {string} in project {int}
     Then the user is created with the ID "sore"
 
   Scenario: User fails to create user with empty ID

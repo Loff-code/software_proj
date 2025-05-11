@@ -35,11 +35,8 @@ public class PM_App extends Observable {
     /* ── USER MANAGEMENT ─────────────────────────────────────────────── */
     public void createUser(User newUser) throws OperationNotAllowedException {
         String newUserID = newUser.getID();
-        if (loggedInUserID == null || newUserID.isEmpty()) {
-            throw new OperationNotAllowedException("User ID cannot be null or empty");
-        }
-        if (newUserID.length() < 1 || newUserID.length() > 4) {
-            throw new OperationNotAllowedException("User ID must be between 1 and 4 characters");
+        if (loggedInUserID == null || loggedInUserID.isEmpty()) {
+            throw new OperationNotAllowedException("User must be logged in");
         }
        try {
             getUserByID(newUserID);
@@ -51,7 +48,7 @@ public class PM_App extends Observable {
 
     public User getUserByID(String ID) throws OperationNotAllowedException {
         if (ID.length() < 1 || ID.length() > 4) {
-            throw new OperationNotAllowedException("User ID must be between 1 and 4 characters");
+            throw new IllegalArgumentException("User ID must be between 1 and 4 characters");
         }
         for (User user : users) {
             if (user.getID().equals(ID)) {
