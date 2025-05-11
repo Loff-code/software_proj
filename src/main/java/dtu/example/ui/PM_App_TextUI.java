@@ -229,18 +229,23 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.PROJECT_MENU;
 			return;
 		}
+
 		String[] parts = input.split(" ");
 		if (parts.length == 4) {
 			try {
-				app.addActivityToProject(projectID, new Activity(
-						parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
-				out.println("Activity add successfully.");
-			} catch (NumberFormatException e) {
-				lastError = "Invalid week or time format.";
+				Activity activity = new Activity(
+						parts[0],
+						Integer.parseInt(parts[1]),
+						Integer.parseInt(parts[2]),
+						Integer.parseInt(parts[3])
+				);
+				app.addActivityToProject(projectID, activity);
+				out.println("Activity added successfully.");
+			} catch (IllegalArgumentException e){
+				lastError = e.getMessage();
 			}
-		} else {
-			lastError = "Invalid input. Format: name startWeek endWeek expectedTime";
 		}
+
 		processStep = ProcessStep.PROJECT_MENU;
 	}
 
