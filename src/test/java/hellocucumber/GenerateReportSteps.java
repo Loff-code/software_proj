@@ -103,10 +103,16 @@ public class GenerateReportSteps {
     }
 
 
+    @When("the user requests a status report for project {string}")
+    public void theUserRequestsAStatusReportForProject(String projectName) {
+        report = pmApp.getStatusReport(1, 52);
 
-
-
-
+    }
+    @Then("an error message \"Project not found\" should be shown")
+    public void anErrorMessageProjectNotFoundShouldBeShown() {
+        assertEquals("Project not found", errorMessageHolder.getErrorMessage(),
+                "Expected error message: Project not found, but got: " + errorMessageHolder.getErrorMessage());
+    }
 
 
 

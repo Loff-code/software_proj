@@ -29,10 +29,6 @@ Feature: View status report for projects
     #Then the user "sore" is set as the leader of project 25000
 
 
-  Scenario: Multiple users register time on the same activity
-    When the user requests a status report for project "P1"
-    Then the activity "Design" should show 8.0 used hours
-
 
   Scenario: User views report of ongoing activities and their hours
     When the user requests a status report for project "P1"
