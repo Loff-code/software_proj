@@ -51,13 +51,13 @@ public void setBudgetTime(int budgetTime) throws IllegalArgumentException{
     this.budgetTime = budgetTime;
 }
 public void setStartWeek(int startWeek) throws IllegalArgumentException{
-    if (startWeek < 0){
+    if (startWeek < 0 || startWeek > 52){
         throw new IllegalArgumentException("Start week cannot be negative");
     }
     this.startWeek = startWeek;
 }
 public void setEndWeek(int endWeek) throws IllegalArgumentException{
-    if (endWeek < 0){
+    if (endWeek < 0 || endWeek > 52){
         throw new IllegalArgumentException("End week cannot be negative");
     }
     if (endWeek < startWeek){

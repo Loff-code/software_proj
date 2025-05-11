@@ -244,6 +244,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			} catch (IllegalArgumentException e){
 				lastError = e.getMessage();
 			}
+		} else {
+			lastError = "Invalid input. Format: activityName expectedTime startWeek endWeek";
 		}
 
 		processStep = ProcessStep.PROJECT_MENU;
