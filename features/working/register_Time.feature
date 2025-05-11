@@ -4,14 +4,14 @@ Feature: Register used time
 
   Background:
     Given the user is logged in
-    And project with name "P" exists
+    And that a project with ID 25000 exists
     Given the following users are registered
       | huba     |
       | sore     |
       | vict     |
       | hamz     |
       | zoha     |
-    And the user adds an activity with name "Demo", budgeted time 100 hours, start week 3, end week 6 to project "P"
+    And the user adds an activity with name "Demo", budgeted time 100 hours, start week 3, end week 6 to project with ID 25000
     And the user "vict" is assigned to the activity "Demo" in project "P" with ID 25000
 
 
@@ -20,6 +20,7 @@ Feature: Register used time
     Given the system date is mocked
     When the user "vict" registers 4.0 hours spent on activity "Demo" on date "2025-02-06" in project with ID 25000
     Then the system records 4.0 hours for "Demo" on "2025-02-06" for the user "vict" in project with ID 25000
+    And printsStuff "vict"
     And no error message is shown
 
 

@@ -123,4 +123,9 @@ public class registerTimeSteps {
     }
 
 
+
+    @And("printsStuff {string}")
+    public void printsstuff(String arg0) {
+        app.getUsersEntriesForToday(arg0);
+    }
 }

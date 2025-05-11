@@ -146,15 +146,6 @@ public class PM_App extends Observable {
         projects.add(project);
     }
 
-    public Project getProject(String name) throws OperationNotAllowedException {
-        for (Project project : projects) {
-            if (project.getName().equals(name)) {
-                return project;
-            }
-        }
-        throw new OperationNotAllowedException("Project does not exist");
-    }
-
     public Project getProject(int id) throws OperationNotAllowedException {
         for (Project project : projects) {
             if (project.getProjectID() == id) {
@@ -162,10 +153,6 @@ public class PM_App extends Observable {
             }
         }
         throw new OperationNotAllowedException("Project does not exist");
-    }
-
-    public String getProjectLeaderID(int projectID) throws OperationNotAllowedException {
-        return getProject(projectID).getProjectLeaderID();
     }
 
     public void assignProjectLeader(int projectID, String assignedUserID) throws OperationNotAllowedException {
@@ -198,27 +185,6 @@ public class PM_App extends Observable {
 
     public void setStatusOfActivity(String activityName, int projectID, String status) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
-        Project containingProject = null;
-        //  Tænker det her kan erstattes med "containingProject = getProjectByID(projectID)"
-        //HERFRA
-        for (Project project : projects) {
-            if (project.getActivities().contains(activity)) {
-                containingProject = project;
-                break;
-            }
-        }
-        if (containingProject == null) {
-            throw new OperationNotAllowedException("Activity does not belong to any project");
-        }
-
-        //HERTIL
-        boolean isAssigned      = activity.getAssignedUsers().contains(loggedInUserID);
-        boolean isProjectLeader = loggedInUserID.equals(containingProject.getProjectLeaderID());
-
-
-        // Tænker umiddelbart at der ikke er behov for denne. Alle kan registrere timer til aktiviteten,
-        // Så jeg tænker at det enten er alle som kan eller kun Project Leader
-
         activity.setStatus(status);
         activity.addLog("Status changed to: " + status + " by " + loggedInUserID);
     }
@@ -229,7 +195,22 @@ public class PM_App extends Observable {
         return activity.getRegisteredTimesForUser(userID);
     }
 
+    public List<String> getUsersEntriesForToday(String userID) {
+        String today = dateServer.dateToString(dateServer.getDate());
+        List<String> entries = new ArrayList<>();
+        for (Project project : projects) {
+            for (Activity activity : project.getActivities()) {
+                if (activity.getUsersWithLoggedTime().contains(userID)) {
+                    entries.add(project.getProjectID() +" "+ project.getName() + " " + activity.getName() + " Hours " + activity.getUsersHoursForToday(userID, today));
+                }
+            }
+        }
 
+        for (String entry : entries) {
+            System.out.println(entry);
+        }
+        return entries;
+    }
 
 
     /* ── REPORTS ─────────────────────────────────────────────────────── */

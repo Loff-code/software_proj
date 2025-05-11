@@ -98,7 +98,7 @@ public class AddProjectLeaderSteps {
         app.login(user);
         try {
             app.assignProjectLeader(id, name);
-        } catch (OperationNotAllowedException e) {
+        } catch (OperationNotAllowedException | IllegalArgumentException e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }

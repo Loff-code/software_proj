@@ -7,9 +7,8 @@ Feature: View status report for projects
   Background:
     Given the user is logged in
     Given that a project with ID 25000 and project name "P1" exists
-    And the project "P1" has a total budget of 100 hours
-    When the user adds an activity with name "Demo", budgeted time 10 hours, start week 1, end week 4 to project "P1"
-    When the user adds an activity with name "Design", budgeted time 30 hours, start week 4, end week 10 to project "P1"
+    When the user adds an activity with name "Demo", budgeted time 10 hours, start week 1, end week 4 to project with ID 25000
+    When the user adds an activity with name "Design", budgeted time 30 hours, start week 4, end week 10 to project with ID 25000
     And the user "vict" is assigned to the activity "Demo" in project "P1" with ID 25000
     And the user "zoha" is assigned to the activity "Demo" in project "P1" with ID 25000
     And the user "vict" is assigned to the activity "Design" in project "P1" with ID 25000

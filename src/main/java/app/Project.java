@@ -10,7 +10,6 @@ public class Project {
     private List<Activity> activities = new ArrayList<>();
     private String projectLeaderID;
     private int projectID;
-    private int totalBudget;
 
     public Project(String name, String client) {
         this.name = name;
@@ -62,21 +61,11 @@ public class Project {
     public int    getProjectID()      { return projectID; }
     public void setProjectID(int id)   { this.projectID = id; }
     public void setProjectLeader(String projectLeaderID, String userID) {
-        if (projectLeaderID == null || projectLeaderID.isEmpty()) {
-            throw new IllegalArgumentException("Project leader ID cannot be null or empty");
-        }
         if (this.projectLeaderID != null && !userID.equals(this.projectLeaderID)) {
             throw new IllegalArgumentException("Only the project leader can assign a project leader");
         }
         this.projectLeaderID = projectLeaderID;
     }
-    public void setTotalBudget(int totalBudget) {
-        if (totalBudget < 0) {
-            throw new IllegalArgumentException("Total budget cannot be negative");
-        }
-        this.totalBudget = totalBudget;
-    }
-
 
 
 }

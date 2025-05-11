@@ -122,9 +122,19 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         return usersWithLoggedTime;
     }
 
+    public int getUsersHoursForToday(String userID, String today) {
+        int totalHours = 0;
+        for (Map.Entry<String, Double> entry : timeMap.entrySet()) {
+            String key = entry.getKey();
+            if (key.startsWith("[" + userID + "]|")) {
+                String date = key.split("\\|")[2];
+                if (date.equals(today)) {
+                    totalHours += entry.getValue();
+                }
+            }
+        }
+        return totalHours;
 
-
-
-
+    }
 }
 
