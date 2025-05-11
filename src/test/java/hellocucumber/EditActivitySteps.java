@@ -16,18 +16,20 @@ public class EditActivitySteps {
 
 
 
-    @Given("the user adds an activity named {string} with budget {int}, start week {int}, end week {int} to project {int}")
-    public void the_user_adds_an_activity_named(String name, int budget, int start, int end, int projectID) {
+    @Given("the user adds an activity named {string} with budget {int}, start year {int}, start week {int}, end year {int}, end week {int} to project {int}")
+    public void the_user_adds_an_activity_named_with_years(
+            String name, int budget, int startYear, int startWeek, int endYear, int endWeek, int projectID) {
         try {
             if (app.getLoggedInUserID() == null) {
                 throw new IllegalStateException("No user is logged in");
             }
-            Activity activity = new Activity(name, budget, start, end);
+            Activity activity = new Activity(name, budget, startYear, startWeek, endYear, endWeek);
             app.addActivityToProject(projectID, activity);
         } catch (Exception e) {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
+
 
     @When("the user edits the name of activity {string} in project {int} to {string}")
     public void the_user_edits_the_name_of_activity(String oldName, int projectID, String newName) {
@@ -107,4 +109,23 @@ public class EditActivitySteps {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
+
+    @When("the user edits the start year of activity {string} in project {int} to {int}")
+    public void theUserEditsTheStartYearOfActivityInProjectTo(String activityName, int projectID, int newStartYear) {
+        try {
+            app.getActivityByName(activityName, projectID).setStartYear(newStartYear);
+        } catch (IllegalArgumentException | OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user edits the end year of activity {string} in project {int} to {int}")
+    public void theUserEditsTheEndYearOfActivityInProjectTo(String activityName, int projectID, int newEndYear) {
+        try {
+            app.getActivityByName(activityName, projectID).setEndYear(newEndYear);
+        } catch (IllegalArgumentException | OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
 }

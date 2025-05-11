@@ -157,6 +157,7 @@ public class AddProjectLeaderSteps {
 
     @Then("no error message is shown")
     public void noErrorMessageIsShown() {
+        System.out.println(errorMessageHolder.getErrorMessage());
         assertTrue(errorMessageHolder.getErrorMessage() == "");
     }
 

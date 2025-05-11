@@ -5,61 +5,61 @@ Feature: Edit activity attributes
 
   Scenario: User changes activity name
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the name of activity "a" in project 25000 to "b"
     Then the activity "b" exists in project with ID 25000
     And no error message is shown
 
   Scenario: User changes budgeted time
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the budgeted time of activity "a" in project 25000 to 40
     Then the activity "a" in project 25000 has budgeted time 40
     And no error message is shown
 
   Scenario: User changes start week
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the start week of activity "a" in project 25000 to 7
     Then the activity "a" in project 25000 has start week 7
     And no error message is shown
 
   Scenario: User changes end week
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the end week of activity "a" in project 25000 to 10
     Then the activity "a" in project 25000 has end week 10
     And no error message is shown
 
-  # FEJLTESTS
+  # Error cases
 
   Scenario: End week before start week
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the end week of activity "a" in project 25000 to 4
     Then an error message "End week cannot be before start week" is shown
 
   Scenario: Negative start week
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the start week of activity "a" in project 25000 to -4
     Then an error message "Start week cannot be negative" is shown
 
   Scenario: Negative end week
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the end week of activity "a" in project 25000 to -4
     Then an error message "End week cannot be negative" is shown
 
   Scenario: Empty name
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the name of activity "a" in project 25000 to ""
     Then an error message "Name cannot be blank" is shown
 
   Scenario: Negative budget time
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     When the user edits the budgeted time of activity "a" in project 25000 to -40
     Then an error message "Budget time cannot be negative" is shown
 
@@ -81,14 +81,43 @@ Feature: Edit activity attributes
 
   Scenario: User fails to assign a user to an activity twice
     Given that a project with ID 25000 exists
-    And the user adds an activity named "a" with budget 10, start week 5, end week 6 to project 25000
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
     Given the following users are registered
-      | huba     |
-      | sore     |
-      | vict     |
-      | hamz     |
-      | zoha     |
+      | huba |
+      | sore |
+      | vict |
+      | hamz |
+      | zoha |
     And the user "huba" is not already assigned to the activity "a" in project 25000
     When the user assigns "huba" to the activity "a" in project 25000
     And the user assigns "huba" to the activity "a" in project 25000
     Then an error message "User is already assigned to this activity" is shown
+
+  Scenario: User sets a negative start year
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
+    When the user edits the start year of activity "a" in project 25000 to -2025
+    Then an error message "Start Year cannot be negative" is shown
+
+  Scenario: User sets end year before start year
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
+    When the user edits the end year of activity "a" in project 25000 to 2024
+    Then an error message "End year cannot be before start year" is shown
+  Scenario: User edits start year of activity successfully
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2026, end week 6 to project 25000
+    When the user edits the start year of activity "a" in project 25000 to 2024
+    Then no error message is shown
+
+  Scenario: User edits end year of activity to a negative value and fails
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2026, end week 6 to project 25000
+    When the user edits the end year of activity "a" in project 25000 to -1
+    Then an error message "End year cannot be negative" is shown
+
+  Scenario: User successfully edits end year of activity
+    Given that a project with ID 25000 exists
+    And the user adds an activity named "a" with budget 10, start year 2025, start week 5, end year 2025, end week 6 to project 25000
+    When the user edits the end year of activity "a" in project 25000 to 2026
+    Then no error message is shown

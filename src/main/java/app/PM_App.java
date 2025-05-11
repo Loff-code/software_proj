@@ -63,46 +63,68 @@ public class PM_App extends Observable {
     }
 
     /* ── AVAILABILITY ────────────────────────────────────────────────── */
-    public int getUserActivityCountByWeek(String userID, int startWeek, int endWeek) {
+    public int getUserActivityCountByWeek(String userID, int startYear, int startWeek, int endYear, int endWeek) {
         int count = 0;
         for (Project project : projects) {
             for (Activity activity : project.getActivities()) {
-                if (activity.getAssignedUsers().contains(userID)
-                        && activity.getStartWeek() <= startWeek
-                        && activity.getEndWeek()   >= endWeek) {
-                    count++;
+                if (activity.getAssignedUsers().contains(userID)) {
+                    boolean yearInRange =
+                            (activity.getStartYear() < endYear ||
+                                    (activity.getStartYear() == endYear && activity.getStartWeek() <= endWeek)) &&
+                                    (activity.getEndYear() > startYear ||
+                                            (activity.getEndYear() == startYear && activity.getEndWeek() >= startWeek));
+
+                    if (yearInRange) {
+                        count++;
+                    }
                 }
             }
         }
         return count;
     }
 
-    public boolean isVacant(String userID, int startWeek, int endWeek) {
-        return getUserActivityCountByWeek(userID, startWeek, endWeek) == 0;
+
+    public boolean isVacant(String userID, int startYear, int startWeek, int endYear, int endWeek) {
+        return getUserActivityCountByWeek(userID,startYear, startWeek,endYear, endWeek) == 0;
     }
 
-    public boolean isAvailable(String userID, int startWeek, int endWeek) {
-        for (int i = startWeek; i <= endWeek; i++) {
-            if (getUserActivityCountByWeek(userID, startWeek, i) >= 20) {
+    public boolean isAvailable(String userID, int startYear, int startWeek, int endYear, int endWeek) {
+        int year = startYear;
+        int week = startWeek;
+
+        while (year < endYear || (year == endYear && week <= endWeek)) {
+            if (getUserActivityCountByWeek(userID, year, week, year, week) >= 20) {
                 return false;
             }
+
+            // Advance to next week, accounting for week rollover
+            week++;
+            if (week > 52) {
+                week = 1;
+                year++;
+            }
         }
+
         return true;
     }
 
-    public List<String> getAvailableUserIDs(int startWeek, int endWeek) {
+
+    public List<String> getAvailableUserIDs(int startYear, int startWeek, int endYear, int endWeek) {
         List<String> availables = new ArrayList<>();
         for (User user : users) {
-            if (isAvailable(user.getID(), startWeek, endWeek)) {
+            if (isAvailable(user.getID(), startYear, startWeek, endYear, endWeek)) {
                 availables.add(user.getID());
             }
         }
         return availables;
     }
 
+
     public List<String> getAvailableUserIDsForActivity(int projectID, String activityName) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
-        List<String> availables = getAvailableUserIDs(activity.getStartWeek(), activity.getEndWeek());
+        List<String> availables = getAvailableUserIDs(
+                activity.getStartYear(), activity.getStartWeek(),
+                activity.getEndYear(), activity.getEndWeek());
 
         for (String id : activity.getAssignedUsers()) {
             availables.remove(id);
@@ -110,17 +132,17 @@ public class PM_App extends Observable {
         return availables;
     }
 
-    public List<String> getVacantUserIDs(int startWeek, int endWeek) throws OperationNotAllowedException {
+    public List<String> getVacantUserIDs(int startYear,int startWeek, int endYear, int endWeek) throws OperationNotAllowedException {
 
-        if (startWeek < 1 || endWeek > 52) {
+        if ((startWeek < 1 || endWeek > 52 || endWeek < 1 || startWeek > 52) ) {
             throw new OperationNotAllowedException("Weeks must be between 1 and 52");
         }
-        if (endWeek < startWeek) {
+        if (endWeek < startWeek && endYear <= startYear) {
             throw new OperationNotAllowedException("End week cannot be before start week");
         }
         List<String> vacant = new ArrayList<>();
         for (User user : users) {
-            if (isVacant(user.getID(), startWeek, endWeek)) {
+            if (isVacant(user.getID(), startYear, startWeek, endYear, endWeek)) {
                 vacant.add(user.getID());
             }
         }
@@ -178,11 +200,14 @@ public class PM_App extends Observable {
 
     public void assignUserToActivity(String userID, String activityName, int projectID) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
-        if (!isAvailable(userID, activity.getStartWeek(), activity.getEndWeek())) {
-            throw new OperationNotAllowedException("User has already 20 Activities in this week");
+
+        if (!isAvailable(userID, activity.getStartYear(), activity.getStartWeek(), activity.getEndYear(), activity.getEndWeek())) {
+            throw new OperationNotAllowedException("User has already 20 Activities in one or more weeks during this period");
         }
+
         activity.assignEmployeeToActivity(userID);
     }
+
 
     public void registerTimeForActivity(String userID, int projectID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
@@ -251,20 +276,25 @@ public class PM_App extends Observable {
         return report.toString(); // Return the complete report as a string
     }
 
-    public String getStatusReport(int startWeek, int endWeek) {
+    public String getStatusReport(int startYear, int startWeek, int endYear, int endWeek) {
         StringBuilder report = new StringBuilder();
         report.append("Project Status Report (Weeks ").append(startWeek).append(" - ").append(endWeek).append(")\n");
         report.append("---------------------------------------------------------------\n");
 
         for (Project project : projects) {
-            if(project.getProjectID() == 1) {
-                continue; // Skip projects without a valid ID
-            }
+            if (project.getProjectID() == 1) continue; // Skip the leave project
+
             StringBuilder projectReport = new StringBuilder();
             boolean hasRelevantActivities = false;
 
             for (Activity activity : project.getActivities()) {
-                if (activity.getStartWeek() <= endWeek && activity.getEndWeek() >= startWeek) {
+                boolean overlaps =
+                        (activity.getStartYear() < endYear ||
+                                (activity.getStartYear() == endYear && activity.getStartWeek() <= endWeek)) &&
+                                (activity.getEndYear() > startYear ||
+                                        (activity.getEndYear() == startYear && activity.getEndWeek() >= startWeek));
+
+                if (overlaps) {
                     hasRelevantActivities = true;
 
                     projectReport.append("  Activity: ").append(activity.getName()).append("\n");
@@ -298,8 +328,7 @@ public class PM_App extends Observable {
 
             if (hasRelevantActivities) {
                 report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
-                report.append(projectReport);
-                report.append("\n");
+                report.append(projectReport).append("\n");
             }
         }
 
@@ -307,69 +336,77 @@ public class PM_App extends Observable {
     }
 
 
+
     public void createLeaveRequest(String userID, String activityName, int projectID, double hours, String dateStrStart, String dateStrEnd) throws OperationNotAllowedException {
         LocalDate dateStart = dateServer.parseDate(dateStrStart);
         LocalDate dateEnd = dateServer.parseDate(dateStrEnd);
+        String newActivityName = "[" + activityName + "] " + userID + " " + dateStrStart + " - " + dateStrEnd;
 
         int startWeek = dateStart.getDayOfYear() / 7 + 1;
         int endWeek = dateEnd.getDayOfYear() / 7 + 1;
-        String newActivityName = "[" + activityName + "] " + userID + " " + dateStrStart + " - " + dateStrEnd;
-        Activity activity = new Activity(newActivityName, (int) hours, startWeek, endWeek);
+        int startYear = dateStart.getYear();
+        int endYear = dateEnd.getYear();
+
+        Activity activity = new Activity(newActivityName, (int) hours, startWeek, endWeek, startYear, endYear);
         addActivityToProject(projectID, activity);
         activity.registerTime(userID, hours, dateStart, dateServer);
     }
 
 
 
-    public String getLeaveStatusReport(int startWeek, int endWeek) {
+    public String getLeaveStatusReport(int startYear, int startWeek, int endYear, int endWeek) {
         StringBuilder report = new StringBuilder();
         report.append("Current Leave Status Report (Weeks ").append(startWeek).append(" - ").append(endWeek).append(")\n");
         report.append("---------------------------------------------------------------\n");
 
         for (Project project : projects) {
-            if (project.getProjectID() == 1) {
+            if (project.getProjectID() != 1) continue;
 
-                StringBuilder projectReport = new StringBuilder();
-                boolean hasRelevantActivities = false;
+            StringBuilder projectReport = new StringBuilder();
+            boolean hasRelevantActivities = false;
 
-                for (Activity activity : project.getActivities()) {
-                    if (activity.getStartWeek() <= endWeek && activity.getEndWeek() >= startWeek) {
-                        hasRelevantActivities = true;
+            for (Activity activity : project.getActivities()) {
+                boolean overlaps =
+                        (activity.getStartYear() < endYear ||
+                                (activity.getStartYear() == endYear && activity.getStartWeek() <= endWeek)) &&
+                                (activity.getEndYear() > startYear ||
+                                        (activity.getEndYear() == startYear && activity.getEndWeek() >= startWeek));
 
-                        projectReport.append("  Activity: ").append(activity.getName()).append("\n");
-                        projectReport.append("    Status: ").append(activity.getStatus()).append("\n");
-                        projectReport.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
+                if (overlaps) {
+                    hasRelevantActivities = true;
 
-                        double totalUsedHours = activity.getTotalUsedHours();
-                        projectReport.append("    Used Hours: ").append(totalUsedHours).append("\n");
+                    projectReport.append("  Activity: ").append(activity.getName()).append("\n");
+                    projectReport.append("    Status: ").append(activity.getStatus()).append("\n");
+                    projectReport.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
 
-                        projectReport.append("    Assigned Users: ");
-                        if (activity.getAssignedUsers().isEmpty()) {
-                            projectReport.append("None\n");
-                        } else {
-                            for (String userID : activity.getAssignedUsers()) {
-                                projectReport.append(userID).append(" ");
-                            }
-                            projectReport.append("\n");
+                    double totalUsedHours = activity.getTotalUsedHours();
+                    projectReport.append("    Used Hours: ").append(totalUsedHours).append("\n");
+
+                    projectReport.append("    Assigned Users: ");
+                    if (activity.getAssignedUsers().isEmpty()) {
+                        projectReport.append("None\n");
+                    } else {
+                        for (String userID : activity.getAssignedUsers()) {
+                            projectReport.append(userID).append(" ");
                         }
+                        projectReport.append("\n");
+                    }
 
-                        projectReport.append("    Users who have logged time: ");
-                        if (activity.getUsersWithLoggedTime().isEmpty()) {
-                            projectReport.append("None\n");
-                        } else {
-                            for (String userID : activity.getUsersWithLoggedTime()) {
-                                projectReport.append(userID).append(" ");
-                            }
-                            projectReport.append("\n");
+                    projectReport.append("    Users who have logged time: ");
+                    if (activity.getUsersWithLoggedTime().isEmpty()) {
+                        projectReport.append("None\n");
+                    } else {
+                        for (String userID : activity.getUsersWithLoggedTime()) {
+                            projectReport.append(userID).append(" ");
                         }
+                        projectReport.append("\n");
                     }
                 }
+            }
 
-                if (hasRelevantActivities) {
-                    report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
-                    report.append(projectReport);
-                    report.append("\n");
-                }
+            if (hasRelevantActivities) {
+                report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
+                report.append(projectReport).append("\n");
             }
         }
 

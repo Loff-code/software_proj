@@ -8,17 +8,23 @@ private String name;
 private int budgetTime;
 private int startWeek;
 private int endWeek;
+private int startYear;
+private int endYear;
 private List<String> assignedUsers = new ArrayList<>();
 private Map<String,Double> timeMap =new HashMap<>();
     private String status = "";
     private List<String> log = new ArrayList<>();
 
-public Activity(String name, int budgetTime, int startWeek, int endWeek){
+public Activity(String name, int budgetTime, int startYear,int startWeek, int endYear, int endWeek){
     this.name = name;
     this.budgetTime = budgetTime;
     this.startWeek = startWeek;
     this.endWeek = endWeek;
+    this.startYear = startYear;
+    this.endYear = endYear;
 }
+
+
 
     public void addLog(String entry) {this.log.add(entry);}
     public void setStatus(String status) {this.status = status;}
@@ -29,6 +35,8 @@ public Activity(String name, int budgetTime, int startWeek, int endWeek){
     public int getBudgetTime(){return this.budgetTime;}
     public int getStartWeek(){return this.startWeek;}
     public int getEndWeek(){return this.endWeek;}
+    public int getStartYear(){return this.startYear;}
+    public int getEndYear(){return this.endYear;}
     public List<String> getAssignedUsers(){return this.assignedUsers;}
 
 public void assignEmployeeToActivity(String userID)throws IllegalArgumentException{
@@ -65,6 +73,21 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
     }
     this.endWeek = endWeek;
 }
+    public void setStartYear(int startYear) throws IllegalArgumentException{
+        if (startYear < 0){
+            throw new IllegalArgumentException("Start Year cannot be negative");
+        }
+        this.startYear = startYear;
+    }
+    public void setEndYear(int endYear) throws IllegalArgumentException{
+        if (endYear < 0 ){
+            throw new IllegalArgumentException("End year cannot be negative");
+        }
+        if (endYear < startYear){
+            throw new IllegalArgumentException("End year cannot be before start year");
+        }
+        this.endYear = endYear;
+    }
 
     public void registerTime(String userID, double hours, LocalDate date, DateServer dateServer) throws IllegalArgumentException{
 

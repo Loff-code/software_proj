@@ -94,22 +94,26 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			return;
 		}
 		String[] parts = input.trim().split(" ");
-		if (parts.length == 2) {
+		if (parts.length == 4) {
 			try {
-				int start = Integer.parseInt(parts[0]);
-				int end = Integer.parseInt(parts[1]);
-				String report = app.getStatusReport(start, end);
+				int startYear = Integer.parseInt(parts[0]);
+				int startWeek = Integer.parseInt(parts[1]);
+				int endYear = Integer.parseInt(parts[2]);
+				int endWeek = Integer.parseInt(parts[3]);
+
+				String report = app.getStatusReport(startYear, startWeek, endYear, endWeek);
 				System.out.println("\n" + report);
 				System.out.println("Press Enter to continue...");
 				reader.readLine();
 			} catch (NumberFormatException e) {
-				lastError = "Invalid input. Please enter two valid week numbers.";
+				lastError = "Invalid input. Please enter four valid numbers.";
 			}
 		} else {
-			lastError = "Invalid input. Format: startWeek endWeek";
+			lastError = "Invalid input. Format: startYear startWeek endYear endWeek";
 		}
 		processStep = ProcessStep.MAIN_MENU;
 	}
+
 
 
 	private void handleChoice(String input, PrintStream out) throws IOException, OperationNotAllowedException {
@@ -227,19 +231,22 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			return;
 		}
 		String[] parts = input.trim().split(" ");
-		if (parts.length == 2) {
+		if (parts.length == 4) {
 			try {
-				int start = Integer.parseInt(parts[0]);
-				int end = Integer.parseInt(parts[1]);
-				String report = app.getLeaveStatusReport(start, end);
+				int startYear = Integer.parseInt(parts[0]);
+				int startWeek = Integer.parseInt(parts[1]);
+				int endYear = Integer.parseInt(parts[2]);
+				int endWeek = Integer.parseInt(parts[3]);
+
+				String report = app.getLeaveStatusReport(startYear, startWeek, endYear, endWeek);
 				System.out.println("\n" + report);
 				System.out.println("Press Enter to continue...");
 				reader.readLine();
 			} catch (NumberFormatException e) {
-				lastError = "Invalid input. Please enter two valid week numbers.";
+				lastError = "Invalid input. Please enter four valid numbers.";
 			}
 		} else {
-			lastError = "Invalid input. Format: startWeek endWeek";
+			lastError = "Invalid input. Format: startYear startWeek endYear endWeek";
 		}
 		processStep = ProcessStep.MAIN_MENU;
 	}
@@ -329,13 +336,15 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 
 		String[] parts = input.split(" ");
-		if (parts.length == 4) {
+		if (parts.length == 6) {
 			try {
 				Activity activity = new Activity(
 						parts[0],
 						Integer.parseInt(parts[1]),
 						Integer.parseInt(parts[2]),
-						Integer.parseInt(parts[3])
+						Integer.parseInt(parts[3]),
+						Integer.parseInt(parts[4]),
+						Integer.parseInt(parts[5])
 				);
 				app.addActivityToProject(projectID, activity);
 				out.println("Activity added successfully.");
@@ -364,15 +373,17 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		processStep = ProcessStep.MAIN_MENU;
 	}
 
-	private void handleUsersMenu(int choice) {
+	private void handleUsersMenu(int choice) throws OperationNotAllowedException, IOException {
 		switch (choice) {
-			case 0, 4 -> processStep = ProcessStep.MAIN_MENU;
+			case 0, 5 -> processStep = ProcessStep.MAIN_MENU;
 			case 1 -> processStep = ProcessStep.LIST_ALL_USERS;
 			case 2 -> processStep = ProcessStep.LIST_VACANT_USERS_INPUT;
 			case 3 -> processStep = ProcessStep.CREATE_USER;
+			case 4 -> handleViewTimeEntriesForUser(); // ✅ NEW: Show time entries
 			default -> setInvalidChoice();
 		}
 	}
+
 
 	private void handleCreateUser(String input, PrintStream out) throws OperationNotAllowedException {
 		if (input.equals("0")) {
@@ -426,8 +437,11 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			return;
 		}
 		try {
-			int start = Integer.parseInt(input);
-			app.getActivityByName(activityName, projectID).setStartWeek(start);
+			String[] parts = input.split(" ");
+			int newYear = Integer.parseInt(parts[0]);
+			int newWeek = Integer.parseInt(parts[1]);
+			app.getActivityByName(activityName, projectID).setStartYear(newYear);
+			app.getActivityByName(activityName, projectID).setStartWeek(newWeek);
 			processStep = ProcessStep.EDIT_ACTIVITY;
 		} catch (NumberFormatException e) {
 			lastError = "Invalid number. Please enter a valid week number.";
@@ -477,26 +491,52 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 
 		String[] parts = input.trim().split(" ");
-		if (parts.length == 2) {
+		if (parts.length == 4) {
 			try {
-				int start = Integer.parseInt(parts[0]);
-				int end = Integer.parseInt(parts[1]);
+				int startYear = Integer.parseInt(parts[0]);
+				int startWeek = Integer.parseInt(parts[1]);
+				int endYear = Integer.parseInt(parts[2]);
+				int endWeek = Integer.parseInt(parts[3]);
 
 				try {
-					lastVacantUsers = app.getVacantUserIDs(start, end);
+					lastVacantUsers = app.getVacantUserIDs(startYear, startWeek, endYear, endWeek);
 					processStep = ProcessStep.LIST_VACANT_USERS;
 				} catch (OperationNotAllowedException e) {
 					lastError = e.getMessage();
-					// Don't advance processStep if there's an error
 				}
-
 			} catch (NumberFormatException e) {
-				lastError = "Invalid input. Please enter two integers: startWeek endWeek.";
+				lastError = "Invalid input. Please enter four integers: startYear startWeek endYear endWeek.";
 			}
 		} else {
-			lastError = "Invalid input. Format: startWeek endWeek";
+			lastError = "Invalid input. Format: startYear startWeek endYear endWeek";
 		}
 	}
+
+	private void handleViewTimeEntriesForUser() throws OperationNotAllowedException, IOException {
+		List<String> allEntries = new ArrayList<>();
+
+		for (Project project : app.getProjects()) {
+			if (project.getProjectID() == 1) continue; // Skip project with ID 1
+
+			for (Activity activity : project.getActivities()) {
+				allEntries.addAll(app.getTimeEntriesForUser(loggedInUserID, activity.getName(), project.getProjectID()));
+			}
+		}
+
+		System.out.println("\nAll time entries for user \"" + loggedInUserID + "\":\n");
+
+		if (allEntries.isEmpty()) {
+			System.out.println(" - No time entries found.");
+		} else {
+			for (String entry : allEntries) {
+				System.out.println(" - " + entry);
+			}
+		}
+
+		System.out.println("\nPress Enter to continue...");
+		reader.readLine();
+	}
+
 
 	private void handleListVacantUsers() {
 		processStep = ProcessStep.USERS_MENU;
@@ -625,7 +665,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			);
 
 
-			case GENERATE_STATUS_REPORT_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
+			case GENERATE_STATUS_REPORT_INPUT ->
+					out.println("Enter: startYear startWeek endYear endWeek (or 0 to cancel)");
 
 			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Add Activity", "Assign Project Leader");
@@ -633,11 +674,19 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case ACTIVITY_MENU -> printOptions(out, "Back", "Assign User", "View Assigned Users", "Edit Activity", "Log Time", "Back to Main Menu");
 			case ASSIGN_USER -> printList(out, app.getAvailableUserIDsForActivity(projectID, activityName), id -> id, "Select a User:");
 			case ASSIGN_PROJECT_LEADER -> printList(out, app.getUsers(), User::getID, "Select a Project Leader:");
-			case ADD_ACTIVITY -> out.println("Enter: activityName expectedTime startWeek endWeek (or 0 to cancel)");
+			case ADD_ACTIVITY -> out.println("Enter: activityName expectedTime startYear startWeek endYear endWeek (or 0 to cancel)");
 			case CREATE_PROJECT -> out.println("Enter: projectName clientName (or 0 to cancel)");
-			case USERS_MENU -> printOptions(out, "Back", "List All Users", "List Vacant Users", "Create User", "Main Menu");
+			case USERS_MENU -> printOptions(out,
+					"Back",
+					"List All Users",
+					"List Vacant Users",
+					"Create User",
+					"View My Registered Time Entries",  // ✅ NEW
+					"Main Menu"
+			);
 			case LIST_ALL_USERS -> printListReadOnly(out, app.getUsers(), User::getID, "All Users:");
-			case LIST_VACANT_USERS_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
+			case LIST_VACANT_USERS_INPUT ->
+					out.println("Enter: startYear startWeek endYear endWeek (or 0 to cancel)");
 			case LIST_VACANT_USERS -> printListReadOnly(out, lastVacantUsers, id -> id, "Vacant Users:");
 			case VIEW_ASSIGNED_USERS -> printListReadOnly(out, app.getActivityByName(activityName,projectID).getAssignedUsers(), id -> id, "Assigned Users:");
 			case CREATE_USER -> out.println("Enter UserID (max 4 chars) or 0 to cancel:");
@@ -659,7 +708,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case STATUS_REPORT -> {}
 			case VIEW_USER_ENTRIES_FOR_TODAY -> printListReadOnly(out, app.getUsersEntriesForToday(loggedInUserID), string -> string, "Time Entries for Today:");
 			case CREATE_LEAVE_REQUEST_INPUT -> out.println("Enter: hours startDate(YYYY-MM-DD) endDate(YYYY-MM-DD) activityName (or 0 to cancel)");
-			case GENERATE_LEAVE_STATUS_REPORT_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
+			case GENERATE_LEAVE_STATUS_REPORT_INPUT ->
+					out.println("Enter: startYear startWeek endYear endWeek (or 0 to cancel)");
 
 		}
 	}

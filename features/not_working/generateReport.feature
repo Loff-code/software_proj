@@ -1,5 +1,3 @@
-#læs 5.2 i projekt beskrivelsen
-
 Feature: View status report for projects
   Description: Allows a user to generate a report that shows all project activities with used time, budgeted time, and their current status.
   Actor: User
@@ -7,8 +5,8 @@ Feature: View status report for projects
   Background:
     Given the user is logged in
     Given that a project with ID 25000 and project name "P1" exists
-    When the user adds an activity with name "Demo", budgeted time 10 hours, start week 1, end week 4 to project with ID 25000
-    When the user adds an activity with name "Design", budgeted time 30 hours, start week 4, end week 10 to project with ID 25000
+    When the user adds an activity with name "Demo", budgeted time 10 hours, start year 2025, start week 1, end year 2025, end week 4 to project with ID 25000
+    When the user adds an activity with name "Design", budgeted time 30 hours, start year 2025, start week 4, end year 2025, end week 10 to project with ID 25000
     And the user "vict" is assigned to the activity "Demo" in project "P1" with ID 25000
     And the user "zoha" is assigned to the activity "Demo" in project "P1" with ID 25000
     And the user "vict" is assigned to the activity "Design" in project "P1" with ID 25000
@@ -17,14 +15,9 @@ Feature: View status report for projects
     When the user "vict" registers 6.0 hours spent on activity "Design" on date "2025-02-07" in project with ID 25000
     And the user sets the status of "Demo" to "Completed" in project with ID 25000
     And the user sets the status of "Design" to "In progress" in project with ID 25000
-    #Given the user "sore" is not already a leader of the project
-    #When the user assigns "sore" as the project leader to the project 25000
-    #Then the user "sore" is set as the leader of project 25000
-
-
 
   Scenario: User views report of ongoing activities and their hours
-    When the user requests a status report from week 1 to week 10
+    When the user requests a status report from start year 2025, start week 1 to end year 2025, end week 10
     Then the report should include:
       | ProjectName | ProjectID | ProjectLeader | Activity | Assigned users | Used hours | Budgeted hours | Status      | Start week | End week |
       | P1          | 25000     | sore          | Demo     | vict, zoha     | 10.0       | 10             | Completed   | 1          | 4        |
@@ -34,14 +27,7 @@ Feature: View status report for projects
   Scenario: Report for project with no activities
     Given that a project with ID 30000 and project name "EmptyProject" exists
     And there are no activities in project with ID 30000
-    When the user requests a status report from week 1 to week 10
+    When the user requests a status report from start year 2025, start week 1 to end year 2025, end week 10
     Then the report should not include:
       | EmptyProject | 30000  |
     And no error message is shown
-  #Scenario: User sees previously registered times
-   # Given the system date is mocked
-    #When the user "vict" registers 4.0 hours spent on activity "Design" on date "2025-02-06" in project with ID 25000
-    #Then the user "vict" should see the registered times for activity "Design" in project with ID 25000
-    #Then the user "vict" should see the following registered time entries for activity "Design" in project with ID 25000:
-    #  | [vict]|Design|2025-02-06 | 4.0 hours |
-    #  | [vict]|Design|2025-02-07 | 6.0 hours |

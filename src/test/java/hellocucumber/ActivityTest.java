@@ -14,7 +14,7 @@ public class ActivityTest {
 
     @Test
     void registerTime_fails_whenDateIsNull() {
-        Activity activity = new Activity("Demo", 100, 1, 5);
+        Activity activity = new Activity("Demo", 100, 1,1,1, 5);
         activity.assignEmployeeToActivity("vict");
 
         Exception e = assertThrows(IllegalArgumentException.class, () ->
@@ -26,7 +26,7 @@ public class ActivityTest {
 
     @Test
     void registerTime_fails_whenUserIdIsBlank() {
-        Activity activity = new Activity("Demo", 100, 1, 5);
+        Activity activity = new Activity("Demo", 100, 1, 5,1,2);
         activity.assignEmployeeToActivity("");
 
         LocalDate date = LocalDate.of(2025, 2, 6);

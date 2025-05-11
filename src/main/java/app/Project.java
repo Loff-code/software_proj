@@ -20,8 +20,14 @@ public class Project {
         if (activity == null || activity.getName() == null || activity.getName().isEmpty()) {
             throw new IllegalArgumentException("Activity name cannot be null or empty");
         }
-        if (activity.getEndWeek() < activity.getStartWeek()) {
+        if (activity.getEndWeek() < activity.getStartWeek() && activity.getEndYear() <= activity.getStartYear()) {
             throw new IllegalArgumentException("End week cannot be before start week");
+        }
+        if (activity.getStartYear() < 0 || activity.getEndYear() < 0) {
+            throw new IllegalArgumentException("Year cannot be negative");
+        }
+        if (activity.getStartYear() > activity.getEndYear()) {
+            throw new IllegalArgumentException("Start year cannot be after end year");
         }
         if (userID == null || userID.isEmpty()) {
             throw new IllegalArgumentException("User ID cannot be null or empty");
@@ -29,7 +35,7 @@ public class Project {
         if (projectLeaderID != null && !userID.equals(projectLeaderID)) {
             throw new IllegalArgumentException("Only the project leader can add activities");
         }
-        if (activity.getStartWeek() < 1 || activity.getEndWeek() > 52) {
+        if (activity.getStartWeek() < 1 || activity.getEndWeek() < 1 || activity.getStartWeek() > 52|| activity.getEndWeek() > 52) {
             throw new IllegalArgumentException("Weeks must be between 1 and 52");
         }
         if (activity.getBudgetTime() < 0) {

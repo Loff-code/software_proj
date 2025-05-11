@@ -1,6 +1,7 @@
 package hellocucumber;
 
 import app.*;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,8 +14,8 @@ import java.util.List;
 
 public class FindVacWorkerSteps {
 
-    private ErrorMessageHolder errorMessageHolder;
-    private PM_App app;
+    private final ErrorMessageHolder errorMessageHolder;
+    private final PM_App app;
     private List<String> foundEmployees;
 
     public FindVacWorkerSteps(PM_App app, ErrorMessageHolder errorMessageHolder) {
@@ -31,26 +32,27 @@ public class FindVacWorkerSteps {
                 app.createUser(new User(userID));
             } catch (OperationNotAllowedException | IllegalArgumentException e) {
                 errorMessageHolder.setErrorMessage(e.getMessage());
-                if (errorMessageHolder.getErrorMessage().equals("User ID is already taken")){
+                if ("User ID is already taken".equals(errorMessageHolder.getErrorMessage())) {
                     errorMessageHolder.setErrorMessage("");
                 }
             }
         }
     }
 
-    @Given("the user {string} is assigned to an activity from week {int} to {int}")
-    public void the_user_is_assigned_to_an_activity_from_week_to_week(String userID, Integer startWeek, Integer endWeek) throws OperationNotAllowedException {
+
+    @And("the user {string} is assigned to an activity from start year {int}, start week {int} to end year {int}, end week {int}")
+    public void theUserIsAssignedToAnActivityFromStartYearStartWeekToEndYearEndWeek(String userID, Integer startYear, Integer startWeek, Integer endYear, Integer endWeek) throws OperationNotAllowedException {
         Project project = new Project("TestProject", "TestClient");
-        Activity activity = new Activity("TestActivity", 10, startWeek, endWeek);
+        Activity activity = new Activity("TestActivity", 10, startYear, startWeek, endYear, endWeek);
         project.getActivities().add(activity);
         app.getProjects().add(project);
         app.assignUserToActivity(userID, activity.getName(), project.getProjectID());
     }
-
-    @When("the user searches for available employees between week {int} and week {int}")
-    public void the_user_searches_for_available_employees_between_week_and_week(Integer startWeek, Integer endWeek) throws OperationNotAllowedException {
-        foundEmployees = app.getVacantUserIDs(startWeek, endWeek);
+    @When("the user searches for available employees between start year {int}, start week {int} and end year {int}, end week {int}")
+    public void the_user_searches_for_available_employees_between_year_week_and_year_week(Integer startYear, Integer startWeek, Integer endYear, Integer endWeek) throws OperationNotAllowedException {
+        foundEmployees = app.getVacantUserIDs(startYear, startWeek, endYear, endWeek);
     }
+  
 
     @Then("the available employees list should contain {string}")
     public void the_available_employees_list_should_contain(String userID) {
@@ -61,4 +63,6 @@ public class FindVacWorkerSteps {
     public void the_available_employees_list_should_not_contain(String userID) {
         assertFalse(foundEmployees.contains(userID));
     }
+
+
 }
