@@ -206,9 +206,6 @@ public class PM_App extends Observable {
             }
         }
 
-        for (String entry : entries) {
-            System.out.println(entry);
-        }
         return entries;
     }
 
@@ -249,31 +246,24 @@ public class PM_App extends Observable {
 
     public String getStatusReport(int startWeek, int endWeek) {
         StringBuilder report = new StringBuilder();
-
         report.append("Project Status Report (Weeks ").append(startWeek).append(" - ").append(endWeek).append(")\n");
         report.append("---------------------------------------------------------------\n");
 
-        // Loop through all projects
         for (Project project : projects) {
             StringBuilder projectReport = new StringBuilder();
             boolean hasRelevantActivities = false;
 
-            // Loop through all activities in the project
             for (Activity activity : project.getActivities()) {
-                // Check if the activity is within the specified week range
                 if (activity.getStartWeek() <= endWeek && activity.getEndWeek() >= startWeek) {
                     hasRelevantActivities = true;
 
-                    // Activity info
                     projectReport.append("  Activity: ").append(activity.getName()).append("\n");
                     projectReport.append("    Status: ").append(activity.getStatus()).append("\n");
                     projectReport.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
 
-                    // Calculate total used hours for this activity
                     double totalUsedHours = activity.getTotalUsedHours();
                     projectReport.append("    Used Hours: ").append(totalUsedHours).append("\n");
 
-                    // Assigned users
                     projectReport.append("    Assigned Users: ");
                     if (activity.getAssignedUsers().isEmpty()) {
                         projectReport.append("None\n");
@@ -284,7 +274,6 @@ public class PM_App extends Observable {
                         projectReport.append("\n");
                     }
 
-                    // Users who have logged time
                     projectReport.append("    Users who have logged time: ");
                     if (activity.getUsersWithLoggedTime().isEmpty()) {
                         projectReport.append("None\n");
@@ -297,7 +286,6 @@ public class PM_App extends Observable {
                 }
             }
 
-            // Only append project info if there was at least one relevant activity
             if (hasRelevantActivities) {
                 report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
                 report.append(projectReport);
@@ -307,6 +295,7 @@ public class PM_App extends Observable {
 
         return report.toString();
     }
+
 
 
 

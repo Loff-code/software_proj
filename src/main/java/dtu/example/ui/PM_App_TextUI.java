@@ -34,7 +34,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		LOGIN, MAIN_MENU, SELECT_PROJECT, PROJECT_MENU, SELECT_ACTIVITY, ACTIVITY_MENU,
 		EDIT_ACTIVITY, STATUS_REPORT, EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START,
 		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME,
-		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER,
+		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER,GENERATE_STATUS_REPORT_INPUT, GENERATE_STATUS_REPORT_OUTPUT,
 		ADD_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
 		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
 		SELECT_ASSIGNED_ACTIVITY, ENTER_LOG_TIME_HOURS, CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE
@@ -84,12 +84,38 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		}
 	}
 
+
+	private void handleGenerateStatusReportInput(String input) throws IOException {
+		if (input.equals("0")) {
+			processStep = ProcessStep.MAIN_MENU;
+			return;
+		}
+		String[] parts = input.trim().split(" ");
+		if (parts.length == 2) {
+			try {
+				int start = Integer.parseInt(parts[0]);
+				int end = Integer.parseInt(parts[1]);
+				String report = app.getStatusReport(start, end);
+				System.out.println("\n" + report);
+				System.out.println("Press Enter to continue...");
+				reader.readLine();
+			} catch (NumberFormatException e) {
+				lastError = "Invalid input. Please enter two valid week numbers.";
+			}
+		} else {
+			lastError = "Invalid input. Format: startWeek endWeek";
+		}
+		processStep = ProcessStep.MAIN_MENU;
+	}
+
+
 	private void handleChoice(String input, PrintStream out) throws IOException, OperationNotAllowedException {
 		int number = needsNumericInput(processStep) ? Integer.parseInt(input) : -1;
 
 		switch (processStep) {
 			case LOGIN -> handleLogin(input, out);
 			case MAIN_MENU -> handleMainMenu(number);
+			case GENERATE_STATUS_REPORT_INPUT -> handleGenerateStatusReportInput(input);
 			case SELECT_PROJECT -> handleSelectProject(number);
 			case PROJECT_MENU -> handleProjectMenu(number);
 			case SELECT_ACTIVITY -> handleSelectActivity(number);
@@ -109,7 +135,6 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case EDIT_ACTIVITY_START -> handleEditActivityStart(input);
 			case EDIT_ACTIVITY_END -> handleEditActivityEnd(input);
 			case EDIT_ACTIVITY_BUDGET_TIME -> handleEditActivityBudgetTime(input);
-			case STATUS_REPORT -> handleStatusReport(out);
 			case SELECT_ASSIGNED_ACTIVITY -> handleSelectAssignedActivity(number);
 			case ENTER_LOG_TIME_HOURS -> handleLogTimeHours(input);
 			case CHOOSE_LOG_DATE_METHOD -> handleChooseLogDateMethod(number);
@@ -123,7 +148,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			ProcessStep.CREATE_USER, ProcessStep.EDIT_ACTIVITY_NAME, ProcessStep.EDIT_ACTIVITY_START,
 			ProcessStep.EDIT_ACTIVITY_END, ProcessStep.EDIT_ACTIVITY_BUDGET_TIME,
 			ProcessStep.LIST_VACANT_USERS_INPUT, ProcessStep.ENTER_LOG_TIME_HOURS,
-			ProcessStep.ENTER_LOG_TIME_DATE
+			ProcessStep.ENTER_LOG_TIME_DATE,ProcessStep.GENERATE_STATUS_REPORT_INPUT
+
 	);
 	private boolean needsNumericInput(ProcessStep step) {
 		return !TEXT_STEPS.contains(step);
@@ -142,9 +168,11 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 2 -> processStep = ProcessStep.CREATE_PROJECT;
 			case 3 -> processStep = ProcessStep.USERS_MENU;
 			case 4 -> processStep = ProcessStep.SELECT_ASSIGNED_ACTIVITY;
+			case 5 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT; // NEW OPTION
 			default -> setInvalidChoice();
 		}
 	}
+
 
 	private void handleSelectProject(int choice) {
 		if (choice == 0) {
@@ -189,7 +217,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case 2 -> processStep = ProcessStep.VIEW_ASSIGNED_USERS;
 			case 3 -> processStep = ProcessStep.EDIT_ACTIVITY;
 			case 4 -> processStep = ProcessStep.ENTER_LOG_TIME_HOURS;
-			case 5 -> processStep = ProcessStep.STATUS_REPORT;
+			case 5 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT;
 			case 6 -> {
 				projectID = 0;
 				activityName = null;
@@ -204,8 +232,8 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			processStep = ProcessStep.ACTIVITY_MENU;
 			return;
 		}
-		List<String> assignedUsers =app.getAssignedActivitiesByUserID(loggedInUserID);
-		String userId = selectFromList(assignedUsers, choice, id ->id);
+
+		String userId = selectFromList(app.getAvailableUserIDsForActivity(projectID, activityName), choice, id ->id);
 		if (userId != null) {
 			app.assignUserToActivity(userId, activityName, projectID);
 		}
@@ -386,22 +414,6 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		processStep = ProcessStep.USERS_MENU;
 	}
 
-	private void handleStatusReport(PrintStream out) throws IOException, OperationNotAllowedException {
-		out.println("Status for Activity: " + activityName);
-		Activity a =app.getActivityByName(activityName, projectID);
-		out.println("   Name: " + a.getName());
-		out.println("   Start Week: " + a.getStartWeek());
-		out.println("   End Week: " + a.getEndWeek());
-		out.println("   Expected Time: " + a.getBudgetTime());
-		out.println("   Assigned Users:");
-		for (String user : a.getAssignedUsers()) {
-			out.println("     - " + user);
-		}
-		out.println("\nPress enter to continue...");
-		reader.readLine();
-		processStep = ProcessStep.ACTIVITY_MENU;
-	}
-
 	private void handleSelectAssignedActivity(int choice) throws OperationNotAllowedException {
 		if (choice == 0) {
 			processStep = ProcessStep.MAIN_MENU;
@@ -512,7 +524,16 @@ public class PM_App_TextUI implements PropertyChangeListener {
 
 		switch (processStep) {
 			case LOGIN -> out.println("Enter UserID:");
-			case MAIN_MENU -> printOptions(out, "Logout", "Select Project", "Create Project", "Users Menu", "My Assigned Activities");
+			case MAIN_MENU -> printOptions(out,
+					"Logout",
+					"Select Project",
+					"Create Project",
+					"Users Menu",
+					"My Assigned Activities",
+					"Generate Status Report" // NEW
+			);
+			case GENERATE_STATUS_REPORT_INPUT -> out.println("Enter: startWeek endWeek (or 0 to cancel)");
+
 			case SELECT_PROJECT -> printList(out, app.getProjects(), Project::getName, "Select a Project:");
 			case PROJECT_MENU -> printOptions(out, "Back", "Select Activity", "Add Activity", "Assign Project Leader");
 			case SELECT_ACTIVITY -> printList(out, app.getProject(projectID).getActivities(), Activity::getName, "Select an Activity:");

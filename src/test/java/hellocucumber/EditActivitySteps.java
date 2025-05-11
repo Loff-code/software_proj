@@ -87,7 +87,6 @@ public class EditActivitySteps {
 
     @Then("an error message {string} is shown")
     public void an_error_message_is_shown(String expectedMessage) {
-        System.out.println(errorMessageHolder.getErrorMessage());
         assertEquals(expectedMessage, errorMessageHolder.getErrorMessage());
     }
 

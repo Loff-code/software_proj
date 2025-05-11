@@ -71,9 +71,6 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         if(userID.isBlank()){
             throw new IllegalArgumentException("Not allowed: User ID cannot be blank");
         }
-        if(!assignedUsers.contains(userID)){
-            throw new IllegalArgumentException("Not allowed: User is not assigned to this activity");
-        }
         if (hours <= 0 ){
             throw new IllegalArgumentException("Not allowed: Hours have to be positive");
         }
