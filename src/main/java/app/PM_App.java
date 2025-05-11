@@ -276,52 +276,58 @@ public class PM_App extends Observable {
 
         // Loop through all projects
         for (Project project : projects) {
-            report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
+            StringBuilder projectReport = new StringBuilder();
+            boolean hasRelevantActivities = false;
 
             // Loop through all activities in the project
             for (Activity activity : project.getActivities()) {
                 // Check if the activity is within the specified week range
                 if (activity.getStartWeek() <= endWeek && activity.getEndWeek() >= startWeek) {
+                    hasRelevantActivities = true;
+
                     // Activity info
-                    report.append("  Activity: ").append(activity.getName()).append("\n");
-                    report.append("    Status: ").append(activity.getStatus()).append("\n");
-                    report.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
+                    projectReport.append("  Activity: ").append(activity.getName()).append("\n");
+                    projectReport.append("    Status: ").append(activity.getStatus()).append("\n");
+                    projectReport.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
 
                     // Calculate total used hours for this activity
                     double totalUsedHours = activity.getTotalUsedHours();
-                    report.append("    Used Hours: ").append(totalUsedHours).append("\n");
+                    projectReport.append("    Used Hours: ").append(totalUsedHours).append("\n");
 
                     // Assigned users
-                    report.append("    Assigned Users: ");
+                    projectReport.append("    Assigned Users: ");
                     if (activity.getAssignedUsers().isEmpty()) {
-                        report.append("None\n");
+                        projectReport.append("None\n");
                     } else {
                         for (String userID : activity.getAssignedUsers()) {
-                            report.append(userID).append(" ");
+                            projectReport.append(userID).append(" ");
                         }
-                        report.append("\n");
+                        projectReport.append("\n");
                     }
 
-                    // Users who have logged time for this activity (including unassigned users)
-                    report.append("    Users who have logged time: ");
+                    // Users who have logged time
+                    projectReport.append("    Users who have logged time: ");
                     if (activity.getUsersWithLoggedTime().isEmpty()) {
-                        report.append("None\n");
+                        projectReport.append("None\n");
                     } else {
                         for (String userID : activity.getUsersWithLoggedTime()) {
-                            report.append(userID).append(" ");
+                            projectReport.append(userID).append(" ");
                         }
-                        report.append("\n");
+                        projectReport.append("\n");
                     }
                 }
             }
 
-            report.append("\n");  // Separate each project report with an empty line
+            // Only append project info if there was at least one relevant activity
+            if (hasRelevantActivities) {
+                report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
+                report.append(projectReport);
+                report.append("\n");
+            }
         }
 
-        // Return the complete formatted report as a string
         return report.toString();
     }
-
 
 
 

@@ -8,8 +8,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;import io.cucumber.datatable.DataTable;
 
 public class GenerateReportSteps {
 
@@ -114,14 +116,68 @@ public class GenerateReportSteps {
     @When("the user requests a status report for project {string}")
     public void theUserRequestsAStatusReportForProject(String projectName) {
         report = pmApp.getStatusReport(1, 52);
-
     }
 
 
+    @Then("the report should be empty")
+    public void theReportShouldBeEmpty() {
+        assertEquals(pmApp.getStatusReport(1, 52), "Report: Project Status Report (Weeks 1 - 52)\n" +
+                "---------------------------------------------------------------");
+    }
 
 
+    @Then("the report should include:")
+    public void theReportShouldInclude(DataTable expectedTable) {
+        for (Map<String, String> row : expectedTable.asMaps()) {
+            String activity = row.get("Activity");
+            String status = row.get("Status");
+            String budgetedHours = row.get("Budgeted hours");
+            String usedHours = row.get("Used hours");
+            String assignedUsers = row.get("Assigned users").replace(",", "").trim();
+
+            String expectedSnippet = String.format(
+                    "Activity: %s\n" +
+                            "    Status: %s\n" +
+                            "    Budgeted Hours: %s\n" +
+                            "    Used Hours: %s\n" +
+                            "    Assigned Users: %s",
+                    activity, status, budgetedHours, usedHours, assignedUsers
+            );
+
+            assertTrue(normalize(report).contains(normalize(expectedSnippet)),
+                    "Expected snippet not found for activity: " + activity);
+        }
+    }
+    private String normalize(String input) {
+        return input.lines()
+                .map(String::stripTrailing)
+                .map(String::stripLeading)
+                .collect(Collectors.joining("\n"))
+                .trim();
+    }
 
 
+    @When("the user requests a status report from week {int} to week {int}")
+    public void theUserRequestsAStatusReportFromWeekToWeek(int startWeek, int endWeek) {
+        report = pmApp.getStatusReport(startWeek, endWeek);
+    }
+
+
+    @And("there are no activities in project with ID {int}")
+    public void thereAreNoActivitiesInProjectWithID(int projectID) throws OperationNotAllowedException {
+        // Check if the project has no activities
+        Project project = pmApp.getProject(projectID);
+        assertTrue(project.getActivities().isEmpty(), "The project should have no activities.");
+    }
+    @Then("the report should not include:")
+    public void theReportShouldNotInclude(DataTable expectedTable) {
+        List<List<String>> rows = expectedTable.asLists();
+
+        for (List<String> row : rows) {
+            String combined = String.join(" ", row).trim(); // Combine the row entries
+            assertFalse(report.contains(combined), "The report should not include: " + combined);
+        }
+    }
 
 
 }
