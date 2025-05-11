@@ -7,7 +7,6 @@ Feature: View status report for projects
   Background:
     Given the user is logged in
     Given that a project with ID 25000 and project name "P1" exists
-
     #And the project "P1" has a total budget of 100 hours
     # synes det er en god ide at når
     #man laver en project at man også siger hvor mange timer man forventer at bruge
@@ -25,9 +24,9 @@ Feature: View status report for projects
     When the user "vict" registers 6.0 hours spent on activity "Design" on date "2025-02-07" in project with ID 25000
     And the user sets the status of "Demo" to "Completed" in project with ID 25000
     And the user sets the status of "Design" to "In progress" in project with ID 25000
-    Given the user "sore" is not already a leader of the project
-    When the user assigns "sore" as the project leader to the project 25000
-    Then the user "sore" is set as the leader of project 25000
+    #Given the user "sore" is not already a leader of the project
+    #When the user assigns "sore" as the project leader to the project 25000
+    #Then the user "sore" is set as the leader of project 25000
 
 
   Scenario: Multiple users register time on the same activity

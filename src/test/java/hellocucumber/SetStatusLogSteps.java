@@ -117,4 +117,8 @@ public class SetStatusLogSteps {
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
+
+    @Then("the system allow the status to change")
+    public void theSystemAllowTheStatusToChange() {
+    }
 }

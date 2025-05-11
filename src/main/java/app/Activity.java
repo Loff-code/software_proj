@@ -100,6 +100,30 @@ public void setEndWeek(int endWeek) throws IllegalArgumentException{
         return result;
     }
 
+    // Method to calculate total used hours for the activity
+    public double getTotalUsedHours() {
+        double totalUsedHours = 0.0;
+        // Iterate through timeMap to sum all logged hours
+        for (Double hours : timeMap.values()) {
+            totalUsedHours += hours;
+        }
+        return totalUsedHours;
+    }
+
+    // Method to get the users who have logged time for this activity
+    public List<String> getUsersWithLoggedTime() {
+        List<String> usersWithLoggedTime = new ArrayList<>();
+        for (String key : timeMap.keySet()) {
+            String userID = key.split("\\|")[0].replace("[", "").replace("]", "");
+            if (!usersWithLoggedTime.contains(userID)) {
+                usersWithLoggedTime.add(userID);
+            }
+        }
+        return usersWithLoggedTime;
+    }
+
+
+
 
 
 }

@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GenerateReportSteps {
 
     private final PM_App pmApp;
+
     private final ErrorMessageHolder errorMessageHolder;
     private Project project; // Vi gemmer projektet her
 
@@ -21,6 +23,8 @@ public class GenerateReportSteps {
         this.pmApp = pmApp;
         this.errorMessageHolder = errorMessageHolder;
     }
+
+
 
     // Step 1: Opret et projekt med ID 25000 og navn "P1"
     @Given("that a project with ID {int} and project name {string} exists")
@@ -64,6 +68,53 @@ public class GenerateReportSteps {
         }
 
     }
+    private String report; // Declare the report variable
+
+
+    @When("the user requests a status report for project {string} between weeks {int} and {int}")
+    public void theUserRequestsStatusReportForProjectBetweenWeeks(String projectName, int startWeek, int endWeek) {
+        // Get the status report for the given week range
+        report = pmApp.getStatusReport(startWeek, endWeek);
+    }
+
+    @Then("the activity {string} should show {double} used hours")
+    public void theActivityShouldShowUsedHours(String activityName, double expectedUsedHours) {
+        // Check if the report contains the activity name
+        assertTrue(report.contains(activityName), "Activity " + activityName + " not found in the report.");
+
+        // Check if the report contains the expected used hours
+        assertTrue(report.contains(String.valueOf(expectedUsedHours)),
+                "The expected used hours (" + expectedUsedHours + ") for activity " + activityName + " are not found in the report.");
+    }
+
+
+
+
+    @And("the user sets the status of {string} to {string} in project with ID {int}")
+    public void the_user_sets_the_status_of_activity_in_project(String activityName, String status, int projectID) throws OperationNotAllowedException {
+        // Retrieve the activity based on the project ID and activity name
+        Activity activity = pmApp.getActivityByName(activityName, projectID);
+
+        // Set the status of the activity
+        pmApp.setStatusOfActivity(activityName, projectID, status);
+
+        // Verify that the status has been updated correctly
+        assertEquals(status, activity.getStatus(), "The status of the activity was not updated correctly.");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

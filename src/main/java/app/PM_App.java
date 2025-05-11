@@ -220,9 +220,6 @@ public class PM_App extends Observable {
 
         // Tænker umiddelbart at der ikke er behov for denne. Alle kan registrere timer til aktiviteten,
         // Så jeg tænker at det enten er alle som kan eller kun Project Leader
-        if (!isAssigned && !isProjectLeader) {
-            throw new OperationNotAllowedException("Only assigned employees or the project leader can set the status");
-        }
 
         activity.setStatus(status);
         activity.addLog("Status changed to: " + status + " by " + loggedInUserID);
@@ -270,4 +267,66 @@ public class PM_App extends Observable {
 
         return report.toString(); // Return the complete report as a string
     }
+
+    public String getStatusReport(int startWeek, int endWeek) {
+        StringBuilder report = new StringBuilder();
+
+        report.append("Project Status Report (Weeks ").append(startWeek).append(" - ").append(endWeek).append(")\n");
+        report.append("---------------------------------------------------------------\n");
+
+        // Loop through all projects
+        for (Project project : projects) {
+            report.append("Project: ").append(project.getProjectID()).append(" - ").append(project.getName()).append("\n");
+
+            // Loop through all activities in the project
+            for (Activity activity : project.getActivities()) {
+                // Check if the activity is within the specified week range
+                if (activity.getStartWeek() <= endWeek && activity.getEndWeek() >= startWeek) {
+                    // Activity info
+                    report.append("  Activity: ").append(activity.getName()).append("\n");
+                    report.append("    Status: ").append(activity.getStatus()).append("\n");
+                    report.append("    Budgeted Hours: ").append(activity.getBudgetTime()).append("\n");
+
+                    // Calculate total used hours for this activity
+                    double totalUsedHours = activity.getTotalUsedHours();
+                    report.append("    Used Hours: ").append(totalUsedHours).append("\n");
+
+                    // Assigned users
+                    report.append("    Assigned Users: ");
+                    if (activity.getAssignedUsers().isEmpty()) {
+                        report.append("None\n");
+                    } else {
+                        for (String userID : activity.getAssignedUsers()) {
+                            report.append(userID).append(" ");
+                        }
+                        report.append("\n");
+                    }
+
+                    // Users who have logged time for this activity (including unassigned users)
+                    report.append("    Users who have logged time: ");
+                    if (activity.getUsersWithLoggedTime().isEmpty()) {
+                        report.append("None\n");
+                    } else {
+                        for (String userID : activity.getUsersWithLoggedTime()) {
+                            report.append(userID).append(" ");
+                        }
+                        report.append("\n");
+                    }
+                }
+            }
+
+            report.append("\n");  // Separate each project report with an empty line
+        }
+
+        // Return the complete formatted report as a string
+        return report.toString();
+    }
+
+
+
+
+
+
+
+
 }
