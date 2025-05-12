@@ -37,9 +37,6 @@ public class GenerateReportSteps {
     @Then("the user {string} should see the registered times for activity {string} in project with ID {int}")
     public void the_user_should_see_the_registered_times_for_activity_in_project_with_id(String userID, String activityName, int projectID) throws OperationNotAllowedException {
         List<String> entries = pmApp.getTimeEntriesForUser(userID, activityName, projectID);
-        for (String entry : entries) {
-            System.out.println(entry);
-        }
         assertFalse(entries.isEmpty(), "No time entries found for user " + userID);
     }
 
@@ -53,7 +50,6 @@ public class GenerateReportSteps {
             String hours = row.get(1).trim();
             String expectedLine = "[" + userID + "]|" + activityName + "|" + date + " = " + hours;
             assertTrue(actualEntries.contains(expectedLine), "Expected to find: " + expectedLine);
-            System.out.println(expectedLine);
         }
 
     }

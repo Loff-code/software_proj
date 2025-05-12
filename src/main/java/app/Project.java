@@ -36,7 +36,6 @@ public class Project {
             throw new IllegalArgumentException("Only the project leader can add activities");
         }
         if (activity.getStartWeek() < 1 || activity.getEndWeek() < 1 || activity.getStartWeek() > 52|| activity.getEndWeek() > 52) {
-            System.out.println("Start week: " + activity.getStartWeek() + ", End week: " + activity.getEndWeek());
             throw new IllegalArgumentException("Weeks must be between 1 and 52");
         }
         if (activity.getBudgetTime() < 0) {

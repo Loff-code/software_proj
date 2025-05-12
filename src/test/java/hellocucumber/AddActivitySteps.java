@@ -37,7 +37,6 @@ public class AddActivitySteps {
             Activity activity = new Activity(activityName, budgetHours, startYear, startWeek, endYear, endWeek);
             app.addActivityToProject(projectID, activity);
         } catch (OperationNotAllowedException | IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
             errorMessageHolder.setErrorMessage(e.getMessage());
         }
     }
