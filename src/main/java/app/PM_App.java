@@ -346,8 +346,11 @@ public class PM_App extends Observable {
         int endWeek = dateEnd.getDayOfYear() / 7 + 1;
         int startYear = dateStart.getYear();
         int endYear = dateEnd.getYear();
-
-        Activity activity = new Activity(newActivityName, (int) hours, startWeek, endWeek, startYear, endYear);
+        System.out.println("Start week: " + startWeek);
+        System.out.println("End week: " + endWeek);
+        System.out.println("Start year: " + startYear);
+        System.out.println("End year: " + endYear);
+        Activity activity = new Activity(newActivityName, (int) hours, startYear, startWeek, endYear, endWeek);
         addActivityToProject(projectID, activity);
         activity.registerTime(userID, hours, dateStart, dateServer);
     }

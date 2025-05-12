@@ -33,16 +33,15 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	private enum ProcessStep {
 		LOGIN, MAIN_MENU, SELECT_PROJECT, PROJECT_MENU, SELECT_ACTIVITY, ACTIVITY_MENU,
 		EDIT_ACTIVITY, STATUS_REPORT, EDIT_ACTIVITY_NAME, EDIT_ACTIVITY_START,
-		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME,EDIT_ACTIVITY_STATUS,
-		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER,GENERATE_STATUS_REPORT_INPUT, GENERATE_STATUS_REPORT_OUTPUT,
-		ADD_ACTIVITY, CREATE_PROJECT, USERS_MENU, LIST_ALL_USERS,
-		LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
+		EDIT_ACTIVITY_END, EDIT_ACTIVITY_BUDGET_TIME, EDIT_ACTIVITY_STATUS,
+		ASSIGN_USER, VIEW_ASSIGNED_USERS, ASSIGN_PROJECT_LEADER, GENERATE_STATUS_REPORT_INPUT,
+		GENERATE_STATUS_REPORT_OUTPUT, ADD_ACTIVITY, CREATE_PROJECT, USERS_MENU,
+		LIST_ALL_USERS, LIST_VACANT_USERS_INPUT, LIST_VACANT_USERS, CREATE_USER,
 		SELECT_ASSIGNED_ACTIVITY, ENTER_LOG_TIME_HOURS, VIEW_USER_ENTRIES_FOR_TODAY,
-		 CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE,CREATE_LEAVE_REQUEST_INPUT,
-		GENERATE_LEAVE_STATUS_REPORT_INPUT
-
-
+		CHOOSE_LOG_DATE_METHOD, ENTER_LOG_TIME_DATE, CREATE_LEAVE_REQUEST_INPUT,
+		GENERATE_LEAVE_STATUS_REPORT_INPUT, REPORT_MENU
 	}
+
 
 	private ProcessStep processStep = ProcessStep.LOGIN;
 	private double tempLogHours = 0;
@@ -128,6 +127,7 @@ public class PM_App_TextUI implements PropertyChangeListener {
 		switch (processStep) {
 			case LOGIN -> handleLogin(input, out);
 			case MAIN_MENU -> handleMainMenu(number);
+			case REPORT_MENU -> handleReportMenu(number);
 			case GENERATE_STATUS_REPORT_INPUT -> handleGenerateStatusReportInput(input);
 			case SELECT_PROJECT -> handleSelectProject(number);
 			case PROJECT_MENU -> handleProjectMenu(number);
@@ -188,17 +188,23 @@ public class PM_App_TextUI implements PropertyChangeListener {
 	private void handleMainMenu(int choice) throws IOException, OperationNotAllowedException {
 		switch (choice) {
 			case 0 -> logout();
-			case 1 -> processStep = ProcessStep.SELECT_PROJECT;
-			case 2 -> processStep = ProcessStep.CREATE_PROJECT;
-			case 3 -> processStep = ProcessStep.USERS_MENU;
-			case 4 -> processStep = ProcessStep.SELECT_ASSIGNED_ACTIVITY;
-			case 5 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT;
-			case 6 -> processStep = ProcessStep.VIEW_USER_ENTRIES_FOR_TODAY;
-			case 7 -> processStep = ProcessStep.CREATE_LEAVE_REQUEST_INPUT;      // <-- New
-			case 8 -> processStep = ProcessStep.GENERATE_LEAVE_STATUS_REPORT_INPUT; // <-- New
+			case 1 -> processStep = ProcessStep.SELECT_ASSIGNED_ACTIVITY;
+			case 2 -> processStep = ProcessStep.SELECT_PROJECT;
+			case 3 -> processStep = ProcessStep.CREATE_PROJECT;
+			case 4 -> processStep = ProcessStep.USERS_MENU;
+			case 5 -> processStep = ProcessStep.REPORT_MENU;
 			default -> setInvalidChoice();
 		}
 	}
+	private void handleReportMenu(int choice) {
+		switch (choice) {
+			case 0 -> processStep = ProcessStep.MAIN_MENU;
+			case 1 -> processStep = ProcessStep.GENERATE_STATUS_REPORT_INPUT;
+			case 2 -> processStep = ProcessStep.GENERATE_LEAVE_STATUS_REPORT_INPUT;
+			default -> setInvalidChoice();
+		}
+	}
+
 
 
 	private void handleCreateLeaveRequestInput(String input) throws OperationNotAllowedException {
@@ -375,14 +381,17 @@ public class PM_App_TextUI implements PropertyChangeListener {
 
 	private void handleUsersMenu(int choice) throws OperationNotAllowedException, IOException {
 		switch (choice) {
-			case 0, 5 -> processStep = ProcessStep.MAIN_MENU;
+			case 0 -> processStep = ProcessStep.MAIN_MENU;
 			case 1 -> processStep = ProcessStep.LIST_ALL_USERS;
 			case 2 -> processStep = ProcessStep.LIST_VACANT_USERS_INPUT;
 			case 3 -> processStep = ProcessStep.CREATE_USER;
-			case 4 -> handleViewTimeEntriesForUser(); // ✅ NEW: Show time entries
+			case 4 -> handleViewTimeEntriesForUser(); // View My Registered Time Entries
+			case 5 -> processStep = ProcessStep.VIEW_USER_ENTRIES_FOR_TODAY;
+			case 6 -> processStep = ProcessStep.CREATE_LEAVE_REQUEST_INPUT;
 			default -> setInvalidChoice();
 		}
 	}
+
 
 
 	private void handleCreateUser(String input, PrintStream out) throws OperationNotAllowedException {
@@ -654,15 +663,19 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			case LOGIN -> out.println("Enter UserID:");
 			case MAIN_MENU -> printOptions(out,
 					"Logout",
+					"My Assigned Activities",
 					"Select Project",
 					"Create Project",
 					"Users Menu",
-					"My Assigned Activities",
+					"Reports"
+			);
+
+			case REPORT_MENU -> printOptions(out,
+					"Back",
 					"Generate Status Report",
-					"View Today's Time Entries",
-					"Create Leave Request",
 					"Generate Leave Status Report"
 			);
+
 
 
 			case GENERATE_STATUS_REPORT_INPUT ->
@@ -683,9 +696,11 @@ public class PM_App_TextUI implements PropertyChangeListener {
 					"List All Users",
 					"List Vacant Users",
 					"Create User",
-					"View My Registered Time Entries",  // ✅ NEW
-					"Main Menu"
+					"View My Registered Time Entries",
+					"View Today's Time Entries",
+					"Create Leave Request"
 			);
+
 			case LIST_ALL_USERS -> printListReadOnly(out, app.getUsers(), User::getID, "All Users:");
 			case LIST_VACANT_USERS_INPUT ->
 					out.println("Enter: startYear startWeek endYear endWeek (or 0 to cancel)");
@@ -728,9 +743,10 @@ public class PM_App_TextUI implements PropertyChangeListener {
 			if (activityName != null) {
 				Activity activity = project.getActivityByName(activityName);
 				header += " -> [Activity: " + activity.getName()
-						+ " (start: " + activity.getStartWeek()
-						+ ", end: " + activity.getEndWeek() + ")]";
+						+ " (start: " + activity.getStartYear() + " week " + activity.getStartWeek()
+						+ ", end: " + activity.getEndYear() + " week " + activity.getEndWeek() + ")]";
 			}
+
 			out.println(header);
 		}
 	}
