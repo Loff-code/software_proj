@@ -60,7 +60,7 @@ public class PMAppTest {
         Exception exception = assertThrows(OperationNotAllowedException.class, () ->
                 app.getVacantUserIDs(2025, 10, 2025, 5)
         );
-        assertEquals("End week cannot be before start week", exception.getMessage());
+        assertEquals("End time cannot be before start time", exception.getMessage());
     }
 
 

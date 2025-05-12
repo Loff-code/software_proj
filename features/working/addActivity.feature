@@ -26,7 +26,7 @@ Feature: Create activity
 
   Scenario: Employee adds an activity with end week before start week and fails
     When the user adds an activity with name "a", budgeted time 10 hours, start year 2025, start week 5, end year 2025, end week 4 to project with ID 25000
-    Then an error message "End week cannot be before start week" is shown
+    Then an error message "End time cannot be before start time" is shown
 
   Scenario: Employee adds an activity with negative budgeted time and fails
     When the user adds an activity with name "a", budgeted time -10 hours, start year 2025, start week 5, end year 2025, end week 6 to project with ID 25000
@@ -55,4 +55,4 @@ Feature: Create activity
 
   Scenario: Employee adds an activity with start year after end year and fails
     When the user adds an activity with name "a", budgeted time 10 hours, start year 2026, start week 5, end year 2025, end week 6 to project with ID 25000
-    Then an error message "Start year cannot be after end year" is shown
+    Then an error message "End time cannot be before start time" is shown

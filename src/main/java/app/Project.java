@@ -20,9 +20,7 @@ public class Project {
         if (activity == null || activity.getName() == null || activity.getName().isEmpty()) {
             throw new IllegalArgumentException("Activity name cannot be null or empty");
         }
-        if (activity.getEndWeek() < activity.getStartWeek() && activity.getEndYear() <= activity.getStartYear()) {
-            throw new IllegalArgumentException("End time cannot be before start time");
-        }
+
         if (activity.getStartYear() < 0 || activity.getEndYear() < 0) {
             throw new IllegalArgumentException("Year cannot be negative");
         }
@@ -37,6 +35,12 @@ public class Project {
         }
         if (activity.getBudgetTime() < 0) {
             throw new IllegalArgumentException("Budget time cannot be negative");
+        }
+        if (activity.getEndYear() < activity.getStartYear() ) {
+            throw new IllegalArgumentException("End time cannot be before start time");
+        }
+        if ((activity.getEndWeek() < activity.getStartWeek() && activity.getEndYear() == activity.getStartYear() )) {
+            throw new IllegalArgumentException("End time cannot be before start time");
         }
 
         try {
