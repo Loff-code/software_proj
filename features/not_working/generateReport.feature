@@ -31,3 +31,18 @@ Feature: View status report for projects
     Then the report should not include:
       | EmptyProject | 30000  |
     And no error message is shown
+
+
+  Scenario: Report for project with no assigned user in activity
+    Given that a project with ID 30000 and project name "EmptyProject" exists
+    When the user adds an activity with name "Demo", budgeted time 10 hours, start year 2025, start week 1, end year 2025, end week 4 to project with ID 30000
+    When the user requests a status report from start year 2025, start week 1 to end year 2025, end week 10
+    And no error message is shown
+
+
+  Scenario: Report for project with no assigned user in activity
+    Given that a project with ID 30000 and project name "EmptyProject" exists
+    When the user adds an activity with name "Demo", budgeted time 10 hours, start year 2025, start week 1, end year 2025, end week 4 to project with ID 30000
+    When the user requests a status report from start year 2025, start week 2 to end year 2026, end week 1
+    And no error message is shown
+

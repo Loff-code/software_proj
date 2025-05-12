@@ -25,3 +25,4 @@ Feature: Set status log
     Then the status of "Planning" is updated to "Started" in project with ID 25000
     And a log entry is created with the new status
     And no error message is shown
+

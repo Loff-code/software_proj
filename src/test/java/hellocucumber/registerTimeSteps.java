@@ -38,15 +38,7 @@ public class registerTimeSteps {
             app.setDateServer(new RealDateServer());
         }
 
-        if (date == null || date.isBlank()) {
-            errorMessageHolder.setErrorMessage("Not allowed: Date cannot be null");
-            return;
-        }
 
-        if (userID.isBlank()) {
-            errorMessageHolder.setErrorMessage("Not allowed: User ID cannot be blank");
-            return;
-        }
 
         try {
             app.registerTimeForActivity(userID, projectID, activityName, hours, date);

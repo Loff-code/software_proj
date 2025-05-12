@@ -111,6 +111,12 @@ public class PM_App extends Observable {
 
     public List<String> getAvailableUserIDs(int startYear, int startWeek, int endYear, int endWeek) {
         List<String> availables = new ArrayList<>();
+        if ((startWeek < 1 || endWeek > 52 || endWeek < 1 || startWeek > 52) ) {
+            throw new IllegalArgumentException("Weeks must be between 1 and 52");
+        }
+        if ((endWeek < startWeek && endYear == startYear) || (endYear < startYear)) {
+            throw new IllegalArgumentException("End time cannot be before start time");
+        }
         for (User user : users) {
             if (isAvailable(user.getID(), startYear, startWeek, endYear, endWeek)) {
                 availables.add(user.getID());
@@ -146,7 +152,7 @@ public class PM_App extends Observable {
         if ((startWeek < 1 || endWeek > 52 || endWeek < 1 || startWeek > 52) ) {
             throw new OperationNotAllowedException("Weeks must be between 1 and 52");
         }
-        if (endWeek < startWeek && endYear <= startYear) {
+        if  ((endWeek < startWeek && endYear == startYear) || (endYear < startYear)) {
             throw new OperationNotAllowedException("End time cannot be before start time");
         }
         List<String> vacant = new ArrayList<>();
@@ -220,7 +226,10 @@ public class PM_App extends Observable {
 
     public void registerTimeForActivity(String userID, int projectID, String activityName, double hours, String dateStr) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
-        LocalDate date = dateServer.parseDate(dateStr);
+        LocalDate date = null;
+        if (!(dateStr == null || dateStr.isEmpty())) {
+            date =dateServer.parseDate(dateStr);
+        }
         activity.registerTime(userID, hours, date, dateServer);
     }
 
@@ -263,13 +272,10 @@ public class PM_App extends Observable {
         }
         return list;
     }
+
     public String generateReport(String projectID) throws OperationNotAllowedException {
         // Find the project by ID
         Project project = getProject(Integer.parseInt(projectID));
-        if (project == null) {
-            throw new OperationNotAllowedException("Project not found");
-        }
-
         // Start building the report
         StringBuilder report = new StringBuilder();
         report.append("Report for project: ").append(project.getName()).append("\n");
@@ -307,11 +313,7 @@ public class PM_App extends Observable {
             boolean hasRelevantActivities = false;
 
             for (Activity activity : project.getActivities()) {
-                boolean overlaps =
-                        (activity.getStartYear() < endYear ||
-                                (activity.getStartYear() == endYear && activity.getStartWeek() <= endWeek)) &&
-                                (activity.getEndYear() > startYear ||
-                                        (activity.getEndYear() == startYear && activity.getEndWeek() >= startWeek));
+                boolean overlaps = (activity.getStartYear() < endYear || (activity.getStartYear() == endYear && activity.getStartWeek() <= endWeek)) &&(activity.getEndYear() > startYear || (activity.getEndYear() == startYear && activity.getEndWeek() >= startWeek));
 
                 if (overlaps) {
                     hasRelevantActivities = true;
@@ -400,26 +402,14 @@ public class PM_App extends Observable {
                     double totalUsedHours = activity.getTotalUsedHours();
                     projectReport.append("    Used Hours: ").append(totalUsedHours).append("\n");
 
-                    projectReport.append("    Assigned Users: ");
-                    if (activity.getAssignedUsers().isEmpty()) {
-                        projectReport.append("None\n");
-                    } else {
-                        for (String userID : activity.getAssignedUsers()) {
-                            projectReport.append(userID).append(" ");
-                        }
-                        projectReport.append("\n");
-                    }
-
                     projectReport.append("    Users who have logged time: ");
-                    if (activity.getUsersWithLoggedTime().isEmpty()) {
-                        projectReport.append("None\n");
-                    } else {
+
                         for (String userID : activity.getUsersWithLoggedTime()) {
                             projectReport.append(userID).append(" ");
                         }
                         projectReport.append("\n");
                     }
-                }
+
             }
 
             if (hasRelevantActivities) {

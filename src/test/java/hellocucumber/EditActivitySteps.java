@@ -2,6 +2,9 @@ package hellocucumber;
 
 import app.*;
 import io.cucumber.java.en.*;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EditActivitySteps {
@@ -14,6 +17,7 @@ public class EditActivitySteps {
         this.errorMessageHolder = errorMessageHolder;
     }
 
+    private List<String> availbles;
 
 
     @Given("the user adds an activity named {string} with budget {int}, start year {int}, start week {int}, end year {int}, end week {int} to project {int}")
@@ -128,4 +132,152 @@ public class EditActivitySteps {
         }
     }
 
+    @When("the user requests the list of available users from year {int} week {int} to year {int} week {int}")
+    public void theUserRequestsTheListOfAvailableUsersFromYearWeekToYearWeek(int arg0, int arg1, int arg2, int arg3) {
+        try {
+            availbles = app.getAvailableUserIDs(arg0, arg1, arg2, arg3);
+        }catch (IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+
+
+    }
+
+    @Then("the list of available users includes {string}")
+    public void theListOfAvailableUsersIncludes(String arg0) {
+        assertTrue(availbles.contains(arg0));
+    }
+
+    @And("the list of available users does not include {string}")
+    public void theListOfAvailableUsersDoesNotInclude(String arg0) {
+        assertFalse(availbles.contains(arg0));
+    }
+
+    @When("the user requests the list of available users to the activity {string} in project {int}")
+    public void theUserRequestsTheListOfAvailableUsersToTheActivityInProject(String arg0, int arg1) throws OperationNotAllowedException {
+        try {
+            availbles = app.getAvailableUserIDsForActivity(arg1, arg0);
+        }catch (IllegalArgumentException| OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user requests the list of vacant users from year {int} week {int} to year {int} week {int}")
+    public void theUserRequestsTheListOfVacantUsersFromYearWeekToYearWeek(int arg0, int arg1, int arg2, int arg3) throws OperationNotAllowedException {
+        try {
+            availbles = app.getVacantUserIDs(arg0, arg1, arg2, arg3);
+        } catch (IllegalArgumentException | OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+
+        }
+    }
+
+    @Then("the list of vacant users includes {string}")
+    public void theListOfVacantUsersIncludes(String arg0) {
+        assertTrue(availbles.contains(arg0));
+    }
+
+
+    @When("the user requests the list all activities assigned to the user {string}")
+    public void theUserRequestsTheListAllActivitiesAssignedToTheUser(String arg0) {
+        try {
+            availbles = app.getAssignedActivitiesByUserID(arg0);
+        } catch (IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+
+    }
+
+    @Then("the list of activities assigned to the user {string} includes {string}")
+    public void theListOfActivitiesAssignedToTheUserIncludes(String arg0, String arg1) {
+        boolean thing = false;
+        for (String activity : availbles) {
+                if (activity.contains(arg1)) {
+                    thing = true;
+                }
+
+        }
+        assertTrue(thing);
+    }
+
+    Activity leaveActivity;
+    String leaveActivityName;
+
+    @When("the user {string} requests leave named {string} from {string} to {string} with {double} hours")
+    public void the_user_requests_leave(String userID, String activityName, String dateStart, String dateEnd, double hours) throws Exception {
+        app.createLeaveRequest(userID, activityName, 1, hours, dateStart, dateEnd);
+        leaveActivity = app.getProject(1).getActivities().get(0);
+        leaveActivityName = leaveActivity.getName(); // Store for reuse
+    }
+
+    @Then("the project {int} contains a leave activity for {string} named {string}")
+    public void the_project_contains_leave_activity(int projectID, String userID, String activityName) throws Exception {
+        List<Activity> activities = app.getProject(projectID).getActivities();
+
+        boolean containsUser = false;
+        boolean containsActivity = false;
+        for (Activity activity : activities) {
+            if (activity.getName().contains(userID)) {
+                containsUser = true;
+            }
+            if (activity.getName().contains(activityName)) {
+                containsActivity = true;
+            }
+        }
+
+        assertTrue(containsActivity);
+        assertTrue(containsUser);
+    }
+
+    @Then("the activity name contains {string}")
+    public void the_activity_name_contains(String expected) {
+        assertTrue(leaveActivityName.contains(expected));
+    }
+
+    @Then("the leave activity for {string} on {string} registers {double} hours")
+    public void the_leave_activity_registers_hours(String userID, String date, double expectedHours) {
+        String key = "[" + userID + "]|" + leaveActivity.getName() + "|" + date;
+        double actual = leaveActivity.getTimeMap().getOrDefault(key, 0.0);
+        assertEquals(expectedHours, actual);
+    }
+
+    String report;
+
+    @When("the user generates a report for project {int}")
+    public void the_user_generates_a_report_for_project(int projectID) throws Exception {
+        try {
+            report = app.generateReport(String.valueOf(projectID));
+        }catch (OperationNotAllowedException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("the report contains {string}")
+    public void the_report_contains(String expectedContent) {
+        assertTrue(report.contains(expectedContent), "Expected report to contain: " + expectedContent);
+    }
+
+    @When("the user requests the leave status report from year {int} week {int} to year {int} week {int}")
+    public void theUserRequestsTheLeaveStatusReportFromYearWeekToYearWeek(int arg0, int arg1, int arg2, int arg3) {
+        try {
+            report = app.getLeaveStatusReport(arg0, arg1, arg2, arg3);
+        }catch (IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("the leave status report is generated successfully")
+    public void theLeaveStatusReportIsGeneratedSuccessfully() {
+        assertNotNull(report, "Leave status report should not be null");
+        assertFalse(report.isEmpty(), "Leave status report should not be empty");
+    }
+
+    @Then("the leave status report from year {int} week {int} to year {int} week {int} is generated successfully")
+    public void theLeaveStatusReportFromYearWeekToYearWeekIsGeneratedSuccessfully(int arg0, int arg1, int arg2, int arg3) {
+        try {
+            report = app.getLeaveStatusReport(arg0, arg1, arg2, arg3);
+        }catch (IllegalArgumentException e) {
+            errorMessageHolder.setErrorMessage(e.getMessage());
+        }
+    }
 }
