@@ -21,13 +21,10 @@ public class Project {
             throw new IllegalArgumentException("Activity name cannot be null or empty");
         }
         if (activity.getEndWeek() < activity.getStartWeek() && activity.getEndYear() <= activity.getStartYear()) {
-            throw new IllegalArgumentException("End week cannot be before start week");
+            throw new IllegalArgumentException("End time cannot be before start time");
         }
         if (activity.getStartYear() < 0 || activity.getEndYear() < 0) {
             throw new IllegalArgumentException("Year cannot be negative");
-        }
-        if (activity.getStartYear() > activity.getEndYear()) {
-            throw new IllegalArgumentException("Start year cannot be after end year");
         }
         if (userID == null || userID.isEmpty()) {
             throw new IllegalArgumentException("User ID cannot be null or empty");

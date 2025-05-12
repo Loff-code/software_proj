@@ -147,7 +147,7 @@ public class PM_App extends Observable {
             throw new OperationNotAllowedException("Weeks must be between 1 and 52");
         }
         if (endWeek < startWeek && endYear <= startYear) {
-            throw new OperationNotAllowedException("End week cannot be before start week");
+            throw new OperationNotAllowedException("End time cannot be before start time");
         }
         List<String> vacant = new ArrayList<>();
         for (User user : users) {
