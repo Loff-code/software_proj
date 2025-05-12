@@ -1,11 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: hellocucumber.PMAppTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.008 s <<< FAILURE! -- in hellocucumber.PMAppTest
+Tests run: 6, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.007 s <<< FAILURE! -- in hellocucumber.PMAppTest
 hellocucumber.PMAppTest.getAvailableUserIDs_returnsOnlyAvailableUsers -- Time elapsed: 0.003 s <<< ERROR!
-app.OperationNotAllowedException: User must be logged in
-	at app.PM_App.createUser(PM_App.java:39)
-	at hellocucumber.PMAppTest.getAvailableUserIDs_returnsOnlyAvailableUsers(PMAppTest.java:25)
+app.OperationNotAllowedException: Project does not exist
+	at app.PM_App.getProject(PM_App.java:193)
+	at app.PM_App.addActivityToProject(PM_App.java:207)
+	at hellocucumber.PMAppTest.getAvailableUserIDs_returnsOnlyAvailableUsers(PMAppTest.java:38)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
