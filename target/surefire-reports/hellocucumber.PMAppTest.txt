@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: hellocucumber.PMAppTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.008 s <<< FAILURE! -- in hellocucumber.PMAppTest
+hellocucumber.PMAppTest.getAvailableUserIDs_returnsOnlyAvailableUsers -- Time elapsed: 0.003 s <<< ERROR!
+app.OperationNotAllowedException: User must be logged in
+	at app.PM_App.createUser(PM_App.java:39)
+	at hellocucumber.PMAppTest.getAvailableUserIDs_returnsOnlyAvailableUsers(PMAppTest.java:25)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

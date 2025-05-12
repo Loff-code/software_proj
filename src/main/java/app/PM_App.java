@@ -120,6 +120,15 @@ public class PM_App extends Observable {
     }
 
 
+
+
+
+
+
+
+
+
+
     public List<String> getAvailableUserIDsForActivity(int projectID, String activityName) throws OperationNotAllowedException {
         Activity activity = getActivityByName(activityName, projectID);
         List<String> availables = getAvailableUserIDs(
@@ -275,6 +284,16 @@ public class PM_App extends Observable {
 
         return report.toString(); // Return the complete report as a string
     }
+
+
+
+
+
+
+
+
+
+
 
     public String getStatusReport(int startYear, int startWeek, int endYear, int endWeek) {
         StringBuilder report = new StringBuilder();

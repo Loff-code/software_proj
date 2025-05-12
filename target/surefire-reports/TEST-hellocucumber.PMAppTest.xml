@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="hellocucumber.ActivityTest" time="0.001" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="hellocucumber.PMAppTest" time="0.008" tests="6" errors="1" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -59,6 +59,18 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="registerTime_fails_whenDateIsNull" classname="hellocucumber.ActivityTest" time="0.0"/>
-  <testcase name="registerTime_fails_whenUserIdIsBlank" classname="hellocucumber.ActivityTest" time="0.0"/>
+  <testcase name="getAvailableUserIDs_returnsOnlyAvailableUsers" classname="hellocucumber.PMAppTest" time="0.003">
+    <error message="User must be logged in" type="app.OperationNotAllowedException"><![CDATA[app.OperationNotAllowedException: User must be logged in
+	at app.PM_App.createUser(PM_App.java:39)
+	at hellocucumber.PMAppTest.getAvailableUserIDs_returnsOnlyAvailableUsers(PMAppTest.java:25)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+]]></error>
+  </testcase>
+  <testcase name="isAvailable_handlesWeekRolloverCorrectly" classname="hellocucumber.PMAppTest" time="0.001"/>
+  <testcase name="testAddObserver" classname="hellocucumber.PMAppTest" time="0.0"/>
+  <testcase name="getVacantUserIDs_throwsException_whenWeekIsOutOfBounds" classname="hellocucumber.PMAppTest" time="0.001"/>
+  <testcase name="getVacantUserIDs_throwsException_whenEndBeforeStart" classname="hellocucumber.PMAppTest" time="0.0"/>
+  <testcase name="generateReport_throwsExceptionIfProjectNotFound" classname="hellocucumber.PMAppTest" time="0.001"/>
 </testsuite>

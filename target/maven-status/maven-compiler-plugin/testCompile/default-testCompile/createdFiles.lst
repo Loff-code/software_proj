@@ -2,6 +2,7 @@ hellocucumber/StepDefinitions.class
 hellocucumber/GenerateReportSteps.class
 hellocucumber/TestJUnit5.class
 hellocucumber/EditActivitySteps.class
+hellocucumber/PMAppTest.class
 hellocucumber/registerTimeSteps.class
 hellocucumber/RunCucumberTest.class
 hellocucumber/CreateProjectSteps.class
